@@ -1,10 +1,10 @@
 import Image from "next/image";
-import Hero from "./Hero";
+import Hero from "./index_components/Hero";
 
 export default function Home() {
   return (
     <main className="">
-      <section className="w-full min-h-[80vh]">{/* <Hero /> */}</section>
+      <Hero />
     </main>
   );
 }

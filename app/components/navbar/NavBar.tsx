@@ -13,7 +13,8 @@ const NavBar = () => {
         <Link href="/">
           <TheHiveLogo variant="both" />
         </Link>
-        <NavLinks />
+        {/* Fix errors here */}
+        {/* <NavLinks /> */}
         <div className="flex space-x-2">
           <UserButton />
           <ThemeToggler />
