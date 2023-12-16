@@ -6,13 +6,13 @@ import { useForm, Controller } from "react-hook-form";
 import { error } from "console";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { propertySchema } from "@/app/lib/schema/propertySchema";
+import { PropertySchema } from "@/app/lib/schema/property";
 import { z } from "zod";
 import { InfoIcon, SearchIcon } from "lucide-react";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 
-type PropertyForm = z.infer<typeof propertySchema>;
+type PropertyForm = z.infer<typeof PropertySchema>;
 
 const NewProperty = () => {
   const {
@@ -21,7 +21,7 @@ const NewProperty = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<PropertyForm>({
-    resolver: zodResolver(propertySchema),
+    resolver: zodResolver(PropertySchema),
   });
   const [error, setError] = useState<string>();
 

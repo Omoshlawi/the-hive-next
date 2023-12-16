@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { propertySchema } from "../../lib/schema/propertySchema";
+import { propertySchema } from "../../lib/schema/property";
 
 export const POST = async (request: NextRequest) => {
   const body = await request.json();

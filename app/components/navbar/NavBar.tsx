@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 const NavBar = () => {
   const pathName = usePathname();
 
-  if (pathName.startsWith("/dashboard")) return false;
+  if (["/dashboard", "/admin"].some(link=>pathName.startsWith(link))) return false;
   return (
     <header className="flex items-center justify-center md:p-5">
       <div className="flex items-center justify-between p-2 px-5 shadow-md w-full rounded-md dark:shadow-zinc-700">
