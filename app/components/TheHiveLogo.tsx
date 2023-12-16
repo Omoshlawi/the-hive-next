@@ -3,6 +3,7 @@ import logoWhite from "@/public/logo-white.png";
 import logoBlack from "@/public/logo-black.png";
 import Image from "next/image";
 import { Lusitana } from "next/font/google";
+import clsx from "clsx";
 const listana = Lusitana({ subsets: ["latin"], weight: ["400", "700"] });
 
 interface Props {
@@ -37,7 +38,13 @@ const TheHiveLogo: React.FC<Props> = ({
         </div>
       )}
       {["both", "text"].includes(variant) && (
-        <h1 className={`${listana.className} font-bold text-3xl`}>{title}</h1>
+        <h1
+          className={clsx(`${listana.className} font-bold text-3xl`, {
+            // [`text-[${size * 0.5}px]`]: size,
+          })}
+        >
+          {title}
+        </h1>
       )}
     </div>
   );
