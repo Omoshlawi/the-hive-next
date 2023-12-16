@@ -13,23 +13,19 @@ const BreadCrumb = () => {
         <span className="font-bold">{"/"}</span>
         <Link href={`/dashboard`}>
           <Badge>
-            <p className="font-bold text-zinc-600">Dashboard</p>
+            <p className="font-bold">Dashboard</p>
           </Badge>
         </Link>
         <span className="font-bold">{"/"}</span>
         <Link href={`/dashboard`}>
           <Badge>
-            <Badge>
-              <p className="font-bold text-zinc-600">Properties</p>
-            </Badge>
+            <p className="font-bold">Properties</p>
           </Badge>
         </Link>
         <span className="font-bold">{"/"}</span>
         <Link href={`/dashboard`}>
           <Badge>
-            <Badge>
-              <p className="font-bold text-zinc-600">new</p>
-            </Badge>
+            <p className="font-bold">new</p>
           </Badge>
         </Link>
       </div>

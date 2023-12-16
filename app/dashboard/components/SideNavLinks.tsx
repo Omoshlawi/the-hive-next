@@ -27,7 +27,7 @@ const SideNavLinks = () => {
             href={href}
             key={index}
             className={clsx("py-2 items-center", {
-              "bg-red-50": href === pathName,
+              "bg-zinc-700": href === pathName,
             })}
           >
             <div className={"p-3 flex items-center space-x-3"}>

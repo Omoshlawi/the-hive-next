@@ -8,7 +8,7 @@ const DashBoardLayout: React.FC<PropsWithChildren> = ({ children }) => {
       <div className="h-full flex-none md:w-72">
         <SideNav />
       </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12 dark:bg-zinc-900 ">
         <DashboardNav />
         {children}
       </div>

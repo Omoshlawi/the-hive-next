@@ -33,12 +33,12 @@ const SummaryCardConcrete: React.FC<SummaryCardProps> = ({
 }) => {
   return (
     <div className="p-5 border-2 rounded-lg flex items-center space-x-3">
-      <div className="rounded-full border p-5 bg-red-400">
-        <Icon className="w-8 h-8 text-white" />
+      <div className="rounded-full border p-5">
+        <Icon className="w-8 h-8" />
       </div>
       <div className="flex flex-col">
         <div className={"font-bold"}>{title}</div>
-        <div className="bg-slate-500 text-lg">{subTitle}</div>
+        <div className="text-slate-500 text-lg">{subTitle}</div>
       </div>
     </div>
   );

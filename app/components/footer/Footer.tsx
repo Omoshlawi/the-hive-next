@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import TheHiveLogo from "../TheHiveLogo";
 import Link from "next/link";
@@ -16,8 +17,11 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Label } from "../ui/label";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathName = usePathname();
+  if (pathName.startsWith("/dashboard")) return false;
   const quickLinks = [
     { label: "Home", href: "/" },
     { label: "Dashboard", href: "/dashboard" },
