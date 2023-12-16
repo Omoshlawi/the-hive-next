@@ -1,4 +1,3 @@
-
 import {
   Tabs,
   TabsContent,
@@ -10,18 +9,17 @@ import HouseSearchForm from "./HouseSearchForm";
 import LandSearchForm from "./LandSearchForm";
 
 export function PropertySearch() {
-
   return (
-    <Tabs defaultValue="password" className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
+    <Tabs defaultValue="password" className="w-full">
+      <TabsList className="grid w-[400px] grid-cols-2">
         <TabsTrigger value="account">Land</TabsTrigger>
         <TabsTrigger value="password">House</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <LandSearchForm/>
+        <LandSearchForm />
       </TabsContent>
       <TabsContent value="password">
-        <HouseSearchForm/>
+        <HouseSearchForm />
       </TabsContent>
     </Tabs>
   );

@@ -27,8 +27,11 @@ import { Checkbox } from "@/app/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useState } from "react";
 
 const HouseSearchForm = () => {
+  const [advanced, setAdvanced] = useState(false);
+  const toggleAdvanced = () => setAdvanced(!advanced);
   const items = [
     {
       id: "pool",
@@ -63,11 +66,14 @@ const HouseSearchForm = () => {
           Find affordable and quality house today from our trusted patners
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid grid-rows-1 gap-3">
+      <CardContent
+        className={clsx("grid grid-cols-1 gap-3 lg:grid-cols-2", {})}
+      >
         <Input id="house" placeholder="Type keyword..." />
+        {advanced && <Input id="location" placeholder="Location" />}
         <div className="grid grid-cols-2 gap-3">
           <Select>
-            <SelectTrigger className="w-[170px]">
+            <SelectTrigger>
               <SelectValue placeholder="Select Type" />
             </SelectTrigger>
             <SelectContent>
@@ -83,7 +89,7 @@ const HouseSearchForm = () => {
             </SelectContent>
           </Select>
           <Select>
-            <SelectTrigger className="w-[170px]">
+            <SelectTrigger>
               <SelectValue placeholder="Select Status" />
             </SelectTrigger>
             <SelectContent>
@@ -95,40 +101,58 @@ const HouseSearchForm = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Input id="maxPrice" placeholder="Min Price" type="number" />
-          <Input id="maxPrice" placeholder="Max price" type="number" />
+          {advanced && (
+            <Input id="maxPrice" placeholder="Min Price" type="number" />
+          )}
+          {advanced && (
+            <Input id="maxPrice" placeholder="Max price" type="number" />
+          )}
         </div>
-        <Input id="location" placeholder="Location" />
-        <Label htmlFor="bedrooms">Bed rooms</Label>
-        <Slider id="bedrooms" defaultValue={[1]} max={10} step={1} />
-        <Label htmlFor="size">Size</Label>
-        <Slider id="size" defaultValue={[1]} max={100} step={1} />
-        <p className="font-bold">Amenities</p>
-        <div className="grid grid-cols-2 gap-3">
-          {items.map(({ id, label }) => (
-            <div className="items-center space-x-2">
-              <Checkbox id={id} />
-              <Label
-                htmlFor={id}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {label}
-              </Label>
+        {advanced && (
+          <div className="grid gap-3 grid-cols-1">
+            <div>
+              <Label htmlFor="size">Size</Label>
+              <Slider id="size" defaultValue={[1]} max={100} step={1} />
             </div>
-          ))}
+            <div>
+              <div>
+                <Label htmlFor="bedrooms">Bed rooms</Label>
+                <Slider id="bedrooms" defaultValue={[1]} max={10} step={1} />
+              </div>
+            </div>
+          </div>
+        )}
+        {advanced && (
+          <div>
+            <p className="font-bold">Amenities</p>
+            <div className="grid grid-cols-2 gap-3">
+              {items.map(({ id, label }) => (
+                <div className="items-center space-x-2">
+                  <Checkbox id={id} />
+                  <Label
+                    htmlFor={id}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {label}
+                  </Label>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {!advanced && <div className="hidden md:block" />}
+        <div className="flex space-x-2 items-end justify-end">
+          <Button>
+            <div className="flex space-x-3 items-center">
+              <span className="text-xl">Search</span>
+              <SearchIcon />
+            </div>
+          </Button>
+          <Button onClick={toggleAdvanced}>
+            <SlidersHorizontal />
+          </Button>
         </div>
       </CardContent>
-      <CardFooter className="space-x-4 justify-center">
-        <Button>
-          <div className="flex space-x-3 items-center">
-            <span className="text-xl">Search</span>
-            <SearchIcon />
-          </div>
-        </Button>
-        <Button>
-          <SlidersHorizontal />
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

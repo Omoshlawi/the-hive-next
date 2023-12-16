@@ -8,8 +8,8 @@ import Link from "next/link";
 
 const NavBar = () => {
   return (
-    <header className="flex items-center justify-center p-5 ">
-      <div className="flex items-center justify-between p-2 px-5 shadow-md w-10/12 rounded-md dark:shadow-zinc-700">
+    <header className="flex items-center justify-center p-5 bg-gradient-to-l from-slate-200 to-zinc-400  dark:from-red-950 dark:to-zinc-950">
+      <div className="flex items-center justify-between p-2 px-5 shadow-md w-10/12 rounded-md dark:shadow-zinc-700 dark:bg-zinc-950">
         <Link href="/">
           <TheHiveLogo variant="both" />
         </Link>
