@@ -34,8 +34,8 @@ export default [
         ),
         children: [
           {
-            label: "Usage statistics",
-            href: "/",
+            label: "Overview",
+            href: "/dashboard",
           },
         ],
       },
