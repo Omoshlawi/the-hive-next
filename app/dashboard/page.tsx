@@ -1,10 +1,10 @@
 import React from "react";
 import { lusitana } from "../fonts";
-import SummaryCard from "./components/SummaryCard";
-import EaningTrendsChart from "./components/EaningTrendsChart";
-import LinChart from "./components/LinChart";
-import BarChart from "./components/BarChart";
-import DounartChart from "./components/DounartChart";
+import SummaryCard from "./components/display/SummaryCard";
+import EaningTrendsChart from "./components/charts/EaningTrendsChart";
+import LinChart from "./components/charts/LinChart";
+import BarChart from "./components/charts/BarChart";
+import DounartChart from "./components/charts/DounartChart";
 import { Banknote, Clock4, LayoutList, Users } from "lucide-react";
 import { Card, CardTitle } from "../components/ui/card";
 

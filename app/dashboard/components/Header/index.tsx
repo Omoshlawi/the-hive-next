@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button";
 import { SearchIcon, TextIcon } from "lucide-react";
 import TheHiveLogo from "@/app/components/TheHiveLogo";
 import { Input } from "@/app/components/ui/input";
+import { UserButton } from "@/app/components/navbar/UserButton";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -20,6 +21,7 @@ const Header = (props: {
               e.stopPropagation();
               props.setSidebarOpen(!props.sidebarOpen);
             }}
+            variant={"outline"}
             className="z-99999 block rounded-sm border border-stroke p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
           >
             <TextIcon />
@@ -56,6 +58,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
+          <UserButton />
           {/* <!-- User Area --> */}
         </div>
       </div>
