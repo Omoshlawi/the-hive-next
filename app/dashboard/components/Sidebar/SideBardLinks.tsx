@@ -31,7 +31,7 @@ const SideBardLinks: React.FC<Props> = ({
                     <li key={index}>
                       <Link
                         href={href}
-                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:opacity-30 dark:hover:bg-meta-4 ${
                           pathname.includes(href) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
@@ -109,9 +109,12 @@ const SideBardLinks: React.FC<Props> = ({
                                   <li key={index}>
                                     <Link
                                       href={href}
-                                      className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                        pathname === "/" && "text-white"
-                                      } `}
+                                      className={clsx(
+                                        `group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:opacity-30`,
+                                        {
+                                          "bg-white": pathname === href,
+                                        }
+                                      )}
                                     >
                                       {label}
                                     </Link>
