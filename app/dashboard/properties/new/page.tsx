@@ -48,7 +48,7 @@ const NewProperty = () => {
           name="description"
           control={control}
           render={({ field }) => (
-            <SimpleMDE placeholder="Description ..." {...field} />
+            <SimpleMDE  placeholder="Description ..." {...field} />
           )}
         />
         {/* <ErrorText>{errors.description?.message}</ErrorText> */}
