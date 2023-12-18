@@ -23,15 +23,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
-import { ServiceSchema } from "@/app/lib/schema/pricing";
+import { ServiceFormSchema } from "@/app/lib/schema/pricing";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import ImageInput from "@/app/components/form/ImageInput";
-import { FormFile } from "@/app/lib/schema/common";
+import { FormFile, image } from "@/app/lib/schema/common";
 
-type Service = z.infer<typeof ServiceSchema>;
+type Service = z.infer<typeof ServiceFormSchema>;
 
 interface Props {
   service?: Service;
@@ -50,32 +50,69 @@ const ServiceForm: React.FC<Props> = ({
 }) => {
   const { toast } = useToast();
   const form = useForm<Service>({
-    resolver: zodResolver(ServiceSchema),
+    resolver: zodResolver(ServiceFormSchema),
     defaultValues: service ? service : undefined,
   });
 
   async function onSubmit(values: Service) {
-    // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log("Formstate: ", values);
-    const ffl = new FormFile(values.image);
-    const fl = await ffl.toFile();
+
+    const formData = new FormData();
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        if (key === "image") {
+          const fm = new FormFile(values[key]);
+          const f: File = await fm.toFile();
+          formData.append(key, f);
+        } else {
+          // Assert that key is a string and exists on values
+          formData.append(key, (values as any)[key]);
+        }
+      }
+    }
+    const response = await fetch("/api/services", {
+      method: "POST",
+      body: formData,
+      redirect: "follow",
+    });
+
+    const responseData = await response.json();
+
+    // if (response.ok) {
+    //   const _toast = toast({
+    //     title: "Success!",
+    //     description: (
+    //       <pre className="mt-2 w-[340px] rounded-md bg-green-950 p-4">
+    //         <code className="text-white">
+    //           {"Services updated succesfully!"}
+    //         </code>
+    //       </pre>
+    //     ),
+    //   });
+    //   setTimeout(_toast.dismiss, 3000);
+    // } else {
+    //   if (response.status != 400) {
+    //     const _toast = toast({
+    //       title: "Success!",
+    //       description: (
+    //         <pre className="mt-2 w-[340px] rounded-md bg-green-950 p-4">
+    //           <code className="text-white">
+    //             {"Services updated succesfully!"}
+    //           </code>
+    //         </pre>
+    //       ),
+    //     });
+    //     setTimeout(_toast.dismiss, 3000);
+    //   }
+    //   const { setError } = form;
+    // }
 
     toast({
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">
-            {JSON.stringify(
-              {
-                ...values,
-                flSize: fl.size,
-                fflSize: ffl.size(),
-                same: ffl.size() === (await FormFile.fromFile(fl)).size(),
-              },
-              null,
-              2
-            )}
+            {JSON.stringify(responseData, null, 2)}
           </code>
         </pre>
       ),
@@ -94,12 +131,12 @@ const ServiceForm: React.FC<Props> = ({
           <form onSubmit={form.handleSubmit(onSubmit)} className="">
             <FormField
               control={form.control}
-              name="name"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter name" {...field} />
+                    <Input placeholder="Enter title" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

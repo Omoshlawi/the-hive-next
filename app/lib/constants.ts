@@ -1,1 +1,1 @@
-export const MEDIA_ROOT = "media/"
+export const MEDIA_ROOT = "/media"

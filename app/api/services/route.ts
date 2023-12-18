@@ -6,6 +6,7 @@ import path from "path";
 import fs from "fs/promises";
 import { MEDIA_ROOT } from "@/app/lib/constants";
 import { upload } from "@/app/lib/serverutils";
+import slugify from "slugify";
 
 export const GET = async (request: NextRequest) => {
   const services = await prisma.service.findMany();
@@ -22,15 +23,25 @@ export const POST = async (request: NextRequest) => {
     return { ...prev, [key]: value };
   }, {});
   try {
-    const uploader = await upload({ uploadTo: "upload/services/", formData });
+    const uploader = await upload({ uploadTo: "/upload/services/", formData });
     const image = await uploader.single("image");
+
     const data = { image, ...body };
-    
-} catch (error: any) {
+    const validation = await ServiceSchema.safeParseAsync(data);
+    if (!validation.success) {
+      return NextResponse.json(validation.error.format(), { status: 400 });
+    }
+    const service = await prisma.service.create({
+      data: {
+        slug: slugify(validation.data.title, { lower: true, trim: true }),
+        ...validation.data,
+      },
+    });
+    return NextResponse.json({ service });
+  } catch (error: any) {
     console.error("Error uploading image:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   // Rest of your code
-  return NextResponse.json({ uploaded: "Status" });
 };

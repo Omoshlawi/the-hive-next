@@ -12,10 +12,14 @@ export const FeatureSchema = z.object({
   description: z.string().min(20).optional(),
   image: z.string(),
 });
-export const ServiceSchema = z.object({
-  name: z.string().min(1).max(255),
-  description: z.string().min(20).optional(),
+export const ServiceFormSchema = z.object({
+  title: z.string().min(1).max(255),
+  description: z.string(),
   image: image(),
 });
 
-
+export const ServiceSchema = z.object({
+  title: z.string().min(1).max(255),
+  description: z.string(),
+  image: z.string(),
+});

@@ -22,7 +22,9 @@ export const upload = async ({
 }) => {
   const destinationDirPath = path.join(
     process.cwd(),
-    `public/${MEDIA_ROOT}${uploadTo}`
+    "public",
+    MEDIA_ROOT,
+    uploadTo
   );
 
   if (!existsSync(destinationDirPath)) {
@@ -47,7 +49,8 @@ export const upload = async ({
     return buffer;
   };
 
-  const getResourceUrl = (path: string) => `${MEDIA_ROOT}${uploadTo}${path}`;
+  const getResourceUrl = (filePath: string) =>
+    path.join(MEDIA_ROOT, uploadTo, filePath);
 
   const validateAndsaveFile = async (file: File) => {
     const buffer = await validateFile(file);

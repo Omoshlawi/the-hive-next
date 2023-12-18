@@ -21,6 +21,7 @@ model Service {
   title       String
   slug        String   @unique
   description String
+  image       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -3,8 +3,12 @@ import clsx from "clsx";
 import React from "react";
 import ServiceForm from "./ServiceForm";
 import { Button } from "@/app/components/ui/button";
+import prisma from "@/prisma/client";
 
-const ServicesPage = () => {
+import ServiceCard from "./ServiceCard";
+
+const ServicesPage = async () => {
+  const services = await prisma.service.findMany();
   return (
     <div className="p-2">
       <p
@@ -23,6 +27,11 @@ const ServicesPage = () => {
         >
           <Button>Add service</Button>
         </ServiceForm>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+        {services.map(({ id, ...otherProps }) => (
+          <ServiceCard key={id} {...otherProps} />
+        ))}
       </div>
     </div>
   );
