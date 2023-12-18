@@ -1,21 +1,20 @@
-import { NextRequest } from "next/server";
 import path from "path";
 import fs, { unlink } from "fs/promises";
 import { MEDIA_ROOT } from "./constants";
 import { existsSync } from "fs";
+import slugify from "slugify";
 import { fileTypeFromBuffer } from "file-type";
-import { slugify } from "./utils";
 
 export const upload = async ({
   uploadTo,
-  request,
+  formData,
   validations = {
     allowedTypes: ["image/jpeg", "image/png"],
     maxSize: 5 * 1024 * 1024, // 5 MB
   },
 }: {
   uploadTo: string;
-  request: NextRequest;
+  formData: FormData;
   validations?: {
     allowedTypes?: string[];
     maxSize?: number;
@@ -23,7 +22,7 @@ export const upload = async ({
 }) => {
   const destinationDirPath = path.join(
     process.cwd(),
-    `public/${MEDIA_ROOT}/${uploadTo}`
+    `public/${MEDIA_ROOT}${uploadTo}`
   );
 
   if (!existsSync(destinationDirPath)) {
@@ -31,7 +30,7 @@ export const upload = async ({
   }
 
   const generateUniqueFileName = (file: File) =>
-    slugify(`${Date.now()} ${file.name}`);
+    slugify(`${Date.now()} ${file.name}`, { lower: true, trim: true });
 
   const validateFile = async (file: File) => {
     const buffer = await file.arrayBuffer();
@@ -48,7 +47,7 @@ export const upload = async ({
     return buffer;
   };
 
-  const getResourceUrl = (path: string) => `${MEDIA_ROOT}/${uploadTo}/${path}`;
+  const getResourceUrl = (path: string) => `${MEDIA_ROOT}${uploadTo}${path}`;
 
   const validateAndsaveFile = async (file: File) => {
     const buffer = await validateFile(file);
@@ -58,12 +57,10 @@ export const upload = async ({
     return { uri: getResourceUrl(name), absolutePath: abs };
   };
 
-
   return {
     single: async (field: string) => {
       let savingFilePath: string | undefined;
       try {
-        const formData = await request.formData();
         const file = formData.get(field) as File;
 
         if (!file) {
@@ -85,7 +82,6 @@ export const upload = async ({
       let uploadedFiles: string[] = [];
       let uploadedUris: string[] = [];
       try {
-        const formData = await request.formData();
         const files = formData.getAll(field) as File[];
 
         for (const file of files) {

@@ -17,3 +17,5 @@ export const ServiceSchema = z.object({
   description: z.string().min(20).optional(),
   image: image(),
 });
+
+

@@ -13,15 +13,24 @@ export const GET = async (request: NextRequest) => {
 };
 
 export const POST = async (request: NextRequest) => {
+  const formData = await request.formData();
+  const body = Array.from(formData.entries()).reduce((prev, curr) => {
+    const [key, value] = curr;
+    if (key === "image") {
+      return prev;
+    }
+    return { ...prev, [key]: value };
+  }, {});
   try {
-    const uploader = await upload({ uploadTo: "upload/services", request });
+    const uploader = await upload({ uploadTo: "upload/services/", formData });
     const image = await uploader.single("image");
-  } catch (error: any) {
+    const data = { image, ...body };
+    
+} catch (error: any) {
     console.error("Error uploading image:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
   // Rest of your code
-  console.log(await request.formData());
   return NextResponse.json({ uploaded: "Status" });
 };
