@@ -58,12 +58,25 @@ const ServiceForm: React.FC<Props> = ({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log("Formstate: ", values);
+    const ffl = new FormFile(values.image);
+    const fl = await ffl.toFile();
 
     toast({
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(
+              {
+                ...values,
+                flSize: fl.size,
+                fflSize: ffl.size(),
+                same: ffl.size() === (await FormFile.fromFile(fl)).size(),
+              },
+              null,
+              2
+            )}
+          </code>
         </pre>
       ),
     });
@@ -101,13 +114,17 @@ const ServiceForm: React.FC<Props> = ({
                   <FormLabel>Image</FormLabel>
                   <FormControl>
                     <ImageInput
-                      multiple
                       fallBack={"LO"}
                       {...{
                         ...field,
-                        onChange: (files) => form.setValue(field.name, files),
+                        onChange: (files) =>
+                          form.setValue(field.name, files[0]),
                         value: field.value
-                          ? field.value.map((f) => new FormFile({ ...f }))
+                          ? [
+                              new FormFile({
+                                ...field.value,
+                              }),
+                            ]
                           : [],
                       }}
                     />

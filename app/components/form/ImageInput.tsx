@@ -42,7 +42,7 @@ const ImageInput: React.FC<Props> = ({
             {value[0] && (
               <Trash2
                 onClick={() => {
-                  onChange(value);
+                  onChange([]);
                 }}
                 className="text-red-800 hover:opacity-40"
               />
@@ -63,7 +63,7 @@ const ImageInput: React.FC<Props> = ({
 
             if (!files || !files.length) {
               // Handle the case when no files are selected
-              onChange([]);
+              onChange(value);
               return;
             }
 

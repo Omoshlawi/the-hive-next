@@ -15,5 +15,5 @@ export const FeatureSchema = z.object({
 export const ServiceSchema = z.object({
   name: z.string().min(1).max(255),
   description: z.string().min(20).optional(),
-  image: z.array(image()).min(1),
+  image: image(),
 });
