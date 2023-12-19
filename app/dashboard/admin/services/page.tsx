@@ -19,18 +19,18 @@ const ServicesPage = async () => {
       >
         Services
       </p>
-      <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse p-3">
         <ServiceForm
           title="Service"
           decription="Create a new service by filling bellow for"
           className="max-h-[80vh] overflow-y-auto"
         >
-          <Button>Add service</Button>
+          Add service
         </ServiceForm>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
-        {services.map(({ id, ...otherProps }) => (
-          <ServiceCard key={id} {...otherProps} />
+        {services.map((service) => (
+          <ServiceCard key={service.id} service={service} />
         ))}
       </div>
     </div>

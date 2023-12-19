@@ -33,6 +33,8 @@ import { FormFile, image } from "@/app/lib/schema/common";
 import { ValidationError } from "@/app/lib/exceptions";
 import { addService, updateService } from "./api";
 import ServiceFormSkeleton from "./ServiceFormSkeleton";
+import { useRouter } from "next/navigation";
+import { pick } from "lodash";
 
 type Service = z.infer<typeof ServiceFormSchema>;
 
@@ -41,36 +43,46 @@ interface Props {
   title?: string;
   decription?: string;
   className?: string;
-  children: React.ReactNode; //Trgiier
+  children: React.ReactNode;
 }
 
 const ServiceForm: React.FC<Props> = ({
   service,
-  children,
   title,
   decription,
   className,
+  children,
 }) => {
   const { toast } = useToast();
+  const { refresh } = useRouter();
+  const [showForm, setShowForm] = useState(false);
   const form = useForm<Service>({
     resolver: zodResolver(ServiceFormSchema),
-    defaultValues: service ? service : { description: "", title: "" },
+    defaultValues: service
+      ? pick(service, ["title", "description", "image"])
+      : { description: "", title: "" },
   });
 
   async function onSubmit(values: Service) {
     // ✅ This will be type-safe and validated.
 
     try {
-      const addedService = await addService(values);
+      if (service) await updateService(values, service.id!);
+      else await await addService(values);
+      setShowForm(false);
+      refresh();
       toast({
+        className: "bg-green-900 dark:text-emerald-500",
         description: (
-          <span className="text-green-900">Service added successfully</span>
+          <span className="text-xl text-teal-50">
+            Service added successfully
+          </span>
         ),
       });
     } catch (error) {
       if (error instanceof ValidationError) {
         // Handle validation errors
-        console.log(error);
+        console.log(JSON.stringify(error.errors));
       } else if (
         typeof error === "object" &&
         error !== null &&
@@ -94,8 +106,10 @@ const ServiceForm: React.FC<Props> = ({
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={showForm} onOpenChange={(opem) => setShowForm(opem)}>
+      <DialogTrigger asChild>
+        <Button onClick={() => setShowForm(true)}>{children}</Button>
+      </DialogTrigger>
       <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

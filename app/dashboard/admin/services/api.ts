@@ -14,8 +14,12 @@ const toFormData = async (values: Service) => {
     if (values.hasOwnProperty(key)) {
       if (key === "image") {
         const fm = new FormFile(values[key]);
-        const f: File = await fm.toFile();
-        formData.append(key, f);
+        if (fm.origin === "remote") {
+          formData.append(key, (values as any)[key]["src"]);
+        } else {
+          const f: File = await fm.toFile();
+          formData.append(key, f);
+        }
       } else {
         // Assert that key is a string and exists on values
         formData.append(key, (values as any)[key]);
@@ -27,7 +31,6 @@ const toFormData = async (values: Service) => {
 
 export const addService = async (service: Service) => {
   const formData = await toFormData(service);
-  console.log(service, formData);
 
   const response = await fetch("/api/services", {
     method: "POST",
@@ -45,7 +48,10 @@ export const addService = async (service: Service) => {
   }
 };
 
-export const updateService = async (service: Service, serviceId: string) => {
+export const updateService = async (
+  service: Service,
+  serviceId: string | number
+) => {
   const formData = await toFormData(service);
   const response = await fetch(`/api/services/${serviceId}`, {
     method: "PUT",
