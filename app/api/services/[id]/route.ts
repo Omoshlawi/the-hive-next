@@ -46,3 +46,17 @@ export const PUT = async (
     return NextResponse.json({ detail: error.message }, { status: 500 });
   }
 };
+
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  const id = toNumber(params.id);
+  const service = await prisma.service.findUnique({
+    where: { id },
+  });
+  if (!service)
+    return NextResponse.json({ detail: "Service not found" }, { status: 404 });
+  await prisma.service.delete({ where: { id } });
+  return NextResponse.json({ detail: "Service deleted successfully!" });
+};

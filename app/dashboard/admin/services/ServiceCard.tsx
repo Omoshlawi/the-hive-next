@@ -20,8 +20,21 @@ import {
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
 import { Button } from "@/app/components/ui/button";
-import { PenSquare } from "lucide-react";
+import { PenSquare, Trash2 } from "lucide-react";
 import ServiceForm from "./ServiceForm";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
+import Link from "next/link";
+import ConfirmDialog from "@/app/components/display/ConfirmDialog";
 
 type Service = z.infer<typeof ServiceSchema>;
 type ServiceFormType = z.infer<typeof ServiceFormSchema>;
@@ -57,20 +70,29 @@ const ServiceCard = async ({ service }: { service: Service }) => {
       </CardContent>
       <CardFooter className="flex justify-between">
         <span>{moment(createdAt).format("Do MMM yyyy")}</span>
-        <ServiceForm
-          title="Edit Service"
-          className="h-[80vh] overflow-y-auto"
-          service={{
-            ...service,
-            image: {
-              origin: "remote",
-              src: image,
-              type: `image/${image.split(".").pop()}`,
-            },
-          }}
-        >
-          <PenSquare />
-        </ServiceForm>
+        <div className="flex items-center">
+          <ServiceForm
+            title="Edit Service"
+            className="h-[80vh] overflow-y-auto"
+            service={{
+              ...service,
+              image: {
+                origin: "remote",
+                src: image,
+                type: `image/${image.split(".").pop()}`,
+              },
+            }}
+          >
+            <PenSquare />
+          </ServiceForm>
+          <ConfirmDialog
+            title="Warning"
+            href={`/api/services/${service.id}`}
+            description={`This action cannot be undone. This will permanently delete ${title} service.Are you sure?`}
+          >
+            <Trash2 className="text-red-700" />
+          </ConfirmDialog>
+        </div>
       </CardFooter>
     </Card>
   );
