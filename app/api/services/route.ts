@@ -23,7 +23,6 @@ export const POST = async (request: NextRequest) => {
       }
       return { ...prev, [key]: value };
     }, {});
-    console.log(body);
     const uploader = await upload({ uploadTo: "/upload/services/", formData });
     const image = await uploader.single("image");
 
@@ -43,4 +42,3 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ detail: error.message }, { status: 500 });
   }
 };
-

@@ -28,7 +28,6 @@ export const PUT = async (
       body = { image, ...body };
     }
     const validation = await ServiceSchema.safeParseAsync(body);
-    console.log(body, validation.success);
 
     if (!validation.success) {
       return NextResponse.json(validation.error.format(), { status: 400 });
