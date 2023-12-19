@@ -7,6 +7,7 @@ import fs from "fs/promises";
 import { MEDIA_ROOT } from "@/app/lib/constants";
 import { upload } from "@/app/lib/serverutils";
 import slugify from "slugify";
+import { Droplet } from "lucide-react";
 
 export const GET = async (request: NextRequest) => {
   const services = await prisma.service.findMany();
@@ -15,6 +16,7 @@ export const GET = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest) => {
   try {
+    return NextResponse.json({ detail: "Succesfull" });
     const formData = await request.formData();
     const body = Array.from(formData.entries()).reduce((prev, curr) => {
       const [key, value] = curr;

@@ -32,6 +32,7 @@ import ImageInput from "@/app/components/form/ImageInput";
 import { FormFile, image } from "@/app/lib/schema/common";
 import { ValidationError } from "@/app/lib/exceptions";
 import { addService, updateService } from "./api";
+import ServiceFormSkeleton from "./ServiceFormSkeleton";
 
 type Service = z.infer<typeof ServiceFormSchema>;
 
@@ -55,13 +56,11 @@ const ServiceForm: React.FC<Props> = ({
     resolver: zodResolver(ServiceFormSchema),
     defaultValues: service ? service : { description: "", title: "" },
   });
-  const [loading, setLoading] = useState(false);
 
   async function onSubmit(values: Service) {
     // ✅ This will be type-safe and validated.
 
     try {
-      setLoading(true);
       const addedService = await addService(values);
       toast({
         description: (
@@ -91,8 +90,6 @@ const ServiceForm: React.FC<Props> = ({
           description: `Unexpected error adding service: ${error}`,
         });
       }
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -105,67 +102,70 @@ const ServiceForm: React.FC<Props> = ({
           <DialogDescription>{decription}</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Service title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter servicetitle" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <ImageInput
-                      fallBack={"LO"}
-                      {...{
-                        ...field,
-                        onChange: (files) =>
-                          form.setValue(field.name, files[0]),
-                        value: field.value
-                          ? [
-                              new FormFile({
-                                ...field.value,
-                              }),
-                            ]
-                          : [],
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <SimpleMDE placeholder="Description ..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {!loading && (
-              <Button type="submit" disabled={loading}>
-                Submit
-              </Button>
-            )}
-            {loading && <span>Loading....</span>}
-          </form>
+          {form.formState.isSubmitting ? (
+            <ServiceFormSkeleton />
+          ) : (
+            <form onSubmit={form.handleSubmit(onSubmit)} className="">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Service title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter servicetitle" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Image</FormLabel>
+                    <FormControl>
+                      <ImageInput
+                        fallBack={"LO"}
+                        {...{
+                          ...field,
+                          onChange: (files) =>
+                            form.setValue(field.name, files[0]),
+                          value: field.value
+                            ? [
+                                new FormFile({
+                                  ...field.value,
+                                }),
+                              ]
+                            : [],
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <SimpleMDE placeholder="Description ..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex flex-row-reverse">
+                <Button type="submit" disabled={form.formState.isSubmitting}>
+                  Submit
+                </Button>
+              </div>
+            </form>
+          )}
         </Form>
       </DialogContent>
     </Dialog>
