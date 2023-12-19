@@ -7,8 +7,8 @@ export const POST = async (request: NextRequest) => {
   const validation = await PropertySchema.safeParseAsync(body);
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
-  const property = await prisma.properties.create({ data: validation.data });
-  return NextResponse.json(property, { status: 201 });
+  // const property = await prisma.properties.create({ data: validation.data });
+  // return NextResponse.json(property, { status: 201 });
 };
 
 export const GET = async (request: NextRequest) => {

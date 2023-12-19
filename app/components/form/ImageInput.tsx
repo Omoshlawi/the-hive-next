@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Trash2 } from "lucide-react";
 import { FormFile } from "@/app/lib/schema/common";
@@ -14,17 +14,13 @@ interface Props {
   onBlur?: (event: any) => void;
   disabled?: boolean | undefined;
   name: "image";
-  ref?: React.LegacyRef<HTMLInputElement> | undefined;
 }
 
-const ImageInput: React.FC<Props> = ({
-  fallBack,
-  value = [],
-  onChange,
-  multiple = false,
-  ...otherProps
-}) => {
-  return (
+const ImageInput = forwardRef<HTMLInputElement, Props>(
+  (
+    { fallBack, value = [], onChange, multiple = false, ...otherProps },
+    ref
+  ) => (
     <div>
       {!multiple && (
         <div className="mb-4 flex items-center gap-3">
@@ -133,7 +129,7 @@ const ImageInput: React.FC<Props> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+);
 
 export default ImageInput;

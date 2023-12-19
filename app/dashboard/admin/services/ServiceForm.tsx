@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/app/components/ui/use-toast";
 // import { toast } from "@/app/components/ui/use-toast";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -30,6 +30,8 @@ import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import ImageInput from "@/app/components/form/ImageInput";
 import { FormFile, image } from "@/app/lib/schema/common";
+import { ValidationError } from "@/app/lib/exceptions";
+import { addService, updateService } from "./api";
 
 type Service = z.infer<typeof ServiceFormSchema>;
 
@@ -51,72 +53,47 @@ const ServiceForm: React.FC<Props> = ({
   const { toast } = useToast();
   const form = useForm<Service>({
     resolver: zodResolver(ServiceFormSchema),
-    defaultValues: service ? service : undefined,
+    defaultValues: service ? service : { description: "", title: "" },
   });
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(values: Service) {
     // ✅ This will be type-safe and validated.
 
-    const formData = new FormData();
-    for (const key in values) {
-      if (values.hasOwnProperty(key)) {
-        if (key === "image") {
-          const fm = new FormFile(values[key]);
-          const f: File = await fm.toFile();
-          formData.append(key, f);
-        } else {
-          // Assert that key is a string and exists on values
-          formData.append(key, (values as any)[key]);
-        }
+    try {
+      setLoading(true);
+      const addedService = await addService(values);
+      toast({
+        description: (
+          <span className="text-green-900">Service added successfully</span>
+        ),
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        // Handle validation errors
+        console.log(error);
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error
+      ) {
+        // Check if 'error' is an object with a 'message' property
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error adding service: ${error}`,
+        });
+      } else {
+        // Handle other cases
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error adding service: ${error}`,
+        });
       }
+    } finally {
+      setLoading(false);
     }
-    const response = await fetch("/api/services", {
-      method: "POST",
-      body: formData,
-      redirect: "follow",
-    });
-
-    const responseData = await response.json();
-
-    // if (response.ok) {
-    //   const _toast = toast({
-    //     title: "Success!",
-    //     description: (
-    //       <pre className="mt-2 w-[340px] rounded-md bg-green-950 p-4">
-    //         <code className="text-white">
-    //           {"Services updated succesfully!"}
-    //         </code>
-    //       </pre>
-    //     ),
-    //   });
-    //   setTimeout(_toast.dismiss, 3000);
-    // } else {
-    //   if (response.status != 400) {
-    //     const _toast = toast({
-    //       title: "Success!",
-    //       description: (
-    //         <pre className="mt-2 w-[340px] rounded-md bg-green-950 p-4">
-    //           <code className="text-white">
-    //             {"Services updated succesfully!"}
-    //           </code>
-    //         </pre>
-    //       ),
-    //     });
-    //     setTimeout(_toast.dismiss, 3000);
-    //   }
-    //   const { setError } = form;
-    // }
-
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(responseData, null, 2)}
-          </code>
-        </pre>
-      ),
-    });
   }
 
   return (
@@ -134,15 +111,14 @@ const ServiceForm: React.FC<Props> = ({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Service title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter title" {...field} />
+                    <Input placeholder="Enter servicetitle" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="image"
@@ -183,7 +159,12 @@ const ServiceForm: React.FC<Props> = ({
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            {!loading && (
+              <Button type="submit" disabled={loading}>
+                Submit
+              </Button>
+            )}
+            {loading && <span>Loading....</span>}
           </form>
         </Form>
       </DialogContent>

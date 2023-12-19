@@ -2,6 +2,7 @@ import { ServiceSchema } from "@/app/lib/schema/pricing";
 import { markdownToHtml } from "@/app/lib/utils";
 import React from "react";
 import { z } from "zod";
+import moment from "moment/moment";
 import {
   Card,
   CardContent,
@@ -52,7 +53,7 @@ const ServiceCard = async ({
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger className="flex-wrap text-clip">
-              <Button variant={"ghost"}>{"Read more"}</Button>
+              <span>{"Read more"}</span>
             </AccordionTrigger>
             <AccordionContent>
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
@@ -60,7 +61,7 @@ const ServiceCard = async ({
           </AccordionItem>
         </Accordion>
       </CardContent>
-      <CardFooter>{createdAt.toLocaleDateString()}</CardFooter>
+      <CardFooter>{moment(createdAt).format("Do MMM yyyy")}</CardFooter>
     </Card>
   );
 };

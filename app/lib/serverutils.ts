@@ -72,8 +72,8 @@ export const upload = async ({
         const { uri, absolutePath } = await validateAndsaveFile(file);
         savingFilePath = absolutePath;
         return uri;
-      } catch (error) {
-        console.error("Error uploading file:", error);
+      } catch (error: any) {
+        console.error("Error uploading file:", error.message);
         // Rollback: Delete the uploaded file
         if (savingFilePath) {
           await unlink(savingFilePath);
