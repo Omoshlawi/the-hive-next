@@ -3,6 +3,17 @@ type ImageType = {
   image: string;
 };
 
+type PropertyGroupMemberShip = {
+  id: number;
+  url: string;
+  group: string;
+  property: string;
+  date_joined: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+};
+
 type PropertyLocation = {
   id: number;
   url: string;
@@ -32,4 +43,17 @@ type Property = {
   property_location: PropertyLocation;
   created_at: string;
   updated_at: string;
+};
+
+type PropertyGroup = {
+  id: string;
+  url: string;
+  title: string;
+  slug: string;
+  desscription: String;
+  tags: string[];
+  cover_image: string;
+  created_at: string;
+  updated_at: string;
+  properties_membership: PropertyGroupMemberShip[];
 };

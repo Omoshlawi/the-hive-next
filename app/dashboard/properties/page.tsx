@@ -11,21 +11,19 @@ import moment from "moment";
 import { DataTable } from "@/app/components/display/data-table";
 import { columns } from "./columns";
 
-const MyProperties = async () => {
+const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
+  const queryParams = new URLSearchParams(searchParams);
   const { results: properties }: { results: Property[] } = await (
-    await fetch("http://localhost:5000/properties/", { cache: "no-cache" })
+    await fetch(`http://localhost:5000/properties/?${queryParams.toString()}`, {
+      cache: "no-cache",
+    })
   ).json();
 
   return (
     <div>
-      <div
-        className={`${lusitana.className} font-bold text-2xl m-3 flex justify-between`}
-      >
-        <h1>Properties</h1>
-        <Button>
-          <Link href={"/dashboard/properties/new"}>Add property</Link>
-        </Button>
-      </div>
+      <h1 className={`${lusitana.className} font-bold text-2xl mb-3`}>
+        Properties
+      </h1>
       <Card>
         <CardHeader>
           <FilterHeader />
