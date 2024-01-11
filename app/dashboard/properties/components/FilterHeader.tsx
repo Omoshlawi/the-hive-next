@@ -41,6 +41,7 @@ import {
 } from "@/app/components/ui/popover";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 interface Props {}
 
@@ -75,19 +76,22 @@ const FilterHeader: React.FC<Props> = ({}) => {
   const searchParams = useSearchParams();
   // ?page_size=1
 
+  const handleSearch = useDebouncedCallback((value) => {
+    const queryParams = new URLSearchParams(searchParams);
+    if (value) {
+      queryParams.set("search", value);
+    } else {
+      queryParams.delete("search");
+    }
+    replace(`${pathName}?${queryParams.toString()}`);
+  }, 300);
   return (
     <div className="flex items-center md:space-x-2 flex-col md:flex-row max-md:space-y-2">
       <Input
-        value={searchParams.get("search") as string}
+        value={searchParams.get("search") as string | undefined}
         placeholder="Search...."
         onChange={({ target: { value } }) => {
-          const queryParams = new URLSearchParams(searchParams);
-          if (value) {
-            queryParams.set("search", value);
-          } else {
-            queryParams.delete("search");
-          }
-          replace(`${pathName}?${queryParams.toString()}`);
+          handleSearch(value);
         }}
       />
       <div className="flex md:space-x-2 items-center flex-col md:flex-row md:justify-end w-full max-md:space-y-2">
@@ -101,6 +105,7 @@ const FilterHeader: React.FC<Props> = ({}) => {
             }
             replace(`${pathName}?${queryParams.toString()}`);
           }}
+          value={searchParams.get("page_size") as string | undefined}
         >
           <SelectTrigger className="">
             <SelectValue placeholder="Page size" />

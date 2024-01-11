@@ -112,7 +112,7 @@ const SideBardLinks: React.FC<Props> = ({
                                       className={clsx(
                                         `group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:opacity-30`,
                                         {
-                                          "bg-white": pathname === href,
+                                          "bg-white dark:bg-black": pathname === href,
                                         }
                                       )}
                                     >

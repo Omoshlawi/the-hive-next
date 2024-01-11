@@ -1,6 +1,6 @@
 import { lusitana } from "@/app/fonts";
 
-import React from "react";
+import React, { Suspense } from "react";
 import FilterHeader from "./components/FilterHeader";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
@@ -10,15 +10,10 @@ import Image from "next/image";
 import moment from "moment";
 import { DataTable } from "@/app/components/display/data-table";
 import { columns } from "./columns";
+import { Skeleton } from "@/app/components/ui/skeleton";
+import PropertyDataTable from "./components/PropertyDataTable";
 
 const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
-  const queryParams = new URLSearchParams(searchParams);
-  const { results: properties }: { results: Property[] } = await (
-    await fetch(`http://localhost:5000/properties/?${queryParams.toString()}`, {
-      cache: "no-cache",
-    })
-  ).json();
-
   return (
     <div>
       <h1 className={`${lusitana.className} font-bold text-2xl mb-3`}>
@@ -29,7 +24,9 @@ const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
           <FilterHeader />
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns} data={properties} />
+          <Suspense fallback={<Skeleton />}>
+            <PropertyDataTable searchParams={searchParams} />
+          </Suspense>
         </CardContent>
       </Card>
     </div>
