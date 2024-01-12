@@ -1,17 +1,9 @@
 import { lusitana } from "@/app/fonts";
-
 import React, { Suspense } from "react";
 import FilterHeader from "./components/FilterHeader";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
-import { Button } from "@/app/components/ui/button";
-import Link from "next/link";
-import { z } from "zod";
-import Image from "next/image";
-import moment from "moment";
-import { DataTable } from "@/app/components/display/data-table";
-import { columns } from "./columns";
-import { Skeleton } from "@/app/components/ui/skeleton";
 import PropertyDataTable from "./components/PropertyDataTable";
+import TableSkeleton from "./components/TableSkeleton";
 
 const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
   return (
@@ -24,7 +16,10 @@ const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
           <FilterHeader />
         </CardHeader>
         <CardContent>
-          <Suspense fallback={<Skeleton />}>
+          <Suspense
+            key={"searchResults"}
+            fallback={<TableSkeleton cols={4} rows={7} />}
+          >
             <PropertyDataTable searchParams={searchParams} />
           </Suspense>
         </CardContent>

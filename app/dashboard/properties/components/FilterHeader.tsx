@@ -45,36 +45,10 @@ import { useDebouncedCallback } from "use-debounce";
 
 interface Props {}
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 const FilterHeader: React.FC<Props> = ({}) => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
   const { replace } = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  // ?page_size=1
 
   const handleSearch = useDebouncedCallback((value) => {
     const queryParams = new URLSearchParams(searchParams);
@@ -85,14 +59,15 @@ const FilterHeader: React.FC<Props> = ({}) => {
     }
     replace(`${pathName}?${queryParams.toString()}`);
   }, 300);
+
   return (
     <div className="flex items-center md:space-x-2 flex-col md:flex-row max-md:space-y-2">
       <Input
-        value={searchParams.get("search") as string | undefined}
         placeholder="Search...."
         onChange={({ target: { value } }) => {
           handleSearch(value);
         }}
+        defaultValue={(searchParams.get("search") as string | undefined) ?? ""}
       />
       <div className="flex md:space-x-2 items-center flex-col md:flex-row md:justify-end w-full max-md:space-y-2">
         <Select
@@ -121,57 +96,9 @@ const FilterHeader: React.FC<Props> = ({}) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className="w-[200px] justify-between"
-            >
-              {value
-                ? frameworks.find((framework) => framework.value === value)
-                    ?.label
-                : "Select framework..."}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search framework..." />
-              <CommandEmpty>No framework found.</CommandEmpty>
-              <CommandGroup>
-                {frameworks.map((framework) => (
-                  <CommandItem
-                    key={framework.value}
-                    value={framework.value}
-                    onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue);
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={clsx("mr-2 h-4 w-4", {
-                        "opacity-100": value === framework.value,
-                        "opacity-0": value !== framework.value,
-                      })}
-                    />
-                    {framework.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </Command>
-          </PopoverContent>
-        </Popover>
-
         <Button variant={"outline"} className="max-md:w-full">
           <div className="flex items-center space-x-2">
-            <FilterIcon /> <span className="text-lg">Filter</span>
-          </div>
-        </Button>
-        <Button variant={"outline"} className="max-md:w-full">
-          <div className="flex items-center space-x-2">
-            <PlusIcon /> <span className="text-lg">Add Property</span>
+            <PlusIcon /> <span className="text-lg">Add</span>
           </div>
         </Button>
 

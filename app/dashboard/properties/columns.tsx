@@ -11,6 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+import { BASE_URL } from "@/app/lib/constants";
+import { UploadFile } from "@/app/lib/entities/files";
+import { Property } from "@/app/lib/entities/properties";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import moment from "moment";
@@ -42,14 +45,14 @@ export const columns: ColumnDef<Property>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
+  { 
     accessorKey: "images",
     header: "Image",
     cell: ({ row, renderValue }) => {
       return (
         <Image
           alt={row.getValue("title")}
-          src={(renderValue() as ImageType[])[0]?.image}
+          src={`${BASE_URL}/files/${(renderValue() as UploadFile[])[0]?.path}`}
           width={100}
           height={100}
           className="h-20 w-40 object-cover rounded-xl"
@@ -62,11 +65,11 @@ export const columns: ColumnDef<Property>[] = [
     header: "Title",
   },
   {
-    accessorKey: "type",
+    accessorKey: "types",
     header: "Types",
     cell: ({ renderValue }) => (
       <div className="flex flex-wrap">
-        {(renderValue() as string[]).map((type, index) => (
+        {((renderValue() ?? []) as string[]).map((type, index) => (
           <Badge
             key={index}
             className="w-fit bg-accent text-accent-foreground m-1"
@@ -78,7 +81,7 @@ export const columns: ColumnDef<Property>[] = [
     ),
   },
   {
-    accessorKey: "created_at",
+    accessorKey: "createdAt",
     header: "Date created",
     cell: ({ renderValue }) =>
       moment(renderValue() as string).format("Do MMM yyy"),
@@ -100,7 +103,9 @@ export const columns: ColumnDef<Property>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(property.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(property._id!.toString())
+              }
             >
               Copy payment ID
             </DropdownMenuItem>
