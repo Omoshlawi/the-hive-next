@@ -1,60 +1,70 @@
 "use client";
-
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
-import { useForm, Controller } from "react-hook-form";
-import { error } from "console";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PropertySchema } from "@/app/lib/schema/property";
 import { z } from "zod";
-import { InfoIcon, SearchIcon } from "lucide-react";
-import { Input } from "@/app/components/ui/input";
+import { PropertySchema } from "@/app/lib/schema";
+
+import clsx from "clsx";
+import { lusitana } from "@/app/fonts";
+import { Form, FormField } from "@/app/components/ui/form";
+import {
+  AmenitiesForm,
+  AttributesForm,
+  DetailsForm,
+  FileUploadsForm,
+} from "./forms";
+import LocationForm from "./forms/LocationForm";
 import { Button } from "@/app/components/ui/button";
 
 type PropertyForm = z.infer<typeof PropertySchema>;
-
-const NewProperty = () => {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PropertyForm>({
+interface Props {
+  property?: PropertyForm;
+}
+const NewProperty: React.FC<Props> = ({ property }) => {
+  const form = useForm<PropertyForm>({
     resolver: zodResolver(PropertySchema),
+    defaultValues: property ?? {
+      amenities: [],
+      attributes: [],
+      date_build: undefined,
+      description: undefined,
+      images: [],
+      location: undefined,
+      published: false,
+      sqftSize: undefined,
+      title: "",
+      types: [],
+    },
   });
-  const [error, setError] = useState<string>();
-
+  function onSubmit(values: PropertyForm) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+    alert(JSON.stringify(values, null, 2));
+  }
   return (
-    <div className="max-w-xl space-y-3 p-5">
-      {error && (
-        <div className="mb-5 flex items-start text-red-800">
-          <InfoIcon />
-          <div>{error}</div>
-        </div>
-      )}
-      <form
-        className="space-y-3"
-        onSubmit={handleSubmit((data) =>
-          setError("Unkone err ocuured" + JSON.stringify(data))
+    <div className="p-2">
+      <p
+        className={clsx(
+          "text-2xl pb-10 text-start self-start",
+          lusitana.className
         )}
       >
-        <div className="flex items-center">
-          <SearchIcon height="16" width="16" />
-          <Input placeholder="Title" {...register("title")} />
-        </div>
-        {/* <ErrorText>{errors.title?.message}</ErrorText> */}
-        <Controller
-          name="description"
-          control={control}
-          render={({ field }) => (
-            <SimpleMDE  placeholder="Description ..." {...field} />
-          )}
-        />
-        {/* <ErrorText>{errors.description?.message}</ErrorText> */}
-        <Input placeholder="Image" type="file" />
-        <Button>Submit new Property</Button>
-      </form>
+        Create property
+      </p>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <DetailsForm />
+          <FileUploadsForm />
+          <AttributesForm />
+          <LocationForm />
+          <AmenitiesForm />
+
+          <Button className="w-full" type="submit">
+            Submit
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };
