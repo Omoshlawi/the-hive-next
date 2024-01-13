@@ -34,37 +34,41 @@ const DetailsForm = () => {
         <CardDescription>Property details</CardDescription>
       </CardHeader>
       <CardContent>
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g Vstech" {...field} />
-              </FormControl>
-              <FormDescription>Property user friendly identity</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="types"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type tags</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g Bungalow, bedsitters" {...field} />
-              </FormControl>
-              <FormDescription>
-                Property type tags since property can fall into multiple
-                category
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g Vstech" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Property user friendly identity
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="types"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type tags</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g Bungalow, bedsitters" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Property type tags since property can fall into multiple
+                  category
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="description"

@@ -1,6 +1,5 @@
 "use client";
 
-
 import {
   Card,
   CardContent,
@@ -18,7 +17,7 @@ import {
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
 import { PropertySchema } from "@/app/lib/schema";
-import React from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 
@@ -26,8 +25,6 @@ type PropertyForm = z.infer<typeof PropertySchema>;
 
 const FileUploadsForm = () => {
   const form = useFormContext<PropertyForm>();
-  console.log();
-
   return (
     <Card>
       <CardHeader>
@@ -37,16 +34,26 @@ const FileUploadsForm = () => {
       <CardContent>
         <FormField
           control={form.control}
-          name="title"
+          name="images"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Images</FormLabel>
               <FormControl>
-                <Input placeholder="e.g Vstech" {...field} />
+                
+                {/* <ImageInput
+                  multiple
+                  fallBack={"LO"}
+                    {...{
+                      ...field,
+                      onChange: (files) =>
+                        form.setValue(
+                          field.name,
+                          files.map((f) => f.name)
+                        ),
+                      value: field.value ?? [],
+                    }}
+                /> */}
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

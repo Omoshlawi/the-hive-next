@@ -6,7 +6,7 @@ import { PropertySchema } from "@/app/lib/schema";
 
 import clsx from "clsx";
 import { lusitana } from "@/app/fonts";
-import { Form, FormField } from "@/app/components/ui/form";
+import { Form } from "@/app/components/ui/form";
 import {
   AmenitiesForm,
   AttributesForm,
@@ -59,7 +59,6 @@ const NewProperty: React.FC<Props> = ({ property }) => {
           <AttributesForm />
           <LocationForm />
           <AmenitiesForm />
-
           <Button className="w-full" type="submit">
             Submit
           </Button>

@@ -1,5 +1,5 @@
-import { Button } from "@radix-ui/themes";
 import React from "react";
+import { Button } from "../components/ui/button";
 
 const Properties = () => {
   return (
