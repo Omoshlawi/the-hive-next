@@ -27,6 +27,25 @@ type PropertyForm = z.infer<typeof PropertySchema>;
 
 const DetailsForm = () => {
   const form = useFormContext<PropertyForm>();
+  const amenities = [
+    "Free wifi",
+    "Secirity Camera",
+    "24 Hour Security",
+    "Swimming Pool",
+    "Conference Room",
+    "Tennis Court",
+    "Boa Hole",
+  ];
+  const types = [
+    "Apartment",
+    "Mainsonet",
+    "Vila",
+    "Bungalow",
+    "Mansion",
+    "BedSitter",
+    "Single",
+    "One Bedroom",
+  ];
   return (
     <Card>
       <CardHeader>
@@ -48,46 +67,82 @@ const DetailsForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="types"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type tags</FormLabel>
-              <FormControl>
-                <CreatableSelect
-                  isMulti
-                  options={[
-                    { value: "Bungalow", label: "Bungalow" },
-                    { value: "Apartment", label: "Apartment" },
-                    { value: "Single", label: "Single" },
-                    { value: "Betsitter", label: "Betsitter" },
-                    { value: "One bedroom", label: "One bedroom" },
-                  ]}
-                  className="dark:text-primary-foreground"
-                  // isLoading
-                  isDisabled={field.disabled}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  value={field.value.map((v) => ({ label: v, value: v }))}
-                  onChange={(val) =>
-                    field.onChange(val.map(({ value }) => value))
-                  }
-                  isSearchable
-                  placeholder="Select or create type tags..."
-                  onCreateOption={(value) =>
-                    field.onChange([...field.value, value])
-                  }
-                />
-              </FormControl>
-              <FormDescription>
-                Property type tags since property can fall into multiple
-                category
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-3">
+          <FormField
+            control={form.control}
+            name="types"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type tags</FormLabel>
+                <FormControl>
+                  <CreatableSelect
+                    isMulti
+                    options={types.map((val) => ({
+                      value: val,
+                      label: val,
+                    }))}
+                    className="dark:text-primary-foreground"
+                    // isLoading
+                    isDisabled={field.disabled}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    value={field.value.map((v) => ({ label: v, value: v }))}
+                    onChange={(val) =>
+                      field.onChange(val.map(({ value }) => value))
+                    }
+                    isSearchable
+                    placeholder="Select or create type tags..."
+                    onCreateOption={(value) =>
+                      field.onChange([...field.value, value])
+                    }
+                  />
+                </FormControl>
+                <FormDescription>
+                  Property type tags since property can fall into multiple
+                  category
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="amenities"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type tags</FormLabel>
+                <FormControl>
+                  <CreatableSelect
+                    isMulti
+                    options={amenities.map((val) => ({
+                      value: val,
+                      label: val,
+                    }))}
+                    className="dark:text-primary-foreground"
+                    // isLoading
+                    isDisabled={field.disabled}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    value={field.value.map((v) => ({ label: v, value: v }))}
+                    onChange={(val) =>
+                      field.onChange(val.map(({ value }) => value))
+                    }
+                    isSearchable
+                    placeholder="Select or create type amenities..."
+                    onCreateOption={(value) =>
+                      field.onChange([...field.value, value])
+                    }
+                  />
+                </FormControl>
+                <FormDescription>
+                  Property type tags since property can fall into multiple
+                  category
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="description"

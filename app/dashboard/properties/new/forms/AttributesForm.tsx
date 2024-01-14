@@ -12,7 +12,7 @@ const AttributesForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Attributes</CardTitle>
+        <CardTitle>Extra Attributes</CardTitle>
         <CardDescription>Propety photos</CardDescription>
       </CardHeader>
       <CardContent>Uploads</CardContent>

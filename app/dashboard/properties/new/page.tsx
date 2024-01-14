@@ -57,9 +57,9 @@ const NewProperty: React.FC<Props> = ({ property }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <DetailsForm />
           <FileUploadsForm files={files} onFilesChange={setFiles} />
-          <AttributesForm />
           <LocationForm />
           <AmenitiesForm />
+          <AttributesForm />
           <Button className="w-full" type="submit">
             Submit
           </Button>
