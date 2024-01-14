@@ -18,7 +18,7 @@ const FileDropZone: React.FC<Props> = ({
 }) => {
   return (
     <Dropzone
-      onDrop={(acceptedFiles) => console.log(acceptedFiles)}
+      onDrop={onDrop}
       minSize={0}
       maxSize={maxFileSize}
       maxFiles={maxFiles}

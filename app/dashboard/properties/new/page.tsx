@@ -15,6 +15,7 @@ import {
 } from "./forms";
 import LocationForm from "./forms/LocationForm";
 import { Button } from "@/app/components/ui/button";
+import { useState } from "react";
 
 type PropertyForm = z.infer<typeof PropertySchema>;
 interface Props {
@@ -28,7 +29,6 @@ const NewProperty: React.FC<Props> = ({ property }) => {
       attributes: [],
       date_build: undefined,
       description: undefined,
-      images: [],
       location: undefined,
       published: false,
       sqftSize: undefined,
@@ -36,6 +36,7 @@ const NewProperty: React.FC<Props> = ({ property }) => {
       types: [],
     },
   });
+  const [files, setFiles] = useState<File[]>([]);
   function onSubmit(values: PropertyForm) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -55,7 +56,7 @@ const NewProperty: React.FC<Props> = ({ property }) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <DetailsForm />
-          <FileUploadsForm />
+          <FileUploadsForm files={files} onFilesChange={setFiles} />
           <AttributesForm />
           <LocationForm />
           <AmenitiesForm />

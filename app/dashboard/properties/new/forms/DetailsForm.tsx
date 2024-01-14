@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { PropertySchema } from "@/app/lib/schema";
-import React from "react";
+import React, { useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -21,12 +21,12 @@ import {
 import { Input } from "@/app/components/ui/input";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import CreatableSelect from "react-select/creatable";
 
 type PropertyForm = z.infer<typeof PropertySchema>;
 
 const DetailsForm = () => {
   const form = useFormContext<PropertyForm>();
-
   return (
     <Card>
       <CardHeader>
@@ -34,41 +34,60 @@ const DetailsForm = () => {
         <CardDescription>Property details</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g Vstech" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Property user friendly identity
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="types"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type tags</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g Bungalow, bedsitters" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Property type tags since property can fall into multiple
-                  category
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g Vstech" {...field} />
+              </FormControl>
+              <FormDescription>Property user friendly identity</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="types"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type tags</FormLabel>
+              <FormControl>
+                <CreatableSelect
+                  isMulti
+                  options={[
+                    { value: "Bungalow", label: "Bungalow" },
+                    { value: "Apartment", label: "Apartment" },
+                    { value: "Single", label: "Single" },
+                    { value: "Betsitter", label: "Betsitter" },
+                    { value: "One bedroom", label: "One bedroom" },
+                  ]}
+                  className="dark:text-primary-foreground"
+                  // isLoading
+                  isDisabled={field.disabled}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  value={field.value.map((v) => ({ label: v, value: v }))}
+                  onChange={(val) =>
+                    field.onChange(val.map(({ value }) => value))
+                  }
+                  isSearchable
+                  placeholder="Select or create type tags..."
+                  onCreateOption={(value) =>
+                    field.onChange([...field.value, value])
+                  }
+                />
+              </FormControl>
+              <FormDescription>
+                Property type tags since property can fall into multiple
+                category
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="description"

@@ -8,12 +8,12 @@ const PropertySchema = z.object({
   date_build: z.coerce.date().optional(),
   published: z.boolean().optional(),
   amenities: z.array(z.string()),
-  images: z.array(
-    z.object({
-      path: z.string(),
-      _id: z.string(),
-    })
-  ),
+  // images: z.array(
+  //   z.object({
+  //     path: z.string(),
+  //     _id: z.string(),
+  //   })
+  // ),
   location: z.string(),
   attributes: z.array(z.object({ name: z.string(), value: z.string() })),
 });
