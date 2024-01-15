@@ -8,7 +8,6 @@ import clsx from "clsx";
 import { lusitana } from "@/app/fonts";
 import { Form } from "@/app/components/ui/form";
 import {
-  AmenitiesForm,
   AttributesForm,
   DetailsForm,
   FileUploadsForm,
@@ -58,7 +57,6 @@ const NewProperty: React.FC<Props> = ({ property }) => {
           <DetailsForm />
           <FileUploadsForm files={files} onFilesChange={setFiles} />
           <LocationForm />
-          <AmenitiesForm />
           <AttributesForm />
           <Button className="w-full" type="submit">
             Submit

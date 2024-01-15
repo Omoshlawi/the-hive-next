@@ -110,7 +110,7 @@ const DetailsForm = () => {
             name="amenities"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Type tags</FormLabel>
+                <FormLabel>Amenities</FormLabel>
                 <FormControl>
                   <CreatableSelect
                     isMulti
