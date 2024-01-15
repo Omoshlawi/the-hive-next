@@ -126,8 +126,8 @@ const HouseSearchForm = () => {
           <div>
             <p className="font-bold">Amenities</p>
             <div className="grid grid-cols-2 gap-3">
-              {items.map(({ id, label }) => (
-                <div className="items-center space-x-2">
+              {items.map(({ id, label }, index) => (
+                <div className="items-center space-x-2" key={index}>
                   <Checkbox id={id} />
                   <Label
                     htmlFor={id}

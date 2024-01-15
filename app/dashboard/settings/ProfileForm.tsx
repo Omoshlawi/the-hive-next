@@ -27,8 +27,11 @@ import { Input } from "@/app/components/ui/input";
 
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false, // Prevent SSR
+});import "easymde/dist/easymde.min.css";
 
 type Profile = z.infer<typeof UserProfileSchema>;
 

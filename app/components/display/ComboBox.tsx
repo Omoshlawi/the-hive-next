@@ -64,7 +64,7 @@ const ComboBox: React.FC<Props> = ({
           <CommandGroup>
             {data.map((item, index) => (
               <CommandItem
-                key={valuextractor(item) ?? index}
+                key={index}
                 value={item._id?.toString()}
                 onSelect={(currentValue) => {
                   onValueChange?.(

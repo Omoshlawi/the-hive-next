@@ -18,16 +18,16 @@ const FeaturedProducts = async () => {
   ).json();
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 p-2 md:p-5">
-      {properties.map(({ title, images }) => (
-        <Card>
+      {properties.map(({ title, images }, index) => (
+        <Card key={index}>
           <CardContent>
             <Carousel className="w-full">
               <CarouselContent>
-                {images.map(({ path }, index) => (
+                {/* {images.map(({ path }, index) => (
                   <CarouselItem key={index}>
                     <div className="p-1">{index + 1}</div>
                   </CarouselItem>
-                ))}
+                ))} */}
               </CarouselContent>
               <CarouselPrevious />
               <CarouselNext />

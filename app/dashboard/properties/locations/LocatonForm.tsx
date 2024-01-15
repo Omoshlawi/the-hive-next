@@ -42,7 +42,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const ServiceForm: React.FC<Props> = ({
+const LocationForm: React.FC<Props> = ({
   location,
   title,
   decription,
@@ -238,4 +238,4 @@ const ServiceForm: React.FC<Props> = ({
   );
 };
 
-export default LocationFormType;
+export default LocationForm;

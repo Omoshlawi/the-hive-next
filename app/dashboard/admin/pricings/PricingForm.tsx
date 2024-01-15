@@ -23,7 +23,10 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 import { PricingSchema } from "@/app/lib/schema/pricing";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false, // Prevent SSR
+});
 import "easymde/dist/easymde.min.css";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";

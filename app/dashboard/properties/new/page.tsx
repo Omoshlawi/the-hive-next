@@ -7,11 +7,7 @@ import { PropertySchema } from "@/app/lib/schema";
 import clsx from "clsx";
 import { lusitana } from "@/app/fonts";
 import { Form } from "@/app/components/ui/form";
-import {
-  AttributesForm,
-  DetailsForm,
-  FileUploadsForm,
-} from "./forms";
+import { AttributesForm, DetailsForm, FileUploadsForm } from "./forms";
 import LocationForm from "./forms/LocationForm";
 import { Button } from "@/app/components/ui/button";
 import { useState } from "react";
@@ -52,12 +48,15 @@ const NewProperty: React.FC<Props> = ({ property }) => {
       >
         Create property
       </p>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <DetailsForm />
-          <FileUploadsForm files={files} onFilesChange={setFiles} />
           <LocationForm />
-          <AttributesForm />
+          {/* <AttributesForm /> */}
+          {/* 
+          <FileUploadsForm files={files} onFilesChange={setFiles} />
+          */}
           <Button className="w-full" type="submit">
             Submit
           </Button>

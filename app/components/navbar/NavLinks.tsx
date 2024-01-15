@@ -25,7 +25,7 @@ const NavLinks = () => {
         <NavigationMenuList>
           {links.map(({ href, label }, index) => {
             return (
-              <NavigationMenuItem>
+              <NavigationMenuItem key={index}>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   <Link href={href} legacyBehavior passHref>
                     {label}

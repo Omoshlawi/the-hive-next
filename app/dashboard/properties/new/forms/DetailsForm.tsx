@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { PropertySchema } from "@/app/lib/schema";
-import React, { useRef } from "react";
+import React, { Suspense, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -19,10 +19,12 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
 import CreatableSelect from "react-select/creatable";
-
+import dynamic from "next/dynamic";
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false, // Prevent SSR
+});
+import "easymde/dist/easymde.min.css";
 type PropertyForm = z.infer<typeof PropertySchema>;
 
 const DetailsForm = () => {
