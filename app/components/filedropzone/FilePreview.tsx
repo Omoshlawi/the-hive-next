@@ -25,17 +25,17 @@ const FilePreview = ({
     })();
   }, []);
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-5">
       {preview ? (
         <Image
-          className="w-20 h-20 object-cover rounded-lg "
+          className="w-20 h-20 object-cover rounded-lg m-[16px]"
           src={preview}
           width={200}
           height={100}
           alt={file.name}
         />
       ) : (
-        <div className="w-20 h-20 object-cover rounded-lg py-3 text-center justify-center">
+        <div className="w-[48px] m-[16px]">
           <FileIcon
             extension={ext as DefaultExtensionType}
             {...defaultStyles[ext as DefaultExtensionType]}
@@ -43,11 +43,14 @@ const FilePreview = ({
           />
         </div>
       )}
-      <div className="col-span-3 flex flex-col">
+      <div className="col-span-3 flex flex-col justify-center m-[16px] overflow-x-auto">
         <div className="">{file.name}</div>
         <div>{prettyBytes(file.size)}</div>
-        <Trash2 className="text-red-900 hover:opacity-50" onClick={onDelete} />
       </div>
+      <Trash2
+        className="text-red-900 hover:opacity-50 self-center"
+        onClick={onDelete}
+      />
     </div>
   );
 };

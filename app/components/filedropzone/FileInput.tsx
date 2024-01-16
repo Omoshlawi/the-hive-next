@@ -15,6 +15,7 @@ const FileInput: React.FC<Props> = ({ value = [], onValueChange }) => {
       />
       {value.map((file, index) => (
         <FilePreview
+          key={index}
           file={file}
           onDelete={() => onValueChange?.(value.filter((f, i) => i !== index))}
         />
