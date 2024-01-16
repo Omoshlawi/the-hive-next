@@ -13,3 +13,6 @@ export interface Repository<T extends Entity> {
   deleteById(id: string): Promise<void>;
 }
 
+export interface PropsWithSearchParams {
+  searchParams?: Record<string, string>;
+}

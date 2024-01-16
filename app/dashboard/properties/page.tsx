@@ -4,8 +4,11 @@ import FilterHeader from "./components/FilterHeader";
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import PropertyDataTable from "./components/PropertyDataTable";
 import TableSkeleton from "./components/TableSkeleton";
+import { PropsWithSearchParams } from "@/app/lib/types/base";
 
-const MyProperties = async ({ searchParams }: { searchParams?: {} }) => {
+const MyProperties: React.FC<PropsWithSearchParams> = async ({
+  searchParams,
+}) => {
   return (
     <div>
       <h1 className={`${lusitana.className} font-bold text-2xl mb-3`}>

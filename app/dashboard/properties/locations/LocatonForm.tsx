@@ -120,9 +120,7 @@ const LocationForm: React.FC<Props> = ({
   return (
     <Dialog open={showForm} onOpenChange={(opem) => setShowForm(opem)}>
       <DialogTrigger asChild>
-        <Button onClick={() => setShowForm(true)} variant={"ghost"}>
-          {children}
-        </Button>
+        <Button onClick={() => setShowForm(true)}>{children}</Button>
       </DialogTrigger>
       <DialogContent className={className}>
         <DialogHeader>

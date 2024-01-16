@@ -14,7 +14,7 @@ import { useApiClient } from "@/app/lib/api";
 import { Location } from "@/app/lib/entities/properties";
 import ComboBox from "@/app/components/display/ComboBox";
 import { useFormContext } from "react-hook-form";
-
+import { default as LocationDialogForm } from "@/app/dashboard/properties/locations/LocatonForm";
 import { z } from "zod";
 import { PropertySchema } from "@/app/lib/schema";
 import {
@@ -58,7 +58,7 @@ const LocationForm = () => {
             <Link href={"/dashboard/properties/locations"}>
               <Button>
                 <Plus />
-                Add
+                Add Location
               </Button>
             </Link>
           </div>
