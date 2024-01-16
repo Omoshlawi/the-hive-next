@@ -43,7 +43,6 @@ const AttributesForm = () => {
                   // onChange={field.onChange}
                   onChange={(val) => {
                     field.onChange(val);
-                    // console.log(val);
                   }}
                 />
               </FormControl>
