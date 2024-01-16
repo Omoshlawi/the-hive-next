@@ -6,12 +6,16 @@ interface Props {
   value?: { name: string; value: any }[];
   onChange?: (value: { name: string; value: any }[]) => void;
   validator?: (value: { name: string; value: string }) => boolean;
+  keyplaceholder?: string;
+  valueplaceholder?: string;
 }
 
 const MultiKeyvalueInput: React.FC<Props> = ({
   onChange,
   value = [],
   validator,
+  keyplaceholder,
+  valueplaceholder,
 }) => {
   const handleChange = (newValue: { name: string; value: any }) => {
     const index = value.findIndex((f) => f.name === newValue.name);
@@ -52,6 +56,8 @@ const MultiKeyvalueInput: React.FC<Props> = ({
         <div className="flex space-x-2 items-center">
           <div className="flex-1">
             <KeyValueInput
+              keyplaceholder={keyplaceholder}
+              valueplaceholder={valueplaceholder}
               onChange={handleChange}
               validator={validator}
               value={{ name: "", value: "" }}

@@ -1,5 +1,5 @@
-import KeyValueInput from "@/app/components/form/multivalueinput/KeyValueInput";
-import MultiKeyvalueInput from "@/app/components/form/multivalueinput/MultiKeyvalueInput";
+"use client";
+import { MultiKeyvalueInput } from "@/app/components/form/multivalueinput";
 import {
   Card,
   CardContent,
@@ -36,14 +36,13 @@ const AttributesForm = () => {
           name="attributes"
           render={({ field }) => (
             <FormItem>
-              {/* <FormLabel>Name</FormLabel> */}
+              <FormLabel>Name/Value attribbutes</FormLabel>
               <FormControl>
                 <MultiKeyvalueInput
+                  keyplaceholder="e.g Bedrooms"
+                  valueplaceholder="e.g 5"
                   value={field.value}
-                  // onChange={field.onChange}
-                  onChange={(val) => {
-                    field.onChange(val);
-                  }}
+                  onChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />

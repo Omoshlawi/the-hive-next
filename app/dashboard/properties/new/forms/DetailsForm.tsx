@@ -92,6 +92,7 @@ const DetailsForm = () => {
                     onChange={(val) =>
                       field.onChange(val.map(({ value }) => value))
                     }
+                    ref={field.ref}
                     isSearchable
                     placeholder="Select or create type tags..."
                     onCreateOption={(value) =>
@@ -116,6 +117,7 @@ const DetailsForm = () => {
                 <FormControl>
                   <CreatableSelect
                     isMulti
+                    ref={field.ref}
                     options={amenities.map((val) => ({
                       value: val,
                       label: val,
