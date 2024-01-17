@@ -7,23 +7,45 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { LocationSchema } from "@/app/lib/schema";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
 type LocationFormType = z.infer<typeof LocationSchema>;
 import LocationPicker from "../LocationPicker";
+import { useApiClient } from "@/app/lib/api";
+import { APIListingResponse } from "@/app/lib/types/base";
+import { PlaceSearchResult } from "@/app/lib/entities/maps";
+import { useDebouncedCallback } from "use-debounce";
+import dynamic from "next/dynamic";
+const ReactSelect = dynamic(() => import("react-select"), {
+  ssr: false, // Prevent SSR
+});
+// import ReactSelect from "react-select";
 
 const LocationGoogleMap = () => {
   const form = useFormContext<LocationFormType>();
+  const { data, loading, request, error } = useApiClient<
+    APIListingResponse<PlaceSearchResult>
+  >({
+    results: [],
+  });
+  const [search, setSearch] = useState<string>();
+  const [selected, setSelected] = useState<PlaceSearchResult>();
+  const places = data?.results ?? [];
+  const handleSearch = useDebouncedCallback(async (value) => {
+    const queryParams = new URLSearchParams({ q: value });
+    await request({
+      url: `maps/places?${queryParams.toString()}`,
+      method: "GET",
+    });
+  }, 300);
+
+  useEffect(() => {
+    if (search) handleSearch(search);
+  }, [search]);
+
+  // console.log("Errors: ", error);
 
   return (
     <Card>
@@ -34,7 +56,27 @@ const LocationGoogleMap = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Input placeholder="Search ...." />
+        <ReactSelect
+          className="dark:text-primary-foreground"
+          placeholder="Search location..."
+          inputValue={search}
+          onInputChange={(value) => setSearch(value)}
+          value={{ label: selected?.display, value: selected?.display }}
+          onChange={(newValue: any) =>
+            setSelected(places.find((p) => p.display === newValue?.label))
+          }
+          isMulti={false}
+          isLoading={loading}
+          options={places.map((place) => ({
+            value: place.display,
+            label: place.display,
+          }))}
+        />
+        {/* <Input
+          placeholder="Search ...."
+          // value={search}
+          onChange={({ target: { value } }) => setSearch(value)}
+        /> */}
         <div className="w-[100%] h-[400px] my-4 rounded-md overflow-auto">
           <LocationPicker />
         </div>

@@ -16,3 +16,7 @@ export interface Repository<T extends Entity> {
 export interface PropsWithSearchParams {
   searchParams?: Record<string, string>;
 }
+
+export interface APIListingResponse<T extends Entity> {
+  results: T[];
+}

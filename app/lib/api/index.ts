@@ -11,7 +11,12 @@ interface ApiResponse<T> {
   error?: { status: number; errors: any };
 }
 
-export const useApiClient = <T = any>(defaultValue: T) => {
+export const getQueryPramas = (params: Record<string, any>) => {
+  const queryParams = new URLSearchParams(params);
+  return `?${queryParams.toString()}`;
+};
+
+export const useApiClient = <T = any>(defaultValue?: T) => {
   const [state, setState] = useState<ApiResponse<T>>({
     data: defaultValue,
     loading: false,
