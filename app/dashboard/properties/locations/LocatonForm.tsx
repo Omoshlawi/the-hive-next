@@ -31,6 +31,7 @@ import { pick } from "lodash";
 import { LocationSchema } from "@/app/lib/schema";
 import LocatinFormSkeleton from "./LocatinFormSkeleton";
 import { Location } from "@/app/lib/entities/properties";
+import LocationPicker from "./LocationPicker";
 
 type LocationFormType = z.infer<typeof LocationSchema>;
 
@@ -126,6 +127,9 @@ const LocationForm: React.FC<Props> = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{decription}</DialogDescription>
+          <div className="w-[100%] h-[200px] my-4">
+            <LocationPicker />
+          </div>
         </DialogHeader>
         <Form {...form}>
           {form.formState.isSubmitting ? (

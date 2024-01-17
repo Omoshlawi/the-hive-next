@@ -61,7 +61,7 @@ const FilterHeader: React.FC<Props> = ({}) => {
   }, 300);
 
   return (
-    <div className="flex items-center md:space-x-2 flex-col md:flex-row max-md:space-y-2">
+    <div className="flex items-center md:space-x-2 flex-col md:flex-row max-md:space-y-2 md:">
       <Input
         placeholder="Search...."
         onChange={({ target: { value } }) => {
@@ -96,17 +96,6 @@ const FilterHeader: React.FC<Props> = ({}) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button variant={"outline"} className="max-md:w-full">
-          <div className="flex items-center space-x-2">
-            <PlusIcon /> <span className="text-lg">Add</span>
-          </div>
-        </Button>
-
-        <Button variant={"outline"} className="max-md:w-full">
-          <div className="flex items-center space-x-2 text-red-900">
-            <Trash2 /> <span className="text-lg">Delete Selected</span>
-          </div>
-        </Button>
       </div>
     </div>
   );

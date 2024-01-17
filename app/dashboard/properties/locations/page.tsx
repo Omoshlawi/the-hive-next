@@ -5,6 +5,9 @@ import FilterHeader from "../components/FilterHeader";
 import TableSkeleton from "../components/TableSkeleton";
 import LocationDataTable from "./LocationDataTable";
 import { PropsWithSearchParams } from "@/app/lib/types/base";
+import { Button } from "@/app/components/ui/button";
+import { PlusIcon, Trash2 } from "lucide-react";
+import { default as LocationDalogForm } from "./LocatonForm";
 
 const LocationsPage: React.FC<PropsWithSearchParams> = ({ searchParams }) => {
   return (
@@ -14,7 +17,20 @@ const LocationsPage: React.FC<PropsWithSearchParams> = ({ searchParams }) => {
       </h1>
       <Card>
         <CardHeader>
-          <FilterHeader />
+          <div>
+            <FilterHeader />
+            <div className="flex items-center space-x-2">
+              <LocationDalogForm className="overflow-y-auto">
+                <PlusIcon /> Add
+              </LocationDalogForm>
+            </div>
+
+            <Button variant={"outline"} className="max-md:w-full">
+              <div className="flex items-center space-x-2 text-red-900">
+                <Trash2 /> <span className="text-lg">Delete Selected</span>
+              </div>
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <Suspense
