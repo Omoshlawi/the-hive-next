@@ -24,7 +24,7 @@ const ReactSelect = dynamic(() => import("react-select"), {
 // import ReactSelect from "react-select";
 
 const LocationGoogleMap = () => {
-  const form = useFormContext<LocationFormType>();
+  const { setValue } = useFormContext<LocationFormType>();
   const { data, loading, request, error } = useApiClient<
     APIListingResponse<PlaceSearchResult>
   >({
@@ -44,6 +44,16 @@ const LocationGoogleMap = () => {
   useEffect(() => {
     if (search) handleSearch(search);
   }, [search]);
+  useEffect(() => {
+    if (selected) {
+      setValue("address", selected.display ?? "");
+      setValue("city", selected.properties.city ?? "");
+      setValue("country", selected.properties.country ?? "");
+      setValue("city", selected.properties.county ?? "");
+      setValue("longitude", selected.coordinates.lng);
+      setValue("latitude", selected.coordinates.lat);
+    }
+  }, [selected]);
 
   // console.log("Errors: ", error);
 
