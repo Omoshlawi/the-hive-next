@@ -78,7 +78,7 @@ const LocationGoogleMap = () => {
           onChange={({ target: { value } }) => setSearch(value)}
         /> */}
         <div className="w-[100%] h-[400px] my-4 rounded-md overflow-auto">
-          <LocationPicker />
+          <LocationPicker location={selected} onLocationChange={setSelected} />
         </div>
       </CardContent>
     </Card>
