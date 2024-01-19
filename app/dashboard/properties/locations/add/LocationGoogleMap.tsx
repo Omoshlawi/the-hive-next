@@ -46,12 +46,16 @@ const LocationGoogleMap = () => {
   }, [search]);
   useEffect(() => {
     if (selected) {
-      setValue("address", selected.display ?? "");
-      setValue("city", selected.properties.city ?? "");
-      setValue("country", selected.properties.country ?? "");
-      setValue("city", selected.properties.county ?? "");
-      setValue("longitude", selected.coordinates.lng);
-      setValue("latitude", selected.coordinates.lat);
+      if (selected.display) setValue("address", selected.display);
+      if (selected.properties.city) setValue("city", selected.properties.city);
+      if (selected.properties.country)
+        setValue("country", selected.properties.country);
+      if (selected.properties.county)
+        setValue("city", selected.properties.county);
+      if (selected.coordinates.lng)
+        setValue("longitude", selected.coordinates.lng);
+      if (selected.coordinates.lat)
+        setValue("latitude", selected.coordinates.lat);
     }
   }, [selected]);
 

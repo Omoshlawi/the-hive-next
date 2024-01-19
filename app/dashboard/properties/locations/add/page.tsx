@@ -55,7 +55,7 @@ const LocationForm: React.FC<Props> = ({
   children,
 }) => {
   const { toast } = useToast();
-  const { refresh } = useRouter();
+  const { replace } = useRouter();
   const form = useForm<LocationFormType>({
     resolver: zodResolver(LocationSchema),
     defaultValues: location
@@ -84,8 +84,7 @@ const LocationForm: React.FC<Props> = ({
 
     try {
       if (location) await updateLocation(location._id!, values);
-      else await await addLocation(values);
-      refresh();
+      else await addLocation(values);
       toast({
         className: "bg-green-900 dark:text-emerald-500",
         description: (
@@ -94,10 +93,15 @@ const LocationForm: React.FC<Props> = ({
           </span>
         ),
       });
+      replace("/dashboard/properties/locations");
     } catch (error) {
       if (error instanceof ValidationError) {
         // Handle validation errors
-        console.log(JSON.stringify(error.errors));
+        Object.entries(error.errors).forEach(([field, value]) => {
+          form.setError(field as any, { message: value as string });
+        });
+
+        // console.log(JSON.stringify(error.errors));
       } else if (
         typeof error === "object" &&
         error !== null &&
@@ -130,21 +134,24 @@ const LocationForm: React.FC<Props> = ({
       >
         Create property
       </p>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <LocationGoogleMap />
-          <LocationDetail />
-          <div className="flex flex-row-reverse">
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              className="w-full"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
-      </Form>
+      {form.formState.isSubmitting && <LocatinFormSkeleton />}
+      {!form.formState.isSubmitting && (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <LocationGoogleMap />
+            <LocationDetail />
+            <div className="flex flex-row-reverse">
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="w-full"
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+        </Form>
+      )}
     </div>
   );
 };
