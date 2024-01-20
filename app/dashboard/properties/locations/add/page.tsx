@@ -36,6 +36,7 @@ import { lusitana } from "@/app/fonts";
 import clsx from "clsx";
 import LocationGoogleMap from "./LocationGoogleMap";
 import LocationDetail from "./LocationDetail";
+import { objectToFormData } from "@/app/lib/utils";
 
 type LocationFormType = z.infer<typeof LocationSchema>;
 
@@ -80,8 +81,6 @@ const LocationForm: React.FC<Props> = ({
   });
 
   async function onSubmit(values: LocationFormType) {
-    // ✅ This will be type-safe and validated.
-
     try {
       if (location) await updateLocation(location._id!, values);
       else await addLocation(values);

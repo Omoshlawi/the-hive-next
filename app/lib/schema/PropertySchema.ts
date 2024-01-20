@@ -9,10 +9,7 @@ const PropertySchema = z.object({
   published: z.boolean().optional(),
   amenities: z.array(z.string()),
   // images: z.array(
-  //   z.object({
-  //     path: z.string(),
-  //     _id: z.string(),
-  //   })
+  //   z.custom((image)=>typeof image === "object" && image instanceof File, "")
   // ),
   location: z.string(),
   attributes: z.array(z.object({ name: z.string(), value: z.string() })),

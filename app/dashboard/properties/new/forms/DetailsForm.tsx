@@ -25,6 +25,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false, // Prevent SSR
 });
 import "easymde/dist/easymde.min.css";
+import { Checkbox } from "@/app/components/ui/checkbox";
 type PropertyForm = z.infer<typeof PropertySchema>;
 
 const DetailsForm = () => {
@@ -147,6 +148,26 @@ const DetailsForm = () => {
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="published"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 my-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Publish property</FormLabel>
+                <FormDescription>
+                  Mark as publish to make propery visible by every one
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="description"
