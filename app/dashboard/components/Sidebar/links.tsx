@@ -90,16 +90,20 @@ export default [
         renderIcon: () => <Home />,
         children: [
           {
-            label: "My Listings",
-            href: "/dashboard/listings",
-          },
-          {
             label: "My Properties",
             href: "/dashboard/properties",
           },
           {
-            label: "Property Groups",
+            label: "Locations",
+            href: "/dashboard/properties/locations",
+          },
+          {
+            label: "Groups",
             href: "/dashboard/groups",
+          },
+          {
+            label: "My Listings",
+            href: "/dashboard/properties/listings",
           },
         ],
       },

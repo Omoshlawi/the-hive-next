@@ -7,6 +7,7 @@ import Footer from "./components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 import { Toaster } from "@/app/components/ui/toaster";
+import AuthProvider from "./context/auth/provider";
 
 export const metadata: Metadata = {
   title: "The hive",
@@ -27,10 +28,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NavBar />
-          {children}
-          <Toaster />
-          <Footer />
+          <AuthProvider>
+            <NavBar />
+            {children}
+            <Toaster />
+            <Footer />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
