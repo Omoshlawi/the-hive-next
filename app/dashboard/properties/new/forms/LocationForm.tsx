@@ -28,6 +28,10 @@ import {
 import { Button } from "@/app/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const ReactSelect = dynamic(() => import("react-select"), {
+  ssr: false, // Prevent SSR
+});
 
 type PropertyForm = z.infer<typeof PropertySchema>;
 
@@ -48,7 +52,12 @@ const LocationForm = () => {
     handleFetchLocations();
   }, []);
   const form = useFormContext<PropertyForm>();
-
+  const getLabel = (value: any) => {
+    const place = locations.find((loc) => loc._id === value);
+    return place
+      ? `${place.address} ${place.city} ${place.state} ${place.country} ${place.zipCode}`
+      : undefined;
+  };
   return (
     <Card>
       <CardHeader>
@@ -74,7 +83,23 @@ const LocationForm = () => {
               <FormLabel>Location</FormLabel>
               <br />
               <FormControl>
-                <ComboBox
+                <ReactSelect
+                  ref={field.ref}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  className="dark:text-primary-foreground"
+                  placeholder="Search location..."
+                  value={{ label: getLabel(field.value), value: field.value }}
+                  onChange={(newValue: any) => field.onChange(newValue.value)}
+                  isSearchable
+                  isMulti={false}
+                  isLoading={loading}
+                  options={locations.map((place) => ({
+                    value: place._id,
+                    label: `${place.address} ${place.city} ${place.state} ${place.country} ${place.zipCode}`,
+                  }))}
+                />
+                {/* <ComboBox
                   data={locations}
                   labelExtractor={(item) =>
                     `${item.address} ${item.city} ${item.state} ${item.country} ${item.zipCode}`
@@ -86,7 +111,7 @@ const LocationForm = () => {
                   onBlur={field.onBlur}
                   label="Location"
                   // {...field}
-                />
+                /> */}
               </FormControl>
               <FormDescription>
                 Select property location or create new location

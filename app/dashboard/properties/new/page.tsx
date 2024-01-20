@@ -16,6 +16,7 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Property } from "@/app/lib/entities/properties";
 import { ValidationError } from "@/app/lib/exceptions";
+import PropertyFormSkeleton from "./forms/FormSkeleton";
 
 type PropertyForm = z.infer<typeof PropertySchema>;
 interface Props {
@@ -112,19 +113,21 @@ const NewProperty: React.FC<Props> = ({ property }) => {
       >
         Create property
       </p>
+      {form.formState.isSubmitting && <PropertyFormSkeleton />}
+      {!form.formState.isSubmitting && (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <DetailsForm />
+            <LocationForm />
+            <FileUploadsForm files={files} onFilesChange={setFiles} />
+            <AttributesForm />
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <DetailsForm />
-          <LocationForm />
-          <FileUploadsForm files={files} onFilesChange={setFiles} />
-          <AttributesForm />
-
-          <Button className="w-full" type="submit">
-            Submit
-          </Button>
-        </form>
-      </Form>
+            <Button className="w-full" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
+      )}
     </div>
   );
 };
