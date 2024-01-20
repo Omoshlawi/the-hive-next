@@ -1,3 +1,4 @@
+"use client";
 import {
   Cloud,
   CreditCard,
@@ -31,14 +32,27 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useSession, signOut } from "next-auth/react";
 
 export function UserButton() {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return <div>Get started</div>;
+  }
+  const alt = session.user?.name
+    ?.split(" ")
+    .map((n) => n.charAt(0).toUpperCase())
+    .join("");
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={session?.user?.image as string | undefined} />
+          <AvatarFallback className="bg-red-500">
+            {alt ? alt : "TH"}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -115,7 +129,7 @@ export function UserButton() {
           <span>API</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

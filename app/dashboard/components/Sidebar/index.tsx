@@ -1,20 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import Image from "next/image";
 import TheHiveLogo from "@/app/components/TheHiveLogo";
 import clsx from "clsx";
-import { Button } from "@/app/components/ui/button";
-import { ArrowLeft, ArrowLeftIcon, TextIcon, UserIcon } from "lucide-react";
-import ListItem from "@/app/components/display/ListItem";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/components/ui/avatar";
+
 import { Separator } from "@/app/components/ui/separator";
 import SideBardLinks from "./SideBardLinks";
+import UserInfo from "./UserInfo";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -105,23 +97,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       <Separator className="bg-accent-foreground opacity-20" />
 
-      <div className="hidden md:block p-2 px-4  lg:px-6">
-        <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-          PROFILE
-        </h3>
-
-        <ListItem
-          title="Omondi Laurent Ouma"
-          avatar={
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          }
-        >
-          lawiomosh3@gmail.com
-        </ListItem>
-      </div>
+      <UserInfo />
       <Separator className="bg-accent-foreground opacity-20" />
       {/* <!-- SIDEBAR HEADER --> */}
 
