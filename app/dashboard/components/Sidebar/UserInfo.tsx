@@ -20,7 +20,7 @@ const UserInfo = () => {
         avatar={
           <Avatar>
             <AvatarImage src={session?.user?.image ?? ""} alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>TH</AvatarFallback>
           </Avatar>
         }
       >
