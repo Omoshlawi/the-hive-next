@@ -1,9 +1,11 @@
 import { BASE_URL } from "@/app/lib/constants";
 import { ValidationError } from "@/app/lib/exceptions";
 import { LoginSchema, RegisterSchema } from "@/app/lib/schema";
+import { wait } from "@/app/lib/utils";
 import { z } from "zod";
 
 export const login = async (params: z.infer<typeof LoginSchema>) => {
+  await wait(5000);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   const response = await fetch(`${BASE_URL}/api/auth/signin/credentials`, {

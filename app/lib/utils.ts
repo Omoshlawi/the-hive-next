@@ -60,3 +60,9 @@ export const objectToFormData = (
   }
   return formData;
 };
+
+export const wait = (ms: number) => {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+};

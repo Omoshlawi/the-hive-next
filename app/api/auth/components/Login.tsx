@@ -19,10 +19,15 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { ValidationError } from "@/app/lib/exceptions";
 import { login } from "./api";
+import { useSessionContext } from "@/app/context/auth/hooks";
+import { User } from "@/app/lib/entities/users";
+import { Token } from "@/app/lib/types/base";
+import LoginSkeleton from "./LoginSkeleton";
 
 const Login = () => {
   const { toast } = useToast();
   const { refresh } = useRouter();
+  const { toggleAuth, setToken } = useSessionContext();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {},
@@ -30,13 +35,15 @@ const Login = () => {
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     try {
-      await login(values);
+      const { user, token }: { user: User; token: Token } = await login(values);
       toast({
         className: "bg-green-900 dark:text-emerald-500",
         description: (
           <span className="text-xl text-teal-50">Login Succeesfull</span>
         ),
       });
+      toggleAuth(false);
+      setToken(token);
     } catch (error) {
       if (error instanceof ValidationError) {
         Object.entries(error.errors).forEach(([field, value]) => {
@@ -65,41 +72,44 @@ const Login = () => {
   }
   return (
     <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-          <FormField
-            control={form.control}
-            name="identifier"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username/Email/Phone number</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g john" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="********" {...field} />
-                </FormControl>
-                <FormDescription>Strong passord</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {form.formState.isSubmitting && <LoginSkeleton />}
+      {!form.formState.isSubmitting && (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+            <FormField
+              control={form.control}
+              name="identifier"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username/Email/Phone number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g john" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="********" {...field} />
+                  </FormControl>
+                  <FormDescription>Strong passord</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
-        </form>
-      </Form>
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+          </form>
+        </Form>
+      )}
     </div>
   );
 };

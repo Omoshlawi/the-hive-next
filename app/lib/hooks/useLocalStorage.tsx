@@ -8,18 +8,17 @@ function useLocalStorage<T>(
   initialValue: T
 ): [T, (value: SetValue<T>) => void] {
   // State to store our value
-  // Pass  initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
     try {
       // Get from local storage by key
       if (typeof window !== "undefined") {
-        // browser code
         const item = window.localStorage.getItem(key);
-        // Parse stored json or if none return initialValue
-        return item ? JSON.parse(item) : initialValue;
+        const parsedItem = item ? JSON.parse(item) : initialValue;
+        return parsedItem === null || parsedItem === undefined
+          ? initialValue
+          : parsedItem;
       }
     } catch (error) {
-      // If error also return initialValue
       console.log(error);
       return initialValue;
     }
@@ -28,18 +27,23 @@ function useLocalStorage<T>(
   // useEffect to update local storage when the state changes
   useEffect(() => {
     try {
-      // Allow value to be a function so we have same API as useState
       const valueToStore =
         typeof storedValue === "function"
           ? storedValue(storedValue)
           : storedValue;
-      // Save state
-      if (typeof window !== "undefined") {
-        // browser code
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+
+      if (valueToStore !== null && valueToStore !== undefined) {
+        // Save state to local storage only if the value is not null or undefined
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        }
+      } else {
+        // Remove the entry from local storage if the value is null or undefined
+        if (typeof window !== "undefined") {
+          window.localStorage.removeItem(key);
+        }
       }
     } catch (error) {
-      // A more advanced implementation would handle the error case
       console.log(error);
     }
   }, [key, storedValue]);

@@ -20,3 +20,10 @@ export interface PropsWithSearchParams {
 export interface APIListingResponse<T extends Entity> {
   results: T[];
 }
+
+export interface Token {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export type SetValue<T> = T | ((val: T) => T);
