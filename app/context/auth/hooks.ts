@@ -12,11 +12,13 @@ export const useSessionContext = () => {
       ...val,
       authenticate: open,
     }));
+  const logout = () => setToken?.(undefined);
   return {
     setSession,
     toggleAuth,
     authenticate,
     setToken: setToken!,
     user: decode(token?.accessToken ?? "") as TokenPayload | null,
+    logout
   };
 };
