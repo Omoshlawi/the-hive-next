@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -17,17 +18,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
+import { useSessionContext } from "@/app/context/auth/hooks";
 
 const AuthDialog = () => {
   const [mode, setMode] = useState<"Sign In" | "Sign Up">("Sign In");
-  const [show, setShow] = useState(false);
+  const { toggleAuth, authenticate } = useSessionContext();
   return (
-    <Dialog open={show} onOpenChange={(open) => setShow(open)}>
-      <DialogTrigger asChild>
-        <Button variant="default" onClick={() => setShow(!show)}>
-          Get started
-        </Button>
-      </DialogTrigger>
+    <Dialog open={authenticate} onOpenChange={toggleAuth}>
       <DialogContent className="max-h-[80vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-3 lg:gap-2 p-0 lg:min-w-max max-sm:w-[420px]">
         <Image
           src={mode === "Sign In" ? login : register}

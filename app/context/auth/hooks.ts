@@ -1,7 +1,15 @@
+"use client";
 import { useContext } from "react";
-import { SessionContext } from "./session";
+import { Session, SessionContext } from "./session";
 
 export const useSessionContext = () => {
-  const data = useContext(SessionContext);
-  return data;
+  const { accessToken, authenticate, refreshToken, setSession } =
+    useContext(SessionContext);
+  const toggleAuth = (open: boolean) =>
+    setSession!((val) => ({
+      ...val,
+      authenticate: open,
+    }));
+
+  return { setSession, toggleAuth, authenticate };
 };

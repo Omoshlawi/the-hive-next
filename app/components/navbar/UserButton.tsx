@@ -33,13 +33,14 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSession, signOut } from "next-auth/react";
-import AuthDialog from "@/app/api/auth/components/AuthDialog";
+import { useSessionContext } from "@/app/context/auth/hooks";
 
 export function UserButton() {
   const { data: session } = useSession();
+  const { toggleAuth } = useSessionContext();
 
   if (!session) {
-    return <AuthDialog />;
+    return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
   }
   const alt = session.user?.name
     ?.split(" ")
