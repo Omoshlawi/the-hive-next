@@ -22,8 +22,6 @@ export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
   );
   const [session, setSession] = useState<Session>({
     authenticate: false,
-    setToken,
-    token,
   });
 
   return (
@@ -31,8 +29,8 @@ export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
       value={{
         authenticate: session.authenticate ?? false,
         setSession: session.setSession ?? setSession,
-        token: session.token,
-        setToken: session.setToken,
+        setToken,
+        token,
       }}
     >
       {children}

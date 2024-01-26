@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BASE_URL } from "../constants";
+import { stat } from "fs";
 
 interface RequestOptions extends RequestInit {
   url: string;
@@ -16,6 +17,11 @@ export const getQueryPramas = (params: Record<string, any>) => {
   return `?${queryParams.toString()}`;
 };
 
+/**
+ *
+ * @param defaultValue
+ * @returns
+ */
 export const useApiClient = <T = any>(defaultValue?: T) => {
   const [state, setState] = useState<ApiResponse<T>>({
     data: defaultValue,
@@ -27,15 +33,16 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
       setState({ loading: true });
 
       const response = await fetch(`${BASE_URL}/${options.url}`, options);
+      const data = await response.json();
       const status = response.status;
+      // console.log(data);
+
       if (response.ok) {
-        const data = await response.json();
         setState((value) => ({ ...value, data, error: undefined }));
       } else {
-        const errors = await response.json();
         setState((value) => ({
           ...value,
-          error: { status, errors },
+          error: { status, errors: data },
           data: undefined,
         }));
       }

@@ -5,7 +5,7 @@ import { wait } from "@/app/lib/utils";
 import { z } from "zod";
 
 export const login = async (params: z.infer<typeof LoginSchema>) => {
-  await wait(5000);
+  // await wait(5000);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   const response = await fetch(`${BASE_URL}/api/auth/signin/credentials`, {

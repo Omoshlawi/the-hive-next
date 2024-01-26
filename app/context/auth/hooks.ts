@@ -1,7 +1,9 @@
 "use client";
-import { useContext } from "react";
-import { Session, SessionContext } from "./session";
-
+import { useContext, useEffect, useState } from "react";
+import { SessionContext } from "./session";
+import { User } from "@/app/lib/entities/users";
+import { decode } from "jsonwebtoken";
+import { TokenPayload } from "@/app/lib/types/base";
 export const useSessionContext = () => {
   const { token, authenticate, setSession, setToken } =
     useContext(SessionContext);
@@ -10,8 +12,11 @@ export const useSessionContext = () => {
       ...val,
       authenticate: open,
     }));
-  const getUser = async () => {
-    alert(JSON.stringify(token, null, 2));
+  return {
+    setSession,
+    toggleAuth,
+    authenticate,
+    setToken: setToken!,
+    user: decode(token?.accessToken ?? "") as TokenPayload | null,
   };
-  return { setSession, toggleAuth, authenticate, setToken: setToken!, getUser };
 };

@@ -27,3 +27,13 @@ export interface Token {
 }
 
 export type SetValue<T> = T | ((val: T) => T);
+
+export interface TokenPayload {
+  id: string;
+  name?: string;
+  email?: string;
+  username?: string;
+  phoneNumber?: string;
+  image?: string;
+  type: "refresh" | "access";
+}
