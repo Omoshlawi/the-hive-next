@@ -15,15 +15,53 @@ import {
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
 import { LoginSchema } from "@/app/lib/schema";
+import { useToast } from "@/app/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { ValidationError } from "@/app/lib/exceptions";
+import { login } from "./api";
 
 const Login = () => {
+  const { toast } = useToast();
+  const { refresh } = useRouter();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof LoginSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof LoginSchema>) {
+    try {
+      await login(values);
+      toast({
+        className: "bg-green-900 dark:text-emerald-500",
+        description: (
+          <span className="text-xl text-teal-50">Login Succeesfull</span>
+        ),
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        Object.entries(error.errors).forEach(([field, value]) => {
+          form.setError(field as any, { message: value as string });
+        });
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error
+      ) {
+        // Check if 'error' is an object with a 'message' property
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error logging in: ${error}`,
+        });
+      } else {
+        // Handle other cases
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error logging in: ${error}`,
+        });
+      }
+    }
   }
   return (
     <div>
@@ -58,7 +96,7 @@ const Login = () => {
           />
 
           <Button type="submit" className="w-full">
-            Submit
+            Login
           </Button>
         </form>
       </Form>

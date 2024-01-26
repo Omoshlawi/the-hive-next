@@ -20,10 +20,13 @@ import {
 
 const AuthDialog = () => {
   const [mode, setMode] = useState<"Sign In" | "Sign Up">("Sign In");
+  const [show, setShow] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={show} onOpenChange={(open) => setShow(open)}>
       <DialogTrigger asChild>
-        <Button variant="default">Get started</Button>
+        <Button variant="default" onClick={() => setShow(!show)}>
+          Get started
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[80vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-3 lg:gap-2 p-0 lg:min-w-max max-sm:w-[420px]">
         <Image

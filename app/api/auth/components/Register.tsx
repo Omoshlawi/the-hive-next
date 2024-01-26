@@ -96,7 +96,7 @@ const Register = () => {
             )}
           />
           <Button type="submit" className="w-full">
-            Submit
+            Register
           </Button>
         </form>
       </Form>
