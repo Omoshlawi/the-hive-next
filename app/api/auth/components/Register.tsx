@@ -22,6 +22,7 @@ import { ValidationError } from "@/app/lib/exceptions";
 import { User } from "@/app/lib/entities/users";
 import { Token } from "@/app/lib/types/base";
 import { register } from "./api";
+import { handleFormErrors } from "@/app/lib/utils";
 
 const Register = () => {
   const { toast } = useToast();
@@ -45,29 +46,7 @@ const Register = () => {
       toggleAuth(false);
       setToken(token);
     } catch (error) {
-      if (error instanceof ValidationError) {
-        Object.entries(error.errors).forEach(([field, value]) => {
-          form.setError(field as any, { message: value as string });
-        });
-      } else if (
-        typeof error === "object" &&
-        error !== null &&
-        "message" in error
-      ) {
-        // Check if 'error' is an object with a 'message' property
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: `Unexpected error logging in: ${error}`,
-        });
-      } else {
-        // Handle other cases
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: `Unexpected error logging in: ${error}`,
-        });
-      }
+      handleFormErrors(error, form);
     }
   }
   return (

@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 
 import { remark } from "remark";
 import html from "remark-html";
+import { ValidationError } from "./exceptions";
+import { toast } from "../components/ui/use-toast";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -65,4 +67,30 @@ export const wait = (ms: number) => {
   return new Promise<void>((resolve, reject) => {
     setTimeout(resolve, ms);
   });
+};
+
+export const handleFormErrors = (error: any, form: any) => {
+  if (error instanceof ValidationError) {
+    Object.entries(error.errors).forEach(([field, value]) => {
+      form.setError(field as any, { message: value as string });
+    });
+  } else if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error
+  ) {
+    // Check if 'error' is an object with a 'message' property
+    toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: `${error}`,
+    });
+  } else {
+    // Handle other cases
+    toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: `${error}`,
+    });
+  }
 };
