@@ -32,25 +32,29 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useSessionContext } from "@/app/context/auth/hooks";
-import { default as LogoutConfirm } from "@/app/api/auth/components/Logout";
-import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 
 export function UserButton() {
-  const { toggleAuth, user } = useSessionContext();
-  const [open, setOpen] = useState(false);
-  if (!user) {
-    return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
-  }
+  const { data: session } = useSession();
 
-  const alt = (user?.name ?? user?.username)?.charAt(0)?.toUpperCase();
+  if (!session) {
+    return (
+      <Button>
+        <Link href={"/dashboard"}>Get started</Link>
+      </Button>
+    );
+  }
+  const alt = session.user?.name
+    ?.split(" ")
+    .map((n) => n.charAt(0).toUpperCase())
+    .join("");
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src={user?.image as string | undefined} />
+          <AvatarImage src={session?.user?.image as string | undefined} />
           <AvatarFallback className="bg-red-500">
             {alt ? alt : "TH"}
           </AvatarFallback>
@@ -60,13 +64,11 @@ export function UserButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={"/dashboard/profile"}>
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
@@ -132,18 +134,11 @@ export function UserButton() {
           <span>API</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <LogoutConfirm open={open} onOpenChange={setOpen}>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.preventDefault();
-              setOpen(true);
-            }}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </LogoutConfirm>
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
