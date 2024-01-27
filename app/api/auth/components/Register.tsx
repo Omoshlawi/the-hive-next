@@ -33,7 +33,9 @@ const Register = () => {
 
   async function onSubmit(values: z.infer<typeof RegisterSchema>) {
     try {
-      const { user, token }: { user: User; token: Token } = await register(values);
+      const { user, token }: { user: User; token: Token } = await register(
+        values
+      );
       toast({
         className: "bg-green-900 dark:text-emerald-500",
         description: (
@@ -72,7 +74,7 @@ const Register = () => {
     <div>
       <Form {...form}>
         {form.formState.isSubmitting && <RegisterSkeleton />}
-        {!form.formState.isSubmitted && (
+        {!form.formState.isSubmitting && (
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={form.control}

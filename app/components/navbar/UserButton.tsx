@@ -43,7 +43,7 @@ export function UserButton() {
     return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
   }
 
-  const alt = (user?.name ?? user?.username)?.charAt(0);
+  const alt = (user?.name ?? user?.username)?.charAt(0)?.toUpperCase();
 
   return (
     <DropdownMenu>
