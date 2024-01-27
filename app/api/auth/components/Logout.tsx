@@ -12,11 +12,16 @@ import {
 import { useSessionContext } from "@/app/context/auth/hooks";
 import React, { PropsWithChildren } from "react";
 
-const Logout: React.FC<PropsWithChildren> = ({ children }) => {
+interface Props extends PropsWithChildren {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+const Logout: React.FC<Props> = ({ children, open, onOpenChange }) => {
   const { logout } = useSessionContext();
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

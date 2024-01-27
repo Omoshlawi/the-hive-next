@@ -34,10 +34,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSessionContext } from "@/app/context/auth/hooks";
 import { default as LogoutConfirm } from "@/app/api/auth/components/Logout";
+import { useState } from "react";
 
 export function UserButton() {
   const { toggleAuth, user } = useSessionContext();
-
+  const [open, setOpen] = useState(false);
   if (!user) {
     return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
   }
@@ -45,7 +46,7 @@ export function UserButton() {
   const alt = (user?.name ?? user?.username)?.charAt(0);
 
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
           <AvatarImage src={user?.image as string | undefined} />
@@ -128,8 +129,13 @@ export function UserButton() {
           <span>API</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <LogoutConfirm>
-          <DropdownMenuItem>
+        <LogoutConfirm open={open} onOpenChange={setOpen}>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

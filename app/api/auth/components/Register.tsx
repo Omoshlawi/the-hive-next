@@ -16,15 +16,57 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { RegisterSchema } from "@/app/lib/schema";
 import RegisterSkeleton from "./RegisterSkeleton";
+import { useToast } from "@/app/components/ui/use-toast";
+import { useSessionContext } from "@/app/context/auth/hooks";
+import { ValidationError } from "@/app/lib/exceptions";
+import { User } from "@/app/lib/entities/users";
+import { Token } from "@/app/lib/types/base";
+import { register } from "./api";
 
 const Register = () => {
+  const { toast } = useToast();
+  const { toggleAuth, setToken } = useSessionContext();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof RegisterSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof RegisterSchema>) {
+    try {
+      const { user, token }: { user: User; token: Token } = await register(values);
+      toast({
+        className: "bg-green-900 dark:text-emerald-500",
+        description: (
+          <span className="text-xl text-teal-50">Login Succeesfull</span>
+        ),
+      });
+      toggleAuth(false);
+      setToken(token);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        Object.entries(error.errors).forEach(([field, value]) => {
+          form.setError(field as any, { message: value as string });
+        });
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "message" in error
+      ) {
+        // Check if 'error' is an object with a 'message' property
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error logging in: ${error}`,
+        });
+      } else {
+        // Handle other cases
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `Unexpected error logging in: ${error}`,
+        });
+      }
+    }
   }
   return (
     <div>
