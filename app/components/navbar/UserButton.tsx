@@ -35,6 +35,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSessionContext } from "@/app/context/auth/hooks";
 import { default as LogoutConfirm } from "@/app/api/auth/components/Logout";
 import { useState } from "react";
+import Link from "next/link";
 
 export function UserButton() {
   const { toggleAuth, user } = useSessionContext();
@@ -59,11 +60,13 @@ export function UserButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <Link href={"/dashboard/profile"}>
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>

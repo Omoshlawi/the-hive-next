@@ -19,6 +19,7 @@ export const useSessionContext = () => {
     authenticate,
     setToken: setToken!,
     user: decode(token?.accessToken ?? "") as TokenPayload | null,
-    logout
+    logout,
+    token,
   };
 };

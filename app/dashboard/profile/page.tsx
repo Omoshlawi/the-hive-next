@@ -13,13 +13,30 @@ import {
   LinkedinIcon,
   TwitterIcon,
 } from "lucide-react";
+import { User } from "@/app/lib/entities/users";
+import { BASE_URL } from "@/app/lib/constants";
 export const metadata: Metadata = {
   title: "Profile Page | The hive",
   description: "This is Profile page for he hive",
   // other metadata
 };
 
-const Profile = () => {
+const Profile = async () => {
+  let user: User;
+  try {
+    const response = await await fetch(`${BASE_URL}/users/profile`, {
+      cache: "no-cache",
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      user = responseData;
+    } else if (response.status === 401) {
+      // Unauthorized
+    } else {
+      // Any other error
+    }
+  } catch (error) {}
+
   return (
     <div className="flex flex-col items-center">
       <p

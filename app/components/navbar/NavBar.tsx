@@ -12,7 +12,7 @@ const NavBar = () => {
   const pathName = usePathname();
 
   if (
-    ["/dashboard", "/admin", "/auth"].some((link) => pathName.startsWith(link))
+    ["/dashboard", "/admin", "/api/auth"].some((link) => pathName.startsWith(link))
   )
     return false;
   return (

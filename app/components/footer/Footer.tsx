@@ -22,7 +22,9 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
   const pathName = usePathname();
   if (
-    ["/dashboard", "/admin", "/auth"].some((link) => pathName.startsWith(link))
+    ["/dashboard", "/admin", "/api/auth"].some((link) =>
+      pathName.startsWith(link)
+    )
   )
     return false;
   const quickLinks = [
