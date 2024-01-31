@@ -19,10 +19,19 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { useSessionContext } from "@/app/context/auth/hooks";
+import { usePathname, useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/lib/constants";
+import { useLocalStorage } from "@/app/lib/hooks";
 
 const AuthDialog = () => {
   const [mode, setMode] = useState<"Sign In" | "Sign Up">("Sign In");
   const { toggleAuth, authenticate } = useSessionContext();
+  const pathName = usePathname();
+  const { push } = useRouter();
+  const [callback, setCallback] = useLocalStorage<string | undefined>(
+    "callback-url",
+    undefined
+  );
   return (
     <Dialog open={authenticate} onOpenChange={toggleAuth}>
       <DialogContent className="max-h-[80vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-3 lg:gap-2 p-0 lg:min-w-max max-sm:w-[420px]">
@@ -65,7 +74,15 @@ const AuthDialog = () => {
             <div className="w-full space-y-2">
               <p className="w-full text-center">Or sign in with</p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
-                <Button variant={"outline"} className="flex space-x-3">
+                <Button
+                  variant={"outline"}
+                  className="flex space-x-3"
+                  onClick={() => {
+                    // TODO store pathName to be used to redirect on successfull authentication
+                    setCallback(pathName);
+                    push(`${BASE_URL}/api/auth/signin/google`);
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24"
