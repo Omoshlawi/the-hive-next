@@ -19,7 +19,7 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { useSessionContext } from "@/app/context/auth/hooks";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BASE_URL } from "@/app/lib/constants";
 import { useLocalStorage } from "@/app/lib/hooks";
 
@@ -32,6 +32,7 @@ const AuthDialog = () => {
     "callback-url",
     undefined
   );
+  const searchParams = useSearchParams();
   return (
     <Dialog open={authenticate} onOpenChange={toggleAuth}>
       <DialogContent className="max-h-[80vh] overflow-y-auto grid grid-cols-1 lg:grid-cols-3 lg:gap-2 p-0 lg:min-w-max max-sm:w-[420px]">
@@ -79,7 +80,8 @@ const AuthDialog = () => {
                   className="flex space-x-3"
                   onClick={() => {
                     // TODO store pathName to be used to redirect on successfull authentication
-                    setCallback(pathName);
+                    const callbackUrl = searchParams.get("callbackUrl");
+                    setCallback(callbackUrl ?? pathName);
                     push(`${BASE_URL}/api/auth/signin/google`);
                   }}
                 >
