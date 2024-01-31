@@ -1,7 +1,13 @@
 "use client";
-import { useLocalStorage } from "@/app/lib/hooks";
+import { useCookieStorage, useLocalStorage } from "@/app/lib/hooks";
 import { SetValue, Token } from "@/app/lib/types/base";
-import React, { PropsWithChildren, createContext, useState } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import { getCookie } from ".";
 
 export interface Session {
   authenticate?: boolean;
@@ -16,13 +22,16 @@ export const Provider = SessionContext.Provider;
 export const SessionConsumer = SessionContext.Consumer;
 
 export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [token, setToken] = useLocalStorage<Token | undefined>(
-    "auth_session",
-    undefined
-  );
+  const [token, setToken] = useState<Token | undefined>();
   const [session, setSession] = useState<Session>({
     authenticate: false,
   });
+
+  useEffect(() => {
+    const token = getCookie<Token | undefined>("session-token", undefined);
+    alert(JSON.stringify(token, null, 2));
+    setToken(token);
+  }, []);
 
   return (
     <Provider

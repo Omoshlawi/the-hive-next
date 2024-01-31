@@ -43,6 +43,7 @@
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
+    "nookies": "^2.5.2",
     "pretty-byte": "^1.0.1",
     "pretty-bytes": "^6.1.1",
     "prisma": "^5.7.0",
