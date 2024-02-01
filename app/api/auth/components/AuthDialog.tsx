@@ -81,9 +81,7 @@ const AuthDialog = () => {
                   onClick={() => {
                     // TODO store pathName to be used to redirect on successfull authentication
                     const callbackUrl = searchParams.get("callbackUrl");
-                    console.log(pathName);
-                    
-                    setCallback(encodeURIComponent(callbackUrl ?? pathName));
+                    setCallback(callbackUrl ?? encodeURIComponent(pathName));
                     push(`${BASE_URL}/api/auth/signin/google`);
                   }}
                 >

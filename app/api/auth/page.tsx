@@ -14,7 +14,13 @@ const AuthPage = () => {
     if (user) {
       console.log("Redirecting to: ", searchParams.get("callbackUrl") ?? "/");
       toggleAuth(false);
-      replace(searchParams.get("callbackUrl") ?? "/");
+      const callBack = searchParams.get("callbackUrl");
+      try {
+        const decoded = callBack ? decodeURIComponent(callBack) : "/";
+        replace(decoded);
+      } catch (error) {
+        replace("/");
+      }
     }
   }, [authenticate, user]);
 
