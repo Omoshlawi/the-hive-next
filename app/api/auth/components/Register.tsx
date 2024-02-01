@@ -26,7 +26,7 @@ import { handleFormErrors } from "@/app/lib/utils";
 
 const Register = () => {
   const { toast } = useToast();
-  const { toggleAuth, setToken } = useSessionContext();
+  const { toggleAuth, notifyChanges } = useSessionContext();
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {},
@@ -44,7 +44,7 @@ const Register = () => {
         ),
       });
       toggleAuth(false);
-      setToken(token);
+      notifyChanges();
     } catch (error) {
       handleFormErrors(error, form);
     }

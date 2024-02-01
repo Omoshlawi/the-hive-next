@@ -1,5 +1,17 @@
+import { CookieSerializeOptions } from "cookie";
+
 export const MEDIA_ROOT = "/media";
 export const BASE_URL = "http://localhost:5000";
+export const authCookieConfig = {
+  name: "session-token",
+  config: {
+    MAX_AGE: 30 * 24 * 60 * 60,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+  } as CookieSerializeOptions,
+};
 export const fileExtensionsColors: { [key: string]: string } = {
   // Images
   jpg: "#ff4081",

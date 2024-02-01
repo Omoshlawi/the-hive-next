@@ -29,10 +29,11 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
   });
 
   const request = async (options: RequestOptions) => {
+    let response;
     try {
       setState({ loading: true });
 
-      const response = await fetch(`${BASE_URL}/${options.url}`, options);
+      response = await fetch(`${BASE_URL}/${options.url}`, options);
       const data = await response.json();
       const status = response.status;
       // console.log(data);
@@ -54,7 +55,12 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
         loading: false,
       }));
     }
+    return response;
   };
 
-  return { ...state, request };
+  return {
+    ...state,
+    request,
+    setData: (data?: T) => setState((d) => ({ ...d, data})),
+  };
 };

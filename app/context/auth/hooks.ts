@@ -5,28 +5,33 @@ import { User } from "@/app/lib/entities/users";
 import { useApiClient } from "@/app/lib/api";
 
 export const useSessionContext = () => {
-  const { loading, request, data, error } = useApiClient<User>(undefined);
-  useEffect(() => {
-    (async () => {
-      await request({ url: `users/profile`, credentials: "include" });
-    })();
-  }, []);
+  const {
+    authenticate,
+    data,
+    error,
+    loading,
+    resetData,
+    notifyChanges,
+    toggleAuth,
+  } = useContext(SessionContext);
 
-  const { authenticate, setSession } = useContext(SessionContext);
-  const toggleAuth = (open: boolean) =>
-    setSession!((val) => ({
-      ...val,
-      authenticate: open,
-    }));
   // console.log(authenticate);
 
-  const logout = () => {};
+  const logout = () => {
+    fetch("/api/auth/logout")
+      .then((resp) => resp.json())
+      .then((data) => console.log(JSON.stringify(data, null, 2)))
+      .catch((err) => console.log(err))
+      .finally(resetData);
+  };
+
   return {
     session: data,
     error,
-    loading,
-    toggleAuth,
     logout,
     authenticate,
+    loading: loading!,
+    notifyChanges: notifyChanges!,
+    toggleAuth: toggleAuth!,
   };
 };

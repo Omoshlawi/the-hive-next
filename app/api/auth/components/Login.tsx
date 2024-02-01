@@ -28,7 +28,7 @@ import { handleFormErrors } from "@/app/lib/utils";
 const Login = () => {
   const { toast } = useToast();
   const { refresh } = useRouter();
-  const { toggleAuth, setToken } = useSessionContext();
+  const { toggleAuth, notifyChanges } = useSessionContext();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {},
@@ -44,7 +44,7 @@ const Login = () => {
         ),
       });
       toggleAuth(false);
-      setToken(token);
+      notifyChanges();
     } catch (error) {
       handleFormErrors(error, form);
     }

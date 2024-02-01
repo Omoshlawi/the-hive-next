@@ -1,10 +1,25 @@
 "use client";
+import { useApiClient } from "@/app/lib/api";
 import { SetValue } from "@/app/lib/types/base";
-import React, { PropsWithChildren, createContext, useState } from "react";
+import { User } from "next-auth";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
 export interface Session {
   authenticate?: boolean;
-  setSession?: (value: SetValue<Session>) => void;
+  data?: User;
+  loading?: boolean;
+  error?: {
+    status: number;
+    errors: any;
+  };
+  resetData?: () => void;
+  notifyChanges?: () => void;
+  toggleAuth?: (open: boolean) => void;
 }
 
 export const SessionContext = createContext<Session>({});
@@ -13,15 +28,31 @@ export const Provider = SessionContext.Provider;
 export const SessionConsumer = SessionContext.Consumer;
 
 export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [session, setSession] = useState<Session>({
-    authenticate: false,
-  });
+  const { loading, request, data, error, setData } =
+    useApiClient<User>(undefined);
+  const [authenticate, setAuthenticate] = useState(false);
+  const toggleAuth = (open: boolean) => setAuthenticate(open);
+  const [updated, setUpdated] = useState(false);
+
+  const nortifyAll = () => setUpdated(!updated);
+  useEffect(() => {
+    (async () => {
+      await request({ url: `users/profile`, credentials: "include" });
+    })();
+  }, [updated]);
+
+  // useEffect(()=>{}, [data,error,])
 
   return (
     <Provider
       value={{
-        ...session,
-        setSession: session.setSession ?? setSession,
+        authenticate,
+        resetData: () => setData(undefined),
+        notifyChanges: nortifyAll,
+        loading,
+        data,
+        error,
+        toggleAuth,
       }}
     >
       {children}

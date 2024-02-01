@@ -13,6 +13,7 @@ export const login = async (params: z.infer<typeof LoginSchema>) => {
     body: JSON.stringify(params),
     redirect: "follow",
     headers: myHeaders,
+    credentials: "include",
   });
   const responseData = await response.json();
   if (response.ok) {
