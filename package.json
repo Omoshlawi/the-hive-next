@@ -36,7 +36,6 @@
     "embla-carousel-autoplay": "^8.0.0-rc19",
     "embla-carousel-react": "^8.0.0-rc19",
     "file-type": "^18.7.0",
-    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "lucide-react": "^0.297.0",
     "moment": "^2.29.4",
@@ -66,7 +65,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.5",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20",
     "@types/react": "^18",

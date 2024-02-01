@@ -2,24 +2,31 @@
 import { useContext, useEffect, useState } from "react";
 import { SessionContext } from "./session";
 import { User } from "@/app/lib/entities/users";
-import { decode } from "jsonwebtoken";
-import { TokenPayload } from "@/app/lib/types/base";
+import { useApiClient } from "@/app/lib/api";
+
 export const useSessionContext = () => {
-  const { token, authenticate, setSession, setToken } =
-    useContext(SessionContext);
+  const { loading, request, data, error } = useApiClient<User>(undefined);
+  useEffect(() => {
+    (async () => {
+      await request({ url: `users/profile`, credentials: "include" });
+    })();
+  }, []);
+
+  const { authenticate, setSession } = useContext(SessionContext);
   const toggleAuth = (open: boolean) =>
     setSession!((val) => ({
       ...val,
       authenticate: open,
     }));
-  const logout = () => setToken?.(undefined);
+  // console.log(authenticate);
+
+  const logout = () => {};
   return {
-    setSession,
+    session: data,
+    error,
+    loading,
     toggleAuth,
-    authenticate,
-    setToken: setToken!,
-    user: decode(token?.accessToken ?? "") as TokenPayload | null,
     logout,
-    token,
+    authenticate,
   };
 };

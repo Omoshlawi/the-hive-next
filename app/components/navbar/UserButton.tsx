@@ -38,7 +38,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 export function UserButton() {
-  const { toggleAuth, user } = useSessionContext();
+  const { toggleAuth, session:user } = useSessionContext();
   const [open, setOpen] = useState(false);
   if (!user) {
     return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
