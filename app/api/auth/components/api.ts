@@ -33,6 +33,7 @@ export const register = async (params: z.infer<typeof RegisterSchema>) => {
     body: JSON.stringify(params),
     redirect: "follow",
     headers: myHeaders,
+    credentials: "include",
   });
   const responseData = await response.json();
   if (response.ok) {
