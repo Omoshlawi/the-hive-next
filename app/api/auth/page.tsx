@@ -6,13 +6,14 @@ import bg from "@/public/poly.jpg";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const AuthPage = () => {
-  const { toggleAuth, authenticate, user } = useSessionContext();
+  const { toggleAuth, authenticate, session: user } = useSessionContext();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   useEffect(() => {
     if (!authenticate && !user) toggleAuth(true);
     if (user) {
       console.log("Redirecting to: ", searchParams.get("callbackUrl") ?? "/");
+      toggleAuth(false);
       replace(searchParams.get("callbackUrl") ?? "/");
     }
   }, [authenticate, user]);

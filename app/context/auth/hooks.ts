@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import { SessionContext } from "./session";
 import { User } from "@/app/lib/entities/users";
 import { useApiClient } from "@/app/lib/api";
+import { useRouter } from "next/navigation";
 
 export const useSessionContext = () => {
+  const { replace } = useRouter();
   const {
     authenticate,
     data,
@@ -17,12 +19,17 @@ export const useSessionContext = () => {
 
   // console.log(authenticate);
 
-  const logout = () => {
+  const logout = (
+    { redirectUrl }: { redirectUrl?: string } = { redirectUrl: "/" }
+  ) => {
     fetch("/api/auth/logout")
       .then((resp) => resp.json())
       .then((data) => console.log(JSON.stringify(data, null, 2)))
       .catch((err) => console.log(err))
-      .finally(resetData);
+      .finally(() => {
+        resetData?.();
+        replace(redirectUrl ?? "/");
+      });
   };
 
   return {
