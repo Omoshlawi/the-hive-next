@@ -16,7 +16,7 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { addSalesListing } from "../../api";
 import { ValidationError } from "@/app/lib/exceptions";
-import { DetailsForm, FileUploadsForm, SaleTermsForm } from "../../forms";
+import { DetailsForm, FileUploadsForm, ListingProperties, SaleTermsForm } from "../../forms";
 
 type RentalListingForm = z.infer<typeof SaleListingSchema>;
 
@@ -100,6 +100,8 @@ const SalesListingAddPage = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <DetailsForm />
             <FileUploadsForm files={files} onFilesChange={setFiles} />
+            <ListingProperties />
+
             <SaleTermsForm />
             <Button className="w-full" type="submit">
               Submit
