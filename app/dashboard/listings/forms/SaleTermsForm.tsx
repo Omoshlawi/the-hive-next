@@ -28,10 +28,29 @@ const RentalTermsForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Rental Terms</CardTitle>
-        <CardDescription>Property Extra attribute</CardDescription>
+        <CardTitle>Sales Terms</CardTitle>
+        <CardDescription>Sales terms and agrements</CardDescription>
       </CardHeader>
       <CardContent>
+        <FormField
+          control={form.control}
+          name="closingDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Closing Date</FormLabel>
+              <FormControl>
+                <div className="w-full">
+                  <DatePicker
+                    date={field.value}
+                    onDateChange={field.onChange}
+                  />
+                </div>
+              </FormControl>
+              <FormDescription>Interval in months</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="downPaymentRequired"
@@ -46,20 +65,6 @@ const RentalTermsForm = () => {
                 demonstrates the buyer's commitment to the " "purchase and
                 serves as an initial contribution toward the property
               </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="closingDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Renewal Interval</FormLabel>
-              <FormControl>
-                <DatePicker date={field.value} onDateChange={field.onChange} />
-              </FormControl>
-              <FormDescription>Interval in months</FormDescription>
               <FormMessage />
             </FormItem>
           )}

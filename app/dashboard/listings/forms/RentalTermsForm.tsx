@@ -28,7 +28,7 @@ const RentalTermsForm = () => {
     <Card>
       <CardHeader>
         <CardTitle>Rental Terms</CardTitle>
-        <CardDescription>Property Extra attribute</CardDescription>
+        <CardDescription>Rental Listing terms</CardDescription>
       </CardHeader>
       <CardContent>
         <FormField

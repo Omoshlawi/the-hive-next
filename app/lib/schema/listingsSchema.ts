@@ -29,7 +29,7 @@ export const SaleListingSchema = z.object({
   tags: z.array(z.string()),
   amenities: z.array(z.string()),
   coverImage: z.string(),
-  published: z.coerce.date().optional(),
+  published: z.coerce.boolean().optional(),
   properties: z.array(ListingPropertySchema),
 });
 
