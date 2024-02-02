@@ -1,4 +1,5 @@
 "use client";
+import DatePicker from "@/app/components/form/DatePicker";
 import { MultiKeyvalueInput } from "@/app/components/form/multivalueinput";
 import {
   Card,
@@ -9,42 +10,56 @@ import {
 } from "@/app/components/ui/card";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
-import { PropertySchema } from "@/app/lib/schema";
+import { SaleListingSchema } from "@/app/lib/schema/listingsSchema";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
-type PropertyForm = z.infer<typeof PropertySchema>;
 
-const SaleTermsForm = () => {
-  const form = useFormContext<PropertyForm>();
+const RentalTermsForm = () => {
+  const form = useFormContext<z.infer<typeof SaleListingSchema>>();
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Extra Attributes</CardTitle>
+        <CardTitle>Rental Terms</CardTitle>
         <CardDescription>Property Extra attribute</CardDescription>
       </CardHeader>
       <CardContent>
         <FormField
           control={form.control}
-          name="attributes"
+          name="downPaymentRequired"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name/Value attribbutes</FormLabel>
+              <FormLabel>Down payment</FormLabel>
               <FormControl>
-                <MultiKeyvalueInput
-                  keyplaceholder="e.g Bedrooms"
-                  valueplaceholder="e.g 5"
-                  value={field.value}
-                  onChange={field.onChange}
-                />
+                <Input placeholder="e.g 10000" {...field} />
               </FormControl>
+              <FormDescription>
+                percentage of the property's total purchase price and
+                demonstrates the buyer's commitment to the " "purchase and
+                serves as an initial contribution toward the property
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="closingDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Renewal Interval</FormLabel>
+              <FormControl>
+                <DatePicker date={field.value} onDateChange={field.onChange} />
+              </FormControl>
+              <FormDescription>Interval in months</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -54,4 +69,4 @@ const SaleTermsForm = () => {
   );
 };
 
-export default SaleTermsForm;
+export default RentalTermsForm;
