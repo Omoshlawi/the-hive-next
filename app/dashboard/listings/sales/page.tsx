@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import { lusitana } from "@/app/fonts";
 import React, { Suspense } from "react";
@@ -22,7 +24,7 @@ const SalesListing: React.FC<PropsWithSearchParams> = async ({
             <div className="flex-1">
               <FilterHeader />
             </div>
-            <Link href={"/dashboard/properties/new"} className="flex-none">
+            <Link href={"/dashboard/listings/sales/add"} className="flex-none">
               <Button className="w-full">
                 <PlusIcon /> Add Sales Listing
               </Button>

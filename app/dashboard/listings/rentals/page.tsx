@@ -20,7 +20,10 @@ const RentalListings: React.FC<PropsWithSearchParams> = ({ searchParams }) => {
             <div className="flex-1">
               <FilterHeader />
             </div>
-            <Link href={"/dashboard/properties/new"} className="flex-none">
+            <Link
+              href={"/dashboard/listings/rentals/add"}
+              className="flex-none"
+            >
               <Button className="w-full">
                 <PlusIcon /> Add Rental Listing
               </Button>
