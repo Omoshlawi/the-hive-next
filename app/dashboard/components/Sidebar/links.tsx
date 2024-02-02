@@ -1,4 +1,4 @@
-import { Home, ShieldCheck } from "lucide-react";
+import { Building, Home, ShieldCheck } from "lucide-react";
 
 export default [
   {
@@ -101,9 +101,24 @@ export default [
             label: "Groups",
             href: "/dashboard/groups",
           },
+        ],
+      },
+      {
+        label: "Listings",
+        href: "/dashboard/properties",
+        renderIcon: () => <Building />,
+        children: [
           {
-            label: "My Listings",
-            href: "/dashboard/properties/listings",
+            label: "All listings",
+            href: "/dashboard/listings",
+          },
+          {
+            label: "Rental Listings",
+            href: "/dashboard/listings/rentals",
+          },
+          {
+            label: "Sale Listing",
+            href: "/dashboard/listings/sales",
           },
         ],
       },
