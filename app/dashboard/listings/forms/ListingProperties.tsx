@@ -54,6 +54,8 @@ const ListingProperties = () => {
     if (search) handleSearch(search);
   }, [search]);
 
+  console.log(form.formState.errors);
+
   return (
     <Card>
       <CardHeader>
@@ -78,11 +80,14 @@ const ListingProperties = () => {
                   onInputChange={(value) => setSearch(value)}
                   // value={field.value.map((v) => ({
                   //   value: v.property,
-                  //   label: "v.note",
+                  //   label: v.title,
                   // }))}
                   onChange={(newValue: any) =>
                     field.onChange(
-                      properties.find((p) => p.title === newValue?.label)?._id
+                      newValue.map((v: any) => ({
+                        propertie: v.value,
+                        title: v.label,
+                      }))
                     )
                   }
                   isMulti={true}

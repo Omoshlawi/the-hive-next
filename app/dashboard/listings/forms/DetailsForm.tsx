@@ -77,7 +77,7 @@ const DetailsForm = () => {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input placeholder="e.g 100000" {...field} />
+                <Input type="number" placeholder="e.g 100000" {...field} />
               </FormControl>
               <FormDescription>listing listing price</FormDescription>
               <FormMessage />

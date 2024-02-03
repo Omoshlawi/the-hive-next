@@ -38,7 +38,7 @@ const RentalTermsForm = () => {
             <FormItem>
               <FormLabel>Deposit</FormLabel>
               <FormControl>
-                <Input placeholder="e.g 10000" {...field} />
+                <Input placeholder="e.g 10000" {...field} type="number" />
               </FormControl>
               <FormDescription>
                 Deposit required for the rental apartment
@@ -54,7 +54,7 @@ const RentalTermsForm = () => {
             <FormItem>
               <FormLabel>Renewal Interval</FormLabel>
               <FormControl>
-                <Input placeholder="e.g 1" {...field} />
+                <Input placeholder="e.g 1" {...field} type="number" />
               </FormControl>
               <FormDescription>Interval in months</FormDescription>
               <FormMessage />

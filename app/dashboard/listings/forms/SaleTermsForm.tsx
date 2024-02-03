@@ -58,7 +58,7 @@ const RentalTermsForm = () => {
             <FormItem>
               <FormLabel>Down payment</FormLabel>
               <FormControl>
-                <Input placeholder="e.g 10000" {...field} />
+                <Input placeholder="e.g 10000" {...field} type="number"/>
               </FormControl>
               <FormDescription>
                 percentage of the property's total purchase price and

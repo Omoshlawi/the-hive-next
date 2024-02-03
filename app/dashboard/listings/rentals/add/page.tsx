@@ -13,7 +13,12 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { addRentalListing } from "../../api";
 import { ValidationError } from "@/app/lib/exceptions";
-import { DetailsForm, FileUploadsForm, ListingProperties, RentalTermsForm } from "../../forms";
+import {
+  DetailsForm,
+  FileUploadsForm,
+  ListingProperties,
+  RentalTermsForm,
+} from "../../forms";
 
 type RentalListingForm = z.infer<typeof RentalListingSchema>;
 
@@ -22,14 +27,14 @@ const RentalListingAddPage = () => {
     resolver: zodResolver(RentalListingSchema),
     defaultValues: {
       amenities: [],
-      available: false,
-      coverImage: "",
-      depositRequired: 0,
+      available: true,
+      // coverImage: "",
+      // depositRequired: 1,
       description: "",
-      price: 0,
+      // price: 1,
       properties: [],
-      published: false,
-      renewalInterval: 1,
+      published: true,
+      // renewalInterval: 1,
       tags: [],
       title: "",
     },
@@ -97,7 +102,7 @@ const RentalListingAddPage = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <DetailsForm />
             <FileUploadsForm files={files} onFilesChange={setFiles} />
-            <ListingProperties/>
+            <ListingProperties />
             <RentalTermsForm />
             <Button className="w-full" type="submit">
               Submit

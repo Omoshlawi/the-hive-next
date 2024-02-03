@@ -16,22 +16,27 @@ import { useToast } from "@/app/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { addSalesListing } from "../../api";
 import { ValidationError } from "@/app/lib/exceptions";
-import { DetailsForm, FileUploadsForm, ListingProperties, SaleTermsForm } from "../../forms";
+import {
+  DetailsForm,
+  FileUploadsForm,
+  ListingProperties,
+  SaleTermsForm,
+} from "../../forms";
 
-type RentalListingForm = z.infer<typeof SaleListingSchema>;
+type SaleListingForm = z.infer<typeof SaleListingSchema>;
 
 const SalesListingAddPage = () => {
-  const form = useForm<RentalListingForm>({
-    resolver: zodResolver(RentalListingSchema),
+  const form = useForm<SaleListingForm>({
+    resolver: zodResolver(SaleListingSchema),
     defaultValues: {
       amenities: [],
-      available: false,
-      coverImage: "",
-      downPaymentRequired: 0,
+      available: true,
+      // coverImage: "",
+      // downPaymentRequired: 0.0,
       description: "",
       price: 0,
       properties: [],
-      published: false,
+      published: true,
       closingDate: undefined,
       tags: [],
       title: "",
@@ -40,7 +45,7 @@ const SalesListingAddPage = () => {
   const [files, setFiles] = useState<File[]>([]);
   const { toast } = useToast();
   const { replace } = useRouter();
-  async function onSubmit(values: RentalListingForm) {
+  async function onSubmit(values: SaleListingForm) {
     try {
       //   if (property) await updateProperty(property._id!, values, files);
       //   else
@@ -92,7 +97,7 @@ const SalesListingAddPage = () => {
   return (
     <div>
       <h1 className={`${lusitana.className} font-bold text-2xl mb-3`}>
-        Add Rental Listings
+        Add Sales Listing
       </h1>
       {form.formState.isSubmitting && <br />}
       {!form.formState.isSubmitting && (
