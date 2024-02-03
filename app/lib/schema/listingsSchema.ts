@@ -1,7 +1,12 @@
 import { z } from "zod";
 
 export const ListingPropertySchema = z.object({
-  property: z.string().uuid(),
+  property: z.string().refine(
+    (value) => {
+      return /^[0-9a-fA-F]{24}$/.test(value) && value.length === 24;
+    },
+    { message: "Invalid property" }
+  ),
   note: z.string().optional(),
   title: z.string().optional(),
 });
@@ -9,7 +14,7 @@ export const ListingPropertySchema = z.object({
 export const RentalListingSchema = z.object({
   depositRequired: z.coerce.number().positive(),
   renewalInterval: z.coerce.number().int().positive(),
-  title: z.string().max(255),
+  title: z.string().max(255).min(1, "Required"),
   description: z.string().optional(),
   available: z.boolean(),
   price: z.coerce.number().positive(),
@@ -23,7 +28,7 @@ export const RentalListingSchema = z.object({
 export const SaleListingSchema = z.object({
   downPaymentRequired: z.coerce.number().positive(),
   closingDate: z.date(),
-  title: z.string().max(255),
+  title: z.string().max(255).min(1, "Required"),
   description: z.string().optional(),
   available: z.boolean(),
   price: z.coerce.number().positive(),

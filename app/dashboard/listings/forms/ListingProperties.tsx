@@ -1,5 +1,4 @@
 "use client";
-import { MultiKeyvalueInput } from "@/app/components/form/multivalueinput";
 import {
   Card,
   CardContent,
@@ -15,18 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/components/ui/form";
-import { Input } from "@/app/components/ui/input";
-import {
-  ListingSchema,
-  RentalListingSchema,
-} from "@/app/lib/schema/listingsSchema";
+import { ListingSchema } from "@/app/lib/schema/listingsSchema";
 import React, { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import dynamic from "next/dynamic";
 import { useApiClient } from "@/app/lib/api";
 import { APIListingResponse } from "@/app/lib/types/base";
-import { PlaceSearchResult } from "@/app/lib/entities/maps";
 import { useDebouncedCallback } from "use-debounce";
 import { Property } from "@/app/lib/entities/properties";
 const ReactSelect = dynamic(() => import("react-select"), {
@@ -78,14 +72,14 @@ const ListingProperties = () => {
                   placeholder="Search property..."
                   inputValue={search}
                   onInputChange={(value) => setSearch(value)}
-                  // value={field.value.map((v) => ({
-                  //   value: v.property,
-                  //   label: v.title,
-                  // }))}
+                  value={field.value.map((v) => ({
+                    value: v.property,
+                    label: v.title,
+                  }))}
                   onChange={(newValue: any) =>
                     field.onChange(
                       newValue.map((v: any) => ({
-                        propertie: v.value,
+                        property: v.value,
                         title: v.label,
                       }))
                     )
