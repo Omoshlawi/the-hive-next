@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <main className="">
       <Hero />
-      <Services />
       <Patners />
+      <Services />
       {/* <FeaturedProducts /> */}
     </main>
   );

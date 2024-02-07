@@ -5,7 +5,6 @@ import { decode } from "jsonwebtoken";
 import { TokenPayload } from "./app/lib/types/base";
 import { serialize } from "cookie";
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const callbackUrl = request.nextUrl.pathname;
   const authCookie = request.cookies.get(authCookieConfig.name)?.value;
