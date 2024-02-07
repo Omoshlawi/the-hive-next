@@ -65,6 +65,12 @@
     --ring: 240 4.9% 83.9%;
   }
 }
+
+@layer utilities {
+  .paused {
+    animation-play-state: paused;
+  }
+}
  
 @layer base {
   * {
