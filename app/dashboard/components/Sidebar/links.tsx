@@ -99,7 +99,7 @@ export default [
           },
           {
             label: "Groups",
-            href: "/dashboard/groups",
+            href: "/dashboard/properties/groups",
           },
         ],
       },

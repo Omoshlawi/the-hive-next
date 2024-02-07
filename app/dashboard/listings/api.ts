@@ -11,6 +11,8 @@ export const addRentalListing = async (
   property: z.infer<typeof RentalListingSchema>,
   coverImage: File
 ) => {
+  alert(JSON.stringify(property, null, 2));
+
   const formData = objectToFormData({ ...property, coverImage });
   const response = await fetch(`${BASE_URL}/properties`, {
     method: "POST",
