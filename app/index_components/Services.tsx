@@ -1,13 +1,5 @@
 "use server";
-import prisma from "@/prisma/client";
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -15,36 +7,80 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/app/components/ui/carousel";
+import {
+  Briefcase,
+  HeartHandshakeIcon,
+  MapPinned,
+  SearchCheck,
+  Users,
+} from "lucide-react";
+
+type Service = {
+  title: string;
+  icon: any;
+  description: string;
+};
 
 const Services = async () => {
-  const services = await prisma.service.findMany();
+  const services: Service[] = [
+    {
+      title: "Property search",
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
+      icon: <SearchCheck width={96} height={96} />,
+    },
+    {
+      title: "Land search",
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
+      icon: <MapPinned width={96} height={96} />,
+    },
+    {
+      title: "Roomie search",
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
+      icon: <Users width={96} height={96} />,
+    },
+    {
+      title: "Job search",
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
+      icon: <Briefcase width={96} height={96} />,
+    },
+    {
+      title: "Investment search",
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
+      icon: <HeartHandshakeIcon width={96} height={96} />,
+    },
+  ];
   return (
     <div className="p-5 flex justify-center">
       <Carousel className="w-10/12 " opts={{ loop: true }}>
         <CarouselContent className="m-4">
-          {services.map(({ id, title, image, description }, index) => (
+          {services.map(({ title, description, icon }, index) => (
             <CarouselItem
               key={index}
               className={`pl-1 md:basis-1/2 lg:basis-1/4`}
             >
-              <div className="p-1">
-                <Card
-                  key={id}
-                  className="border-none background relative h-64 overflow-clip text-white"
-                >
-                  <img
-                    src={image}
-                    className="w-full h-full absolute object-cover bg-blend-overlay"
-                  />
-                  <div className="w-full h-full absolute bg-black opacity-70 dark:opacity-40" />
-
-                  <div className="z-50 absolute w-full h-full">
-                    <CardHeader className="">
-                      <CardTitle className="text-center">{title}</CardTitle>
-                    </CardHeader>
-                    {/* <CardContent className="p-4">{description}</CardContent> */}
-                  </div>
-                </Card>
+              <div
+                className="relative flex flex-col items-center justify-around p-4 mr-4 w-80 h-80 rounded-2xl "
+                style={{ transform: "translate(0px, 0px)", opacity: 1 }}
+              >
+                <div
+                  className="absolute z-0 w-full h-full text-white transform scale-x-105 scale-y-95 bg-cyan-300 rounded-xl -rotate-2 "
+                  style={{ zIndex: -1 }}
+                />
+                <div
+                  className="absolute z-0 w-full h-full text-white transform scale-x-105 scale-y-95 bg-cyan-400 rounded-xl rotate-2 "
+                  style={{ zIndex: -1 }}
+                />
+                <div
+                  className="absolute z-0 w-full h-full transform scale-x-105 scale-y-95 bg-white dark:bg-gray-900 rounded-xl "
+                  style={{ zIndex: -1 }}
+                />
+                <h3 className="z-10 p-2 text-2xl font-semibold text-cyan-900">
+                  {title}
+                </h3>
+                <div className="z-10 p-2 text-cyan-900">{icon}</div>
+                <div className="z-10 p-2 text-sm text-center text-gray-500 ">
+                  {description}
+                </div>
               </div>
             </CarouselItem>
           ))}
