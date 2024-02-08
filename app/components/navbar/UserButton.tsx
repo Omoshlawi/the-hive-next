@@ -51,7 +51,7 @@ export function UserButton() {
       <DropdownMenuTrigger asChild>
         <Avatar>
           <AvatarImage src={user?.image as string | undefined} />
-          <AvatarFallback className="bg-red-500">
+          <AvatarFallback className="bg-cyan-500">
             {alt ? alt : "TH"}
           </AvatarFallback>
         </Avatar>

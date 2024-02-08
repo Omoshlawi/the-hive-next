@@ -1,7 +1,7 @@
 "use client";
 import { useApiClient } from "@/app/lib/api";
+import { User } from "@/app/lib/entities/users";
 import { SetValue } from "@/app/lib/types/base";
-import { User } from "next-auth";
 import React, {
   PropsWithChildren,
   createContext,

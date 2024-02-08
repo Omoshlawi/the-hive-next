@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { ThemeToggler } from "../ThemeToggler";
-import { HomeIcon } from "lucide-react";
 import TheHiveLogo from "../TheHiveLogo";
 import NavLinks from "./NavLinks";
 import { UserButton } from "./UserButton";
@@ -12,7 +11,9 @@ const NavBar = () => {
   const pathName = usePathname();
 
   if (
-    ["/dashboard", "/admin", "/api/auth"].some((link) => pathName.startsWith(link))
+    ["/dashboard", "/admin", "/api/auth"].some((link) =>
+      pathName.startsWith(link)
+    )
   )
     return false;
   return (
@@ -22,7 +23,7 @@ const NavBar = () => {
           <TheHiveLogo variant="both" />
         </Link>
         {/* Fix errors here */}
-        {/* <NavLinks /> */}
+        <NavLinks />
         <div className="flex space-x-2">
           <UserButton />
           <ThemeToggler />

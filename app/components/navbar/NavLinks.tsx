@@ -15,7 +15,7 @@ import GetStatedContent from "./GetStatedContent";
 
 const NavLinks = () => {
   const links = [
-    { label: "Dashboard", href: "/dasboard" },
+    { label: "Dashboard", href: "/dashboard" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
@@ -26,11 +26,11 @@ const NavLinks = () => {
           {links.map(({ href, label }, index) => {
             return (
               <NavigationMenuItem key={index}>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <Link href={href} legacyBehavior passHref>
+                <Link href={href} legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     {label}
-                  </Link>
-                </NavigationMenuLink>
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
             );
           })}

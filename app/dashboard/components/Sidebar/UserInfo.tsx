@@ -6,9 +6,11 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
-import { useSession } from "next-auth/react";
+import { useSessionContext } from "@/app/context/auth/hooks";
 const UserInfo = () => {
-  const { data: session } = useSession();
+  const { session } = useSessionContext();
+  const alt = (session?.name ?? session?.username)?.charAt(0)?.toUpperCase();
+
   return (
     <div className="hidden md:block p-2 px-4  lg:px-6">
       <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
@@ -16,15 +18,17 @@ const UserInfo = () => {
       </h3>
 
       <ListItem
-        title={session?.user?.name ?? ""}
+        title={session?.name ?? ""}
         avatar={
           <Avatar>
-            <AvatarImage src={session?.user?.image ?? ""} alt="@shadcn" />
-            <AvatarFallback>TH</AvatarFallback>
+            <AvatarImage src={session?.image ?? ""} alt="profile picture" />
+            <AvatarFallback className="bg-cyan-500">
+              {alt ? alt : "TH"}
+            </AvatarFallback>
           </Avatar>
         }
       >
-        {session?.user?.email}
+        {session?.email ?? ""}
       </ListItem>
     </div>
   );
