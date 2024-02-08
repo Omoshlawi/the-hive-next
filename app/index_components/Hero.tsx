@@ -17,7 +17,7 @@ const Hero = () => {
         <h1
           className={`text-5xl ${lusitana.className} mb-10 font-bold w-full md:w-[50%]`}
         >
-          We will find a perfect property for you
+          One step closer to your dream house
         </h1>
         <p className="mb-10  w-full md:w-[60%]">
           Find a variety of properties that suit you very easily, forget all

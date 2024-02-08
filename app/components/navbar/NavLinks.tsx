@@ -18,9 +18,10 @@ const NavLinks = () => {
     { label: "Dashboard", href: "/dashboard" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
+    { label: "Pricing", href: "/pricing" },
   ];
   return (
-    <div>
+    <div className="hidden lg:block">
       <NavigationMenu>
         <NavigationMenuList>
           {links.map(({ href, label }, index) => {
@@ -35,7 +36,7 @@ const NavLinks = () => {
             );
           })}
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Get started</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Listings</NavigationMenuTrigger>
             <NavigationMenuContent>
               <GetStatedContent />
             </NavigationMenuContent>

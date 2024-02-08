@@ -10,11 +10,14 @@ import { Pricing } from "../lib/entities/sass";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../components/ui/button";
+import { BASE_URL } from "../lib/constants";
 
 const PricingPage = async () => {
   let pricings: Pricing[] = [];
   try {
-    const response = await fetch(`/api/proxy/pricing`, { cache: "no-cache" });
+    const response = await fetch(new URL(`/api/proxy/pricing`, BASE_URL), {
+      cache: "no-cache",
+    });
     if (response.ok) {
       pricings = (await response.json()).results;
     }
@@ -23,6 +26,7 @@ const PricingPage = async () => {
   }
   return (
     <div>
+     
       <section>
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
@@ -74,7 +78,9 @@ const PricingPage = async () => {
                   href="#"
                   className="font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  <Button className="w-full">Get started</Button>
+                  <Button className="w-full bg-indigo-800 dark:bg-slate-600">
+                    Get started
+                  </Button>
                 </Link>
               </div>
             ))}

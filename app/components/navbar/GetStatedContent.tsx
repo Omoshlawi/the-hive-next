@@ -28,7 +28,7 @@ const GetStatedContent = () => {
       <ListItem href="/sell" title="Sell">
         Finde property buyer now
       </ListItem>
-      <ListItem href="/buy" title="Buy">
+      <ListItem href="/listings" title="Buy">
         Find property buyers with ease
       </ListItem>
     </ul>
