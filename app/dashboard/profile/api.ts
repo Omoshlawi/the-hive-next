@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/app/lib/constants";
 import { Token } from "@/app/lib/types/base";
 
 export const viewProfile = async (token: Token) => {
@@ -6,7 +5,7 @@ export const viewProfile = async (token: Token) => {
   myHeaders.append("x-access-token", token.accessToken);
 
   try {
-    const response = await fetch(`${BASE_URL}/users/profile`, {
+    const response = await fetch(`/api/proxy/users/profile`, {
       method: "GET",
       headers: myHeaders,
       redirect: "follow",

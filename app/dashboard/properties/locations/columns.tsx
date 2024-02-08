@@ -11,13 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { BASE_URL } from "@/app/lib/constants";
-import { UploadFile } from "@/app/lib/entities/files";
 import { Location } from "@/app/lib/entities/properties";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import moment from "moment";
-import Image from "next/image";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.

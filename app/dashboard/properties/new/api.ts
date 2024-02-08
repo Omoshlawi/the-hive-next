@@ -1,7 +1,6 @@
 import { ValidationError } from "@/app/lib/exceptions";
 import { objectToFormData } from "@/app/lib/utils";
 import { z } from "zod";
-import { BASE_URL } from "@/app/lib/constants";
 import { PropertySchema } from "@/app/lib/schema";
 
 export const addProperty = async (
@@ -9,7 +8,7 @@ export const addProperty = async (
   images: File[]
 ) => {
   const formData = objectToFormData({ ...property, images });
-  const response = await fetch(`${BASE_URL}/properties`, {
+  const response = await fetch(`/api/proxy/properties`, {
     method: "POST",
     body: formData,
     redirect: "follow",

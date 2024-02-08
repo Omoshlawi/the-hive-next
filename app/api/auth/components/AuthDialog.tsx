@@ -20,7 +20,6 @@ import {
 } from "@/app/components/ui/card";
 import { useSessionContext } from "@/app/context/auth/hooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { BASE_URL } from "@/app/lib/constants";
 import { useLocalStorage } from "@/app/lib/hooks";
 
 const AuthDialog = () => {
@@ -82,7 +81,8 @@ const AuthDialog = () => {
                     // TODO store pathName to be used to redirect on successfull authentication
                     const callbackUrl = searchParams.get("callbackUrl");
                     setCallback(callbackUrl ?? encodeURIComponent(pathName));
-                    push(`${BASE_URL}/api/auth/signin/google`);
+                    // TODO Find a way to hide proxy for the google auth
+                    push(`/api/proxy/auth/signin/google`);
                   }}
                 >
                   <svg

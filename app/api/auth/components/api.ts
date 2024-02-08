@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/app/lib/constants";
 import { ValidationError } from "@/app/lib/exceptions";
 import { LoginSchema, RegisterSchema } from "@/app/lib/schema";
 import { wait } from "@/app/lib/utils";
@@ -8,12 +7,11 @@ export const login = async (params: z.infer<typeof LoginSchema>) => {
   // await wait(5000);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const response = await fetch(`${BASE_URL}/api/auth/signin/credentials`, {
+  const response = await fetch(`/api/proxy/auth/signin/credentials`, {
     method: "POST",
     body: JSON.stringify(params),
     redirect: "follow",
     headers: myHeaders,
-    credentials: "include",
   });
   const responseData = await response.json();
   if (response.ok) {
@@ -28,12 +26,11 @@ export const login = async (params: z.infer<typeof LoginSchema>) => {
 export const register = async (params: z.infer<typeof RegisterSchema>) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const response = await fetch(`${BASE_URL}/api/auth/signup`, {
+  const response = await fetch(`api/proxy/auth/signup`, {
     method: "POST",
     body: JSON.stringify(params),
     redirect: "follow",
     headers: myHeaders,
-    credentials: "include",
   });
   const responseData = await response.json();
   if (response.ok) {

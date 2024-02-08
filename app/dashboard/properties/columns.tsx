@@ -11,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { BASE_URL } from "@/app/lib/constants";
 import { UploadFile } from "@/app/lib/entities/files";
 import { Property } from "@/app/lib/entities/properties";
 import { ColumnDef } from "@tanstack/react-table";
@@ -52,7 +51,7 @@ export const columns: ColumnDef<Property>[] = [
       return (
         <Image
           alt={row.getValue("title")}
-          src={`${BASE_URL}/files/${(renderValue() as UploadFile[])[0]?.path}`}
+          src={`/api/proxy/files/${(renderValue() as UploadFile[])[0]?.path}`}
           width={100}
           height={100}
           className="h-20 w-40 object-cover rounded-xl"

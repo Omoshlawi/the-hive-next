@@ -1,6 +1,5 @@
 import React from "react";
 import { Property } from "../lib/entities/properties";
-import { BASE_URL } from "../lib/constants";
 import { Card, CardContent } from "../components/ui/card";
 import {
   Carousel,
@@ -12,7 +11,7 @@ import {
 
 const FeaturedProducts = async () => {
   const { results: properties }: { results: Property[] } = await (
-    await fetch(`${BASE_URL}/properties/`, {
+    await fetch(`/api/proxy/properties/`, {
       cache: "no-cache",
     })
   ).json();

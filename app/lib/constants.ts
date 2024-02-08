@@ -1,7 +1,6 @@
 import { CookieSerializeOptions } from "cookie";
 
 export const MEDIA_ROOT = "/media";
-export const BASE_URL = "http://localhost:5000";
 export const authCookieConfig = {
   name: "session-token",
   config: {

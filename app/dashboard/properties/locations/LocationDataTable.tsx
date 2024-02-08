@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/app/lib/constants";
 import { PropsWithSearchParams } from "@/app/lib/types/base";
 import React from "react";
 import { columns } from "./columns";
@@ -10,7 +9,7 @@ const LocationDataTable: React.FC<PropsWithSearchParams> = async ({
 }) => {
   const queryParams = new URLSearchParams(searchParams);
   const { results: locations }: { results: Location[] } = await (
-    await fetch(`${BASE_URL}/properties/locations?${queryParams.toString()}`, {
+    await fetch(`/api/proxy/properties/locations?${queryParams.toString()}`, {
       cache: "no-cache",
     })
   ).json();

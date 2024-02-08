@@ -2,12 +2,11 @@ import { LocationSchema } from "@/app/lib/schema";
 import { ValidationError } from "@/app/lib/exceptions";
 
 import { z } from "zod";
-import { BASE_URL } from "@/app/lib/constants";
 
 export const addLocation = async (location: z.infer<typeof LocationSchema>) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const response = await fetch(`${BASE_URL}/properties/locations`, {
+  const response = await fetch(`/api/proxy/properties/locations`, {
     method: "POST",
     body: JSON.stringify(location),
     redirect: "follow",

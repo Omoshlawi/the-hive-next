@@ -1,7 +1,6 @@
 "use client";
 import { useApiClient } from "@/app/lib/api";
 import { User } from "@/app/lib/entities/users";
-import { SetValue } from "@/app/lib/types/base";
 import React, {
   PropsWithChildren,
   createContext,
@@ -37,11 +36,9 @@ export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const nortifyAll = () => setUpdated(!updated);
   useEffect(() => {
     (async () => {
-      await request({ url: `users/profile`, credentials: "include" });
+      await request({ url: `users/profile` });
     })();
   }, [updated]);
-
-  // useEffect(()=>{}, [data,error,])
 
   return (
     <Provider

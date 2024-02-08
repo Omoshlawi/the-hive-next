@@ -14,7 +14,6 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import { User } from "@/app/lib/entities/users";
-import { BASE_URL } from "@/app/lib/constants";
 export const metadata: Metadata = {
   title: "Profile Page | The hive",
   description: "This is Profile page for he hive",
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 const Profile = async () => {
   let user: User;
   try {
-    const response = await await fetch(`${BASE_URL}/users/profile`, {
+    const response = await await fetch(`/api/proxy/users/profile`, {
       cache: "no-cache",
     });
     const responseData = await response.json();

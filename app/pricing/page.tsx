@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
-import { BASE_URL } from "../lib/constants";
 import { Pricing } from "../lib/entities/sass";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
@@ -15,7 +14,7 @@ import { Button } from "../components/ui/button";
 const PricingPage = async () => {
   let pricings: Pricing[] = [];
   try {
-    const response = await fetch(`${BASE_URL}/pricing`, { cache: "no-cache" });
+    const response = await fetch(`/api/proxy/pricing`, { cache: "no-cache" });
     if (response.ok) {
       pricings = (await response.json()).results;
     }

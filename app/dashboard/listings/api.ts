@@ -1,7 +1,6 @@
 import { ValidationError } from "@/app/lib/exceptions";
 import { objectToFormData } from "@/app/lib/utils";
 import { z } from "zod";
-import { BASE_URL } from "@/app/lib/constants";
 import {
   RentalListingSchema,
   SaleListingSchema,
@@ -14,7 +13,7 @@ export const addRentalListing = async (
   alert(JSON.stringify(property, null, 2));
 
   const formData = objectToFormData({ ...property, coverImage });
-  const response = await fetch(`${BASE_URL}/properties`, {
+  const response = await fetch(`/api/proxy/properties`, {
     method: "POST",
     body: formData,
     redirect: "follow",
@@ -41,7 +40,7 @@ export const addSalesListing = async (
 ) => {
   alert(JSON.stringify(property, null, 2));
   const formData = objectToFormData({ ...property, coverImage });
-  const response = await fetch(`${BASE_URL}/properties`, {
+  const response = await fetch(`/api/proxy/properties`, {
     method: "POST",
     body: formData,
     redirect: "follow",

@@ -1,13 +1,13 @@
-import { Building, Home, ShieldCheck } from "lucide-react";
+import { Banknote, Building, Home, ShieldCheck } from "lucide-react";
 
 export default [
   {
     group: "Admin",
     links: [
       {
-        label: "Pricing",
+        label: "Sass",
         href: "dashboard/admin",
-        renderIcon: () => <ShieldCheck />,
+        renderIcon: () => <Banknote />,
         children: [
           {
             label: "Pricings",

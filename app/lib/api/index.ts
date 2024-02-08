@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { BASE_URL } from "../constants";
-import { stat } from "fs";
-
 interface RequestOptions extends RequestInit {
   url: string;
 }
@@ -33,7 +30,7 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
     try {
       setState({ loading: true });
 
-      response = await fetch(`${BASE_URL}/${options.url}`, options);
+      response = await fetch(`/api/proxy/${options.url}`, options);
       const data = await response.json();
       const status = response.status;
       // console.log(data);
