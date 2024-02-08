@@ -2,18 +2,31 @@ import { DataTable } from "@/app/components/display/data-table";
 import React from "react";
 import { columns } from "../columns";
 import { Property } from "@/app/lib/entities/properties";
+import { PropsWithSearchParams } from "@/app/lib/types/base";
+import { BASE_URL } from "@/app/lib/constants";
 
-const PropertyDataTable = async ({ searchParams }: { searchParams?: {} }) => {
+const PropertyDataTable: React.FC<PropsWithSearchParams> = async ({
+  searchParams,
+}) => {
   // await new Promise((resolve) => {
   //   setTimeout(resolve, 3000);
   // });
-  const queryParams = new URLSearchParams(searchParams);
-  const { results: properties }: { results: Property[] } = await (
-    await fetch(`/api/proxy/properties/?${queryParams.toString()}`, {
-      cache: "no-cache",
-    })
-  ).json();
-
+  let properties: Property[];
+  try {
+    const queryParams = new URLSearchParams(searchParams);
+    const { results }: { results: Property[] } = await (
+      await fetch(
+        new URL(`/api/proxy/properties?${queryParams.toString()}`, BASE_URL),
+        {
+          cache: "no-cache",
+        }
+      )
+    ).json();
+    properties = results;
+  } catch (error: any) {
+    console.log(error.message);
+    properties = [];
+  }
   return <DataTable columns={columns} data={properties} />;
 };
 

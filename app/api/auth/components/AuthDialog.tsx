@@ -82,7 +82,7 @@ const AuthDialog = () => {
                     const callbackUrl = searchParams.get("callbackUrl");
                     setCallback(callbackUrl ?? encodeURIComponent(pathName));
                     // TODO Find a way to hide proxy for the google auth
-                    push(`/api/proxy/auth/signin/google`);
+                    push(`/api/proxy/api/auth/signin/google`);
                   }}
                 >
                   <svg

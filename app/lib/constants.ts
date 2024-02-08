@@ -11,6 +11,8 @@ export const authCookieConfig = {
     path: "/",
   } as CookieSerializeOptions,
 };
+export const BASE_URL = "http://localhost:3000";
+
 export const fileExtensionsColors: { [key: string]: string } = {
   // Images
   jpg: "#ff4081",

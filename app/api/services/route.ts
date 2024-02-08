@@ -1,10 +1,6 @@
 import { ServiceSchema } from "@/app/lib/schema/pricing";
 import prisma from "@/prisma/client";
-import { existsSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import fs from "fs/promises";
-import { MEDIA_ROOT } from "@/app/lib/constants";
 import { upload } from "@/app/lib/serverutils";
 import slugify from "slugify";
 
