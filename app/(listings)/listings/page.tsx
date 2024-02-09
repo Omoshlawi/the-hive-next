@@ -1,6 +1,15 @@
 import React from "react";
 import { BASE_URL } from "../../lib/constants";
 import { PropsWithSearchParams } from "../../lib/types/base";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/app/components/ui/pagination";
 
 const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -23,11 +32,14 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   }
 
   return (
-    <div>
-      <section className="flex flex-col items-center">
-        <h1 className="mt-10 text-4xl font-bold text-gray-800">New Listings</h1>
-        <div className="mt-10 grid max-w-md grid-cols-1 gap-6 px-2 sm:max-w-lg sm:px-20 md:max-w-screen-xl md:grid-cols-2 md:px-10 lg:grid-cols-3 lg:gap-8">
-          <article className="mb-4 overflow-hidden rounded-xl border text-gray-700 shadow-md duration-500 ease-in-out hover:shadow-xl">
+    <div className="w-full rounded-sm p-5 flex flex-col space-y-4 shadow-sm shadow-indigo-800">
+      <h1 className=" text-xl font-bold w-full">Property listings</h1>
+      <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <article
+            key={index}
+            className="mb-4 overflow-hidden rounded-xl border text-gray-700 shadow-md duration-500 ease-in-out hover:shadow-xl"
+          >
             <div className="">
               <img
                 src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -170,7 +182,31 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
               </ul>
             </div>
           </article>
-        </div>
+        ))}
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                2
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </section>
     </div>
   );
