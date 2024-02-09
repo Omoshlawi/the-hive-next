@@ -12,24 +12,89 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Button } from "@/app/components/ui/button";
-import { MoreHorizontal, PenSquare, Trash2 } from "lucide-react";
+import { MoreHorizontal, PenSquare, Trash2, ArrowUpDown } from "lucide-react";
+import moment from "moment/moment";
 
 export const columns: ColumnDef<Pricing>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="text-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="text-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "billingInterval",
-    header: "Billing Interval",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="text-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Billing Interval
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="text-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Created
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const time = moment(row.getValue("createdAt")).format("Do ddd MMM yyy");
+
+      return <div>{time}</div>;
+    },
   },
   {
     accessorKey: "price",
-    header: () => <div className="text-right">Price</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="text-start"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -37,7 +102,7 @@ export const columns: ColumnDef<Pricing>[] = [
         currency: "KES",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {

@@ -51,7 +51,7 @@ const PicingsPage: React.FC<PropsWithSearchParams> = ({ searchParams }) => {
             key={"searchResults"}
             fallback={<TableSkeleton cols={4} rows={7} />}
           >
-            <PricingsTable />
+            <PricingsTable searchParams={searchParams} />
           </Suspense>
         </CardContent>
       </Card>
