@@ -14,8 +14,31 @@ import {
 import { Button } from "@/app/components/ui/button";
 import { MoreHorizontal, PenSquare, Trash2, ArrowUpDown } from "lucide-react";
 import moment from "moment/moment";
+import { Checkbox } from "@/app/components/ui/checkbox";
 
 export const columns: ColumnDef<Pricing>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {

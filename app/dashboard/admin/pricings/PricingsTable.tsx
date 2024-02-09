@@ -1,3 +1,4 @@
+"use client";
 import { DataTable } from "@/app/components/display/data-table";
 import { BASE_URL } from "@/app/lib/constants";
 import { PropsWithSearchParams } from "@/app/lib/types/base";
@@ -19,7 +20,14 @@ const PricingsTable: React.FC<PropsWithSearchParams> = async ({
   } catch (error) {
     console.log(error);
   }
-  return <DataTable columns={columns} data={pricings} />;
+  return (
+    <DataTable
+      columns={columns}
+      data={pricings}
+      onAdd={() => alert("Add new")}
+      onDeleteSelected={(selected) => alert(JSON.stringify(selected, null, 2))}
+    />
+  );
 };
 
 export default PricingsTable;

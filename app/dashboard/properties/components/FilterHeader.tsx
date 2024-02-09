@@ -64,6 +64,7 @@ const FilterHeader: React.FC<Props> = ({}) => {
     <div className="flex flex-col md:flex-row md:space-x-2 max-md:space-y-2">
       <div className="flex-1">
         <Input
+          className="min-w-[350px]"
           placeholder="Search...."
           onChange={({ target: { value } }) => {
             handleSearch(value);
@@ -73,7 +74,7 @@ const FilterHeader: React.FC<Props> = ({}) => {
           }
         />
       </div>
-      <div className="flex-none md:w-52">
+      <div className="flex-none md:w-52 ">
         <Select
           onValueChange={(value) => {
             const queryParams = new URLSearchParams(searchParams);

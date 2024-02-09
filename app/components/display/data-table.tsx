@@ -9,6 +9,7 @@ import {
   getSortedRowModel,
   useReactTable,
   VisibilityState,
+  Row,
 } from "@tanstack/react-table";
 
 import {
@@ -30,20 +31,27 @@ import {
 } from "@/app/components/ui/table";
 import { Button } from "../ui/button";
 import React from "react";
-import { SlidersHorizontal } from "lucide-react";
+import { PlusIcon, SlidersHorizontal, Trash2 } from "lucide-react";
+import FilterHeader from "@/app/dashboard/properties/components/FilterHeader";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onDeleteSelected?: (selected: TData[]) => void;
+  onAdd?: () => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onAdd,
+  onDeleteSelected,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -52,19 +60,30 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
 
     state: {
       sorting,
       columnVisibility,
+      rowSelection,
     },
   });
 
   return (
-    <div>
-      <div className="flex items-center py-4">
+    <div className="space-y-4">
+      <div className="flex flex-col max-lg:space-y-2  lg:flex-row lg:items-center lg:space-x-2 lg:overflow-y-auto">
+        <div className="flex-1">
+          <FilterHeader />
+        </div>
+        <Button className="w-full lg:max-w-[180px] space-x-2" onClick={onAdd}>
+          <PlusIcon /> Add
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto ">
+            <Button
+              variant="outline"
+              className="ml-auto w-full lg:max-w-[180px] space-x-2"
+            >
               <SlidersHorizontal />
               <span>Columns</span>
             </Button>
@@ -91,7 +110,30 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Button
+          variant={"outline"}
+          className="w-full flex-none lg:max-w-[180px]"
+          onClick={() =>
+            onDeleteSelected?.(
+              table
+                .getFilteredSelectedRowModel()
+                .rows.map((row) => row.original)
+            )
+          }
+        >
+          <div className="flex items-center space-x-2 text-red-900">
+            <Trash2 />{" "}
+            <span className="text-lg">
+              Delete {table.getFilteredSelectedRowModel().rows.length}
+            </span>
+          </div>
+        </Button>
       </div>
+      {/* <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div> */}
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
