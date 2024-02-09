@@ -20,14 +20,8 @@ const PricingsTable: React.FC<PropsWithSearchParams> = async ({
   } catch (error) {
     console.log(error);
   }
-  return (
-    <DataTable
-      columns={columns}
-      data={pricings}
-      onAdd={() => alert("Add new")}
-      onDeleteSelected={(selected) => alert(JSON.stringify(selected, null, 2))}
-    />
-  );
+
+  return <DataTable columns={columns} data={pricings} />;
 };
 
 export default PricingsTable;

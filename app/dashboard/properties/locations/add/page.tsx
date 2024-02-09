@@ -3,26 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/app/components/ui/use-toast";
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
+import React from "react";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/app/components/ui/form";
-import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import { ValidationError } from "@/app/lib/exceptions";
 import { addLocation, updateLocation } from "./../api";
@@ -36,7 +20,6 @@ import { lusitana } from "@/app/fonts";
 import clsx from "clsx";
 import LocationGoogleMap from "./LocationGoogleMap";
 import LocationDetail from "./LocationDetail";
-import { objectToFormData } from "@/app/lib/utils";
 
 type LocationFormType = z.infer<typeof LocationSchema>;
 
