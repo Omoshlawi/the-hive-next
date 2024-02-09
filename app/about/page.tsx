@@ -1,6 +1,7 @@
 import React from "react";
 import ClientTestimony from "../index_components/ClientTestimony";
 import WhyUs from "../index_components/WhyUs";
+import FAQ from "../index_components/FAQ";
 
 const AboutPage = () => {
   return (
@@ -57,6 +58,7 @@ const AboutPage = () => {
         </div>
       </section>
       <WhyUs />
+      <FAQ />
       <ClientTestimony />
     </div>
   );

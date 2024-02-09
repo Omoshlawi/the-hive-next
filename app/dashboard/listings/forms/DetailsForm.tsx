@@ -6,8 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { PropertySchema } from "@/app/lib/schema";
-import React, { Suspense, useRef } from "react";
+import React from "react";
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 import {

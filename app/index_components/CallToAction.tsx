@@ -14,12 +14,13 @@ const CallToAction = () => {
           </p>
           <Link
             href="#"
-            className="shadow-pink-600/30 mt-10 inline-flex h-12 items-center rounded-full bg-indigo-500 px-6 py-3 text-xl font-light text-white shadow-md transition hover:translate-y-1 hover:scale-105 hover:bg-pink-600 hover:shadow-lg"
+            className="shadow-pink-600/30 mt-10 inline-flex h-12 items-center rounded-full bg-indigo-500 px-6 py-3 text-xl font-light text-white shadow-md transition hover:translate-y-1 hover:scale-105 hover:bg-gray-600 hover:shadow-lg"
           >
             Contact Us
           </Link>
         </div>
       </div>
+      
     </section>
   );
 };

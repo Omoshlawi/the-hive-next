@@ -43,11 +43,6 @@ const Services = async () => {
       description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
       icon: <Briefcase width={96} height={96} />,
     },
-    {
-      title: "Investment search",
-      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit enim totam possimus rem. Totam, quis!`,
-      icon: <HeartHandshakeIcon width={96} height={96} />,
-    },
   ];
   return (
     <div className="p-5 flex flex-col justify-center items-center">
