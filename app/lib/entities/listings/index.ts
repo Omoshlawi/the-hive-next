@@ -12,7 +12,7 @@ export interface Listing extends Entity {
   published: boolean;
   properties: ListingProperty[];
   rentalListings?: RentalListing[];
-  saleListings?: SaleListing;
+  saleListings?: SaleListing[];
 }
 
 export interface ListingProperty extends Entity {
@@ -33,6 +33,6 @@ export interface SaleListing extends Entity {
   id: string;
   listing: Listing;
   downPaymentRequired: number;
-  closingDate: Date;
+  closingDate: string;
   mortgageOptions?: string;
 }
