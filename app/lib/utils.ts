@@ -94,3 +94,11 @@ export const handleFormErrors = (error: any, form: any) => {
     });
   }
 };
+
+export const formartCurrency = (amount: number) => {
+  const formatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "KES",
+  }).format(amount);
+  return formatted;
+};

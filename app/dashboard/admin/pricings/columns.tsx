@@ -15,6 +15,7 @@ import { Button } from "@/app/components/ui/button";
 import { MoreHorizontal, PenSquare, Trash2, ArrowUpDown } from "lucide-react";
 import moment from "moment/moment";
 import { Checkbox } from "@/app/components/ui/checkbox";
+import { formartCurrency } from "@/app/lib/utils";
 
 export const columns: ColumnDef<Pricing>[] = [
   {
@@ -49,21 +50,6 @@ export const columns: ColumnDef<Pricing>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="text-start"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -120,12 +106,7 @@ export const columns: ColumnDef<Pricing>[] = [
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "KES",
-      }).format(amount);
-
-      return <div className="font-medium">{formatted}</div>;
+      return <div className="font-medium">{formartCurrency(amount)}</div>;
     },
   },
   {

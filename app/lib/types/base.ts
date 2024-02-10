@@ -17,6 +17,10 @@ export interface PropsWithSearchParams {
   searchParams?: Record<string, string>;
 }
 
+export interface PropsWithPathParams {
+  params: Record<string, string>;
+}
+
 export interface APIListingResponse<T extends Entity> {
   results: T[];
 }
