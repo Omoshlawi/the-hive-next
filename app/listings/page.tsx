@@ -14,7 +14,7 @@ import { formartCurrency } from "@/app/lib/utils";
 import { Badge } from "@/app/components/ui/badge";
 import { PropsWithSearchParams } from "../lib/types/base";
 import { BASE_URL } from "../lib/constants";
-import ListLayout from "./components/ListLayout";
+import { ListLayout } from "./components";
 
 const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -57,7 +57,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                       href={`/listings/${id}`}
                       className="text-lg hover:text-indigo-600 font-medium duration-500 ease-in-out"
                     >
-                      {title}-{title}({properties.length} properties)
+                      {title}({properties.length} properties)
                     </Link>
                   </div>
                   <div className="box-border flex border-t border-b border-solid border-gray-200 px-0 py-6 space-x-2 flex-wrap">
