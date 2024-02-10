@@ -16,7 +16,7 @@ const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
     return <div>404 not found</div>;
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 m-2 lg:mx-10 lg:my-5">
+    <div className="grid grid-cols-1 lg:grid-cols-4 m-2 lg:mx-10 lg:my-5 gap-2">
       <div className="lg:col-span-1 lg:mr-10 ">
         <ListingProfile listing={listing} />
       </div>

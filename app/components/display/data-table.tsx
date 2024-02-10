@@ -75,9 +75,11 @@ export function DataTable<TData, TValue>({
         <div className="flex-1">
           <FilterHeader />
         </div>
-        <Button className="w-full lg:max-w-[180px] space-x-2" onClick={onAdd}>
-          <PlusIcon /> Add
-        </Button>
+        {typeof onAdd === "function" && (
+          <Button className="w-full lg:max-w-[180px] space-x-2" onClick={onAdd}>
+            <PlusIcon /> Add
+          </Button>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -110,24 +112,26 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button
-          variant={"outline"}
-          className="w-full flex-none lg:max-w-[180px]"
-          onClick={() =>
-            onDeleteSelected?.(
-              table
-                .getFilteredSelectedRowModel()
-                .rows.map((row) => row.original)
-            )
-          }
-        >
-          <div className="flex items-center space-x-2 text-red-900">
-            <Trash2 />{" "}
-            <span className="text-lg">
-              Delete {table.getFilteredSelectedRowModel().rows.length}
-            </span>
-          </div>
-        </Button>
+        {typeof onDeleteSelected === "function" && (
+           <Button
+            variant={"outline"}
+            className="w-full flex-none lg:max-w-[180px]"
+            onClick={() =>
+              onDeleteSelected?.(
+                table
+                  .getFilteredSelectedRowModel()
+                  .rows.map((row) => row.original)
+              )
+            }
+          >
+            <div className="flex items-center space-x-2 text-red-900">
+              <Trash2 />{" "}
+              <span className="text-lg">
+                Delete {table.getFilteredSelectedRowModel().rows.length}
+              </span>
+            </div>
+          </Button>
+        )}
       </div>
       {/* <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
