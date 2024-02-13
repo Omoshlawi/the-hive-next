@@ -14,7 +14,8 @@ import { formartCurrency } from "@/app/lib/utils";
 import { Badge } from "@/app/components/ui/badge";
 import { PropsWithSearchParams } from "../lib/types/base";
 import { BASE_URL } from "../lib/constants";
-import { ListLayout } from "./components";
+import { ListLayoutWithSideBar } from "../components/layouts";
+import { FilterForm } from "./components";
 
 const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -37,10 +38,9 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   }
 
   return (
-    <ListLayout>
+    <ListLayoutWithSideBar sideBar={<FilterForm />}>
       <div className="w-full rounded-sm p-5 flex flex-col space-y-4 shadow-sm shadow-indigo-800">
         <h1 className=" text-xl font-bold w-full">Property listings</h1>
-
         <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
           {listings.map(
             ({ tags, coverImage, id, title, price, properties }, index) => (
@@ -64,7 +64,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                       {title}({properties.length} properties)
                     </Link>
                   </div>
-                  <div className="box-border flex border-t border-b border-solid border-gray-200 px-0 py-6 space-x-2 flex-wrap">
+                  <div className="box-border flex border-t border-b border-solid border-gray-200 px-0 py-6 space-x-2 flex-wrap space-y-1">
                     {tags.map((amenity, index) => (
                       <Badge key={index}>{amenity}</Badge>
                     ))}
@@ -225,7 +225,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
           </Pagination>
         </section>
       </div>
-    </ListLayout>
+    </ListLayoutWithSideBar>
   );
 };
 

@@ -10,10 +10,8 @@ export const addRentalListing = async (
   property: z.infer<typeof RentalListingSchema>,
   coverImage: File
 ) => {
-  alert(JSON.stringify(property, null, 2));
-
   const formData = objectToFormData({ ...property, coverImage });
-  const response = await fetch(`/api/proxy/properties`, {
+  const response = await fetch(`/api/proxy/listings/rentals`, {
     method: "POST",
     body: formData,
     redirect: "follow",
@@ -38,14 +36,19 @@ export const addSalesListing = async (
   property: z.infer<typeof SaleListingSchema>,
   coverImage: File
 ) => {
-  alert(JSON.stringify(property, null, 2));
-  const formData = objectToFormData({ ...property, coverImage });
-  const response = await fetch(`/api/proxy/properties`, {
+  const formData = objectToFormData({
+    ...property,
+    coverImage,
+    closingDate: property.closingDate.toISOString(),
+  });
+  const response = await fetch(`/api/proxy/listings/sales`, {
     method: "POST",
     body: formData,
     redirect: "follow",
   });
   const responseData = await response.json();
+  console.log(responseData);
+
   if (response.ok) {
     return responseData;
   } else if (response.status === 400) {

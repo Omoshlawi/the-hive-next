@@ -1,8 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, Suspense } from "react";
 import { PropsWithPathParams } from "@/app/lib/types/base";
 import { Listing } from "@/app/lib/entities/listings";
 import { BASE_URL } from "@/app/lib/constants";
-import { ListingProfile } from "../components";
+import { ListingProfile, ListingPropertyCard } from "../components";
+import { ListLayoutWithSideBar } from "@/app/components/layouts";
 
 const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
   let listing: Listing;
@@ -16,12 +17,18 @@ const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
     return <div>404 not found</div>;
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 m-2 lg:mx-10 lg:my-5 gap-2">
-      <div className="lg:col-span-1 lg:mr-10 ">
-        <ListingProfile listing={listing} />
+    <ListLayoutWithSideBar sideBar={<ListingProfile listing={listing} />}>
+      <div className="w-full rounded-sm p-5 flex flex-col space-y-4 shadow-sm shadow-indigo-800">
+        <h1 className=" text-xl font-bold w-full">Listing Properties</h1>
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+          {listing.properties.map(({ property }, index) => (
+            <Suspense fallback={<div>Loading property ....</div>} key={index}>
+              <ListingPropertyCard propertyId={property} />
+            </Suspense>
+          ))}
+        </section>
       </div>
-      <div className="lg:col-span-3">properties info</div>
-    </div>
+    </ListLayoutWithSideBar>
   );
 };
 
