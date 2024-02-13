@@ -1,4 +1,5 @@
 import { Entity } from "../../types/base";
+import { UploadFile } from "../files";
 
 export interface Listing extends Entity {
   id: string;
@@ -8,7 +9,7 @@ export interface Listing extends Entity {
   price: number;
   tags: string[];
   amenities: string[];
-  coverImage: string;
+  coverImage: UploadFile;
   published: boolean;
   properties: ListingProperty[];
   rentalListings?: RentalListing[];

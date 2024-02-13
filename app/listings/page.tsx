@@ -49,7 +49,11 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                 className="mb-4 overflow-hidden rounded-xl border shadow-md duration-500 ease-in-out hover:shadow-xl"
               >
                 <div className="">
-                  <img src={coverImage} alt="" className="" />
+                  <img
+                    src={`/api/proxy/files/${coverImage.path}`}
+                    alt={title}
+                    className="bg-indigo-800"
+                  />
                 </div>
                 <div className="p-4">
                   <div className="pb-6">

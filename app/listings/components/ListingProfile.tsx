@@ -38,7 +38,11 @@ const ListingProfile: FC<Props> = ({
         <div className="h-full bg-background" />
       </div>
       {/* EndBackground */}
-      <img src={coverImage} alt="" className="rounded-full h-56 w-56 mt-5" />
+      <img
+        src={`/api/proxy/files/${coverImage.path}`}
+        alt={title}
+        className="rounded-full h-56 w-56 mt-5 bg-indigo-800 "
+      />
       <div className="w-full grid grid-cols-1 gap-2 p-4">
         <span
           className={clsx(
