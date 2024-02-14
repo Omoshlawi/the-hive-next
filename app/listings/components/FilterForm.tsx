@@ -13,6 +13,7 @@ import {
 } from "@/app/components/ui/accordion";
 import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
+import { Card } from "@/app/components/ui/card";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
@@ -26,7 +27,7 @@ const FilterForm = () => {
     "Entertainment",
   ];
   return (
-    <div className="shadow-gray-800 shadow-sm rounded-sm">
+    <Card className="border-none shadow-md shadow-indigo-400">
       {/* Header */}
       <div className="p-2 ">
         <div className="w-full flex justify-between items-center mb-2 ">
@@ -149,7 +150,7 @@ const FilterForm = () => {
           </AccordionItem>
         </Accordion>
       </div>
-    </div>
+    </Card>
   );
 };
 

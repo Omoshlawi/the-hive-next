@@ -21,6 +21,7 @@ const ListingPropertyCard = async ({ propertyId }: Props) => {
     return <div>404 not found</div>;
   }
 
+  // TODO Display Only two tags, extra atrs and thirs should be other and indicates number
   return (
     <article className="mb-4 overflow-hidden rounded-xl border shadow-md duration-500 ease-in-out hover:shadow-xl">
       <div className="">
@@ -33,7 +34,7 @@ const ListingPropertyCard = async ({ propertyId }: Props) => {
       <div className="p-4">
         <div className="pb-6">
           <Link
-            href={`/listings/${propertyId}`}
+            href={`/properties/${propertyId}`}
             className="text-lg hover:text-indigo-600 font-medium duration-500 ease-in-out"
           >
             {property.title}
