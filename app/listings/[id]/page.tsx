@@ -18,7 +18,7 @@ const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
   }
   return (
     <ListLayoutWithSideBar sideBar={<ListingProfile listing={listing} />}>
-      <div className="w-full rounded-sm p-5 flex flex-col space-y-4 shadow-sm shadow-indigo-800">
+      <div className="w-full rounded-sm p-5 flex flex-col space-y-4">
         <h1 className=" text-xl font-bold w-full">Listing Properties</h1>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
           {listing.properties.map(({ property }, index) => (
