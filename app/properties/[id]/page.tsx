@@ -8,25 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/app/components/ui/carousel";
 import ImageDisplay from "./ImageDisplay";
 import { ListLayoutWithSideBar } from "@/app/components/layouts";
 import { FilterForm } from "@/app/listings/components";
-import {
-  BookmarkPlus,
-  Check,
-  CheckCircle,
-  CheckCircle2,
-  Heart,
-} from "lucide-react";
+import { BookmarkPlus, CheckCircle, CheckCircle2, Heart } from "lucide-react";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
+import LocationPlotter from "@/app/components/display/LocationPlotter";
+import ReviewForm from "./ReviewForm";
 
 const PropertyDetail: FC<PropsWithPathParams> = async ({
   params: { id: propertyId },
@@ -116,6 +105,26 @@ const PropertyDetail: FC<PropsWithPathParams> = async ({
                   </div>
                 ))}
               </div>
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md shadow-indigo-400">
+            <CardHeader>
+              <CardTitle>Property Location</CardTitle>
+            </CardHeader>
+            <CardContent className="h-80 rounded-md overflow-hidden">
+              <LocationPlotter
+                lat={property.location.latitude}
+                lng={property.location.longitude}
+                display={`${property.location.address} ${property.location.city} ${property.location.state} ${property.location.country} ${property.location.zipCode}`}
+              />
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md shadow-indigo-400">
+            <CardHeader>
+              <CardTitle>Write a View</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ReviewForm propertyId={property._id! as string} />
             </CardContent>
           </Card>
         </div>
