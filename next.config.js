@@ -7,7 +7,8 @@ const nextConfig = {
     return [
       {
         source: "/api/proxy/:path*",
-        destination: `${process.env.BACKEND_URL}/:path*`,
+        // destination: `${process.env.BACKEND_URL}/:path*`,
+        destination: 'http://localhost:5000/:path'
       },
     ];
   },
