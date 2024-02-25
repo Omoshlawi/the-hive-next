@@ -14,6 +14,8 @@ import {
   TwitterIcon,
 } from "lucide-react";
 import { User } from "@/app/lib/entities/users";
+import { viewProfile } from "./api";
+import { Token } from "@/app/lib/types/base";
 export const metadata: Metadata = {
   title: "Profile Page | The hive",
   description: "This is Profile page for he hive",
@@ -22,19 +24,26 @@ export const metadata: Metadata = {
 
 const Profile = async () => {
   let user: User;
-  try {
-    const response = await await fetch(`/api/proxy/users/profile`, {
-      cache: "no-cache",
-    });
-    const responseData = await response.json();
-    if (response.ok) {
-      user = responseData;
-    } else if (response.status === 401) {
-      // Unauthorized
-    } else {
-      // Any other error
-    }
-  } catch (error) {}
+  // try {
+  //   const response = await await fetch(`/api/proxy/users/profile`, {
+  //     cache: "no-cache",
+  //   });
+  //   const responseData = await response.json();
+  //   if (response.ok) {
+  //     user = responseData;
+  //   } else if (response.status === 401) {
+  //     // Unauthorized
+  //   } else {
+  //     // Any other error
+  //   }
+  // } catch (error) {}
+
+  // Obtaining the token ??
+  const token: Token = {
+    accessToken: "",
+    refreshToken: ""
+  }
+  user = await viewProfile(token)
 
   return (
     <div className="flex flex-col items-center">
@@ -68,7 +77,7 @@ const Profile = async () => {
           </Button>
         </CardHeader>
         <CardContent className="pt-10 md:pt-14 lg:pt-16">
-          <p className="font-bold text-center text-2xl">Laurent Ouma</p>
+          <p className="font-bold text-center text-2xl">{ user ? user.name : "Laurent Ouma"}</p>
           <p className="text-center text-zinc-500 p-3">
             Property manager bio goes here though i need long one to see how it
             works
