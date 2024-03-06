@@ -1,4 +1,11 @@
-import { Banknote, Building, Home, ShieldCheck } from "lucide-react";
+import {
+  Banknote,
+  Building,
+  Home,
+  LucideRadioTower,
+  ShieldCheck,
+  User2Icon,
+} from "lucide-react";
 
 export default [
   {
@@ -121,6 +128,16 @@ export default [
             href: "/dashboard/listings/sales",
           },
         ],
+      },
+      {
+        label: "Agents",
+        href: "/dashboard/agents",
+        renderIcon: () => <User2Icon />,
+      },
+      {
+        label: "Agencies",
+        href: "/dashboard/agencies",
+        renderIcon: () => <LucideRadioTower />,
       },
       {
         label: "Profile",

@@ -22,14 +22,14 @@ const GetStatedContent = () => {
           </Link>
         </NavigationMenuLink>
       </li>
-      <ListItem href="/rent" title="Rent">
-        Find suitable properties for rent
+      <ListItem href="/listings" title="Properties">
+        Find properties listed for sales, rent, lease, e.t.c
       </ListItem>
-      <ListItem href="/sell" title="Sell">
-        Finde property buyer now
+      <ListItem href="/agents" title="Agents">
+        Find trusted reputable agents
       </ListItem>
-      <ListItem href="/listings" title="Buy">
-        Find property buyers with ease
+      <ListItem href="/agencies" title="Agencies">
+        Find best popular trusted agencies
       </ListItem>
     </ul>
   );

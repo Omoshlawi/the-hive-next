@@ -9,14 +9,14 @@ export interface Agent extends Entity {
   contacts: AgentContact[];
   memberShips: AgencyMembership[];
   user?: string;
-  profilePic?: UploadFile;
+  profilePic: UploadFile;
   specialties?: string[];
   licenses?: Record<string, any>; //TODO make required in 2nd mvp
   achievements?: Record<string, any>;
   facebook?: string;
   linkedIn?: string;
   twitter?: string;
-  instagram?: String;
+  instagram?: string;
 }
 
 export interface AgentContact extends Entity {
