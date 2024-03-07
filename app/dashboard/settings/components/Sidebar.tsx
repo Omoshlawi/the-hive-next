@@ -14,7 +14,7 @@ const Sidebar = () => {
     { name: "Teams", href: "/dashboard/settings/teams" },
     { name: "Accounts", href: "/dashboard/settings/accounts" },
     { name: "Users", href: "/dashboard/settings/users" },
-    { name: "Billing", href: "/dashboard/settings/billings" },
+    { name: "Billing", href: "/dashboard/settings/subscriptions" },
     { name: "Notifications", href: "/dashboard/settings/notofications" },
   ];
 
