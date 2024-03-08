@@ -1,16 +1,19 @@
-import { Token } from "@/app/lib/types/base";
+import { BASE_URL } from "@/app/lib/constants";
 
-export const viewProfile = async (token: Token) => {
-  var myHeaders = new Headers();
-  myHeaders.append("x-access-token", token.accessToken);
-
+export const viewProfile = async () => {
   try {
-    const response = await fetch(`/api/proxy/users/profile`, {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    });
+    const response = await fetch(
+      new URL(`/api/proxy/users/profile`, BASE_URL),
+      {
+        cache: "no-cache",
+        redirect: "follow",
+      }
+    );
     const responseData = await response.json();
-    return responseData;
-  } catch (error) {}
+    if (response.ok) {
+      return responseData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

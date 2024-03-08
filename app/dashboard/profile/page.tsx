@@ -23,28 +23,8 @@ export const metadata: Metadata = {
 };
 
 const Profile = async () => {
-  let user: User;
-  // try {
-  //   const response = await await fetch(`/api/proxy/users/profile`, {
-  //     cache: "no-cache",
-  //   });
-  //   const responseData = await response.json();
-  //   if (response.ok) {
-  //     user = responseData;
-  //   } else if (response.status === 401) {
-  //     // Unauthorized
-  //   } else {
-  //     // Any other error
-  //   }
-  // } catch (error) {}
-
-  // Obtaining the token ??
-  const token: Token = {
-    accessToken: "",
-    refreshToken: ""
-  }
-  user = await viewProfile(token)
-
+  const user = await viewProfile();
+  console.log(user);
   return (
     <div className="flex flex-col items-center">
       <p
