@@ -28,3 +28,15 @@ export interface FeaturePricing {
   pricing?: Pricing;
   feature?: Feature;
 }
+
+export interface UserSubscription extends Entity {
+  id: string;
+  user: string;
+  featurePricingLimitId?: string;
+  featurePricing: FeaturePricing;
+  startDate: string;
+  endDate: string;
+  status: "active" | "cancelled" | "expired";
+  cancellationDate?: string;
+  cancellationReason?: string;
+}
