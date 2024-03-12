@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 interface RequestOptions extends RequestInit {
   url: string;
 }
@@ -24,7 +24,6 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
     data: defaultValue,
     loading: false,
   });
-
   const request = async (options: RequestOptions) => {
     let response;
     try {
@@ -58,6 +57,6 @@ export const useApiClient = <T = any>(defaultValue?: T) => {
   return {
     ...state,
     request,
-    setData: (data?: T) => setState((d) => ({ ...d, data})),
+    setData: (data?: T) => setState((d) => ({ ...d, data })),
   };
 };

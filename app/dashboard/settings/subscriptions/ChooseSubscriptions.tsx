@@ -15,6 +15,11 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { Label } from "@/app/components/ui/label";
+import { useApiClient } from "@/app/lib/api";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { initiateSTKPush } from "./api";
+import { ValidationError } from "@/app/lib/exceptions";
+import { useToast } from "@/app/components/ui/use-toast";
 
 interface Props {
   pricings?: Pricing[];
@@ -25,11 +30,51 @@ const ChooseSubscriptions: React.FC<Props> = ({
   pricings = [],
   subscription = [],
 }) => {
+  const { toast } = useToast();
   const [currPricing, setCurrPricing] = useState<string>();
-  const [openDialog, setDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [openDialog, setDialogOpen] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const pricing = pricings.find((pricing) => pricing.id === currPricing);
+  async function onSubmit() {
+    if (
+      phoneNumber?.length === 9 &&
+      (phoneNumber.startsWith("7") || phoneNumber.startsWith("1"))
+    ) {
+      try {
+        setLoading(true);
+        const payload = { phoneNumber, pricing: currPricing };
+        const res = await initiateSTKPush(payload);
+        toast({
+          className: "bg-green-900 dark:text-emerald-500",
+          description: (
+            <span className="text-xl text-teal-50">
+              Payment initiated.Please complete payment
+            </span>
+          ),
+        });
+      } catch (error) {
+        if (typeof error === "object" && error !== null && "message" in error) {
+          // Check if 'error' is an object with a 'message' property
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: `Unexpected error: ${error}`,
+          });
+        } else {
+          // Handle other cases
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: `Unexpected error:${error}`,
+          });
+        }
+      } finally {
+        setDialogOpen(false);
+        setLoading(false);
+      }
+    }
+  }
   return (
     <>
       <table className="mb-10 w-full">
@@ -104,14 +149,16 @@ const ChooseSubscriptions: React.FC<Props> = ({
               </div>
             </div>
             <DialogFooter>
-              <Button
-                type="submit"
-                onClick={() => {
-                  if (phoneNumber?.length === 9) setDialogOpen(false);
-                }}
-              >
-                Initiate payment
-              </Button>
+              {!loading ? (
+                <Button type="submit" onClick={onSubmit}>
+                  Initiate payment
+                </Button>
+              ) : (
+                <Button variant={"outline"} className="space-x-3 flex">
+                  <ScaleLoader />
+                  <span>Processing...</span>
+                </Button>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>
