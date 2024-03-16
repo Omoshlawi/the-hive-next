@@ -27,8 +27,8 @@ const SubscriptionsPage = async () => {
   }
   return (
     <div className="w-full">
-      <div className=" mx-auto w-full rounded-2xl px-2 py-16 duration-150 ease-in-out sm:p-20 sm:pb-16 md:max-w-screen-xl">
-        <h2 className="mb-12 w-full text-center text-4xl font-bold md:text-5xl">
+      <div className=" mx-auto w-full rounded-2xl px-2 py-4 duration-150 ease-in-out sm:p-20 sm:pb-16 md:max-w-screen-xl">
+        <h2 className="mb-4 w-full text-center text-4xl font-bold md:text-5xl">
           Manage subscriptions
         </h2>
         <table className="mb-10 w-full">

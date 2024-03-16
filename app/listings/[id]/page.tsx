@@ -6,6 +6,7 @@ import { ListingProfile, ListingPropertyCard } from "../components";
 import { ListLayoutWithSideBar } from "@/app/components/layouts";
 
 const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
+  
   let listing: Listing;
   try {
     listing = await (

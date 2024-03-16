@@ -3,6 +3,7 @@ import { useSessionContext } from "@/app/context/auth/hooks";
 import { useLocalStorage } from "@/app/lib/hooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
+import SyncLoader from "react-spinners/SyncLoader";
 
 const OauthCallback = () => {
   // const { setToken } = useSessionContext();
@@ -20,7 +21,11 @@ const OauthCallback = () => {
     setCallback(undefined);
   }, []);
 
-  return <div></div>;
+  return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <SyncLoader />
+    </div>
+  );
 };
 
 export default OauthCallback;

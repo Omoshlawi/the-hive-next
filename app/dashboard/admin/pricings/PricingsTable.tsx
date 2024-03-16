@@ -5,6 +5,7 @@ import { PropsWithSearchParams } from "@/app/lib/types/base";
 import React from "react";
 import { columns } from "./columns";
 import { Pricing } from "@/app/lib/entities/sass";
+import RenderTable from "./RenderTable";
 
 const PricingsTable: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -21,7 +22,7 @@ const PricingsTable: React.FC<PropsWithSearchParams> = async ({
     console.log(error);
   }
 
-  return <DataTable columns={columns} data={pricings} />;
+  return <RenderTable pricing={pricings} />;
 };
 
 export default PricingsTable;

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const Profile = async () => {
   let user: User;
   try {
-    const response = await await fetch(`/api/proxy/users/profile`, {
+    const response = await fetch(`/api/proxy/users/profile`, {
       cache: "no-cache",
     });
     const responseData = await response.json();

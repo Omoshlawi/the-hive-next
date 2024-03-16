@@ -1,4 +1,6 @@
 import { Entity } from "../../types/base";
+import { Payment } from "../billing";
+import { User } from "../users";
 
 export interface Pricing extends Entity {
   id: string;
@@ -31,9 +33,10 @@ export interface FeaturePricing {
 
 export interface UserSubscription extends Entity {
   id: string;
-  user: string;
-  featurePricingLimitId?: string;
-  featurePricing: FeaturePricing;
+  user: Partial<User>;
+  pricingId?: string;
+  pricing?: Partial<Pricing>;
+  payment: Partial<Payment>;
   startDate: string;
   endDate: string;
   status: "active" | "cancelled" | "expired";

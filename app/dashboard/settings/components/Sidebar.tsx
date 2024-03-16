@@ -14,7 +14,8 @@ const Sidebar = () => {
     { name: "Teams", href: "/dashboard/settings/teams" },
     { name: "Accounts", href: "/dashboard/settings/accounts" },
     { name: "Users", href: "/dashboard/settings/users" },
-    { name: "Billing", href: "/dashboard/settings/subscriptions" },
+    { name: "Subscriptions", href: "/dashboard/settings/subscriptions" },
+    { name: "Billings", href: "/dashboard/settings/billings" },
     { name: "Notifications", href: "/dashboard/settings/notofications" },
   ];
 
@@ -22,7 +23,8 @@ const Sidebar = () => {
     <div className="col-span-2 hidden sm:block">
       <ul>
         {links.map(({ href, name }, index) => {
-          const isActive = pathName === href;
+          const isActive =
+          new URL(href, "http://localhost").pathname === pathName;
           return (
             <li
               key={index}
