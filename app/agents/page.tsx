@@ -40,18 +40,18 @@ const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
 
   return (
     <ListLayoutWithSideBar sideBar={<FilterForm />}>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="container px-6 py-10 mx-auto">
-          <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
-            Agents-Meet all our agents
-          </h1>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-4">
+      <div className="container my-24 mx-auto md:px-6">
+        {/* Section: Design Block */}
+        <section className="mb-32 text-center">
+          <h2 className="mb-12 text-3xl font-bold">Agents </h2>
+          <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             {agents.map((agent, index) => (
               <AgentCard key={index} agent={agent} />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+        {/* Section: Design Block */}
+      </div>
     </ListLayoutWithSideBar>
   );
 };
