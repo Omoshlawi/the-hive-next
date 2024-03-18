@@ -30,7 +30,7 @@ const AgentCard: React.FC<Props> = async ({
           <div className="relative overflow-hidden bg-cover bg-no-repeat">
             <img
               src={`/api/proxy/files/${profilePic.path}`}
-              className="w-full rounded-t-lg"
+              className="w-full rounded-t-lg "
             />
             <Link href={`/agents/${id}`}>
               <div className="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed" />

@@ -21,7 +21,7 @@ const AgentDetailSidBar: React.FC<Props> = ({ agent }) => {
       <img
         src={`/api/proxy/files/${agent.profilePic.path}`}
         alt={agent.firstName}
-        className="rounded-full h-56 w-56 mt-5 bg-indigo-800 "
+        className="rounded-full h-56 w-56 mt-5 bg-indigo-800 object-cover"
       />
       <div className="w-full grid grid-cols-1 gap-2 p-4">
         <span
