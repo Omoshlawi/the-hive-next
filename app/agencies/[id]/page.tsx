@@ -1,9 +1,10 @@
+import HeroHeader from "@/app/components/display/HeroHeader";
 import { ListLayoutWithSideBar } from "@/app/components/layouts";
+import { BASE_URL } from "@/app/lib/constants";
+import { Agency } from "@/app/lib/entities/agency";
 import { PropsWithPathParams } from "@/app/lib/types/base";
 import React from "react";
-import AgentDetailSidBar from "./AgentDetailSidBar";
-import { Agent } from "@/app/lib/entities/agents";
-import { BASE_URL } from "@/app/lib/constants";
+import AgencyDetailSideBar from "./AgencyDetailSideBar";
 import {
   Card,
   CardContent,
@@ -11,56 +12,44 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { Badge } from "@/app/components/ui/badge";
-import { Button } from "@/app/components/ui/button";
-import {
-  BookmarkPlus,
-  CheckCircle,
-  Heart,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
-import HeroHeader from "@/app/components/display/HeroHeader";
+import { CheckCircle, Mail, MapPin, Phone } from "lucide-react";
 import { Separator } from "@/app/components/ui/separator";
 
-const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
+const AgencyDetail: React.FC<PropsWithPathParams> = async ({
   params: { id },
 }) => {
-  let agent: Agent;
+  let agency: Agency;
   try {
-    agent = await (
-      await fetch(new URL(`/api/proxy/agents/${id}`, BASE_URL), {
+    agency = await (
+      await fetch(new URL(`/api/proxy/agencies/${id}`, BASE_URL), {
         cache: "no-cache",
       })
     ).json();
   } catch (error: any) {
+    console.log(error);
+
     return <div>404 not found</div>;
-    // console.log(error.message);
   }
   return (
     <div>
-      <HeroHeader
-        subtitle={`${agent.firstName} ${agent.lastName}`}
-        title="Agent Detail"
-      />
+      <HeroHeader title="Agency Detail" subtitle={agency.name} />
       <ListLayoutWithSideBar
         reverse
-        sideBar={<AgentDetailSidBar agent={agent} />}
+        sideBar={<AgencyDetailSideBar agency={agency} />}
       >
         <div className="w-full px-5 flex flex-col space-y-4">
           <Card className="border-none shadow-md shadow-indigo-400">
             <CardHeader>
               <CardTitle>About Agent</CardTitle>
             </CardHeader>
-            <CardContent>{agent.bio ?? "No description"}</CardContent>
+            <CardContent>{agency.description ?? "No description"}</CardContent>
             <CardFooter>
               <div className="">
                 <ul className="mx-auto flex list-inside">
-                  {agent.facebook && (
+                  {agency.facebook && (
                     <a
                       target="_blank"
-                      href={agent.facebook}
+                      href={agency.facebook}
                       className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white p-2 border rounded-md"
                       aria-label="Facebook"
                     >
@@ -82,10 +71,10 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                       </svg>
                     </a>
                   )}
-                  {agent.twitter && (
+                  {agency.twitter && (
                     <a
                       target="_blank"
-                      href={agent.twitter}
+                      href={agency.twitter}
                       className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white p-2 border rounded-md"
                       aria-label="Twitter"
                     >
@@ -103,10 +92,10 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                       </svg>
                     </a>
                   )}
-                  {agent.linkedIn && (
+                  {agency.linkedIn && (
                     <a
                       target="_blank"
-                      href={agent.linkedIn}
+                      href={agency.linkedIn}
                       className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white p-2 border rounded-md"
                       aria-label="LinkedIn"
                     >
@@ -128,10 +117,10 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                       </svg>
                     </a>
                   )}
-                  {agent.instagram && (
+                  {agency.instagram && (
                     <a
                       target="_blank"
-                      href={agent.instagram}
+                      href={agency.instagram}
                       className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white p-2 border rounded-md"
                       aria-label="Instagram"
                     >
@@ -207,7 +196,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {(agent?.specialties ?? []).map((amenity, index) => (
+                {(agency?.specialties ?? []).map((amenity, index) => (
                   <div key={index} className="flex space-x-3 p-2">
                     <CheckCircle />
                     <span>{amenity}</span>
@@ -227,7 +216,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                     <Mail />
                   </div>
                   <div className="flex flex-col ">
-                    <span>{agent.email}</span>
+                    <span>{agency.email}</span>
                     <span className="opacity-50">Email</span>
                   </div>
                 </div>
@@ -236,7 +225,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                     <Phone />
                   </div>
                   <div className="flex flex-col ">
-                    <span>{agent.phoneNumber}</span>
+                    <span>{agency.phoneNumber}</span>
                     <span className="opacity-50">Call</span>
                   </div>
                 </div>
@@ -245,7 +234,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                     <MapPin />
                   </div>
                   <div className="flex flex-col ">
-                    <span>{`${agent.state} ${agent.city}, ${agent.country}`}</span>
+                    <span>{`${agency.state} ${agency.city}, ${agency.country}`}</span>
                     <span className="opacity-50">Location</span>
                   </div>
                 </div>
@@ -257,20 +246,20 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                   <span className="opacity-50 text-xs">Property</span>
                 </div>
                 <div className="flex flex-col ">
-                  <span className="font-bold">{`${agent.country}`}</span>
+                  <span className="font-bold">{`${agency.country}`}</span>
                   <span className="opacity-50 text-xs">Country</span>
                 </div>
                 <div className="flex flex-col ">
-                  <span className="font-bold">{`${agent.city}`}</span>
+                  <span className="font-bold">{`${agency.city}`}</span>
                   <span className="opacity-50 text-xs">City</span>
                 </div>
                 <div className="flex flex-col ">
-                  <span className="font-bold">{`${agent.state}`}</span>
+                  <span className="font-bold">{`${agency.state}`}</span>
                   <span className="opacity-50 text-xs">State</span>
                 </div>
                 <div className="flex flex-col ">
                   <span className="font-bold">{`${
-                    agent.zipCode ?? "None"
+                    agency.zipCode ?? "None"
                   }`}</span>
                   <span className="opacity-50 text-xs">Zip code</span>
                 </div>
@@ -283,4 +272,4 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
   );
 };
 
-export default AgentDetailScreen;
+export default AgencyDetail;
