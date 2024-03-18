@@ -34,7 +34,7 @@ const ListingProfile: FC<Props> = ({
     <div className="shadow-gray-800 shadow-sm rounded-sm flex flex-col items-center  relative overflow-hidden">
       {/* Background   */}
       <div className="w-full h-full absolute flex flex-col -z-10">
-        <div className="h-48 w-full bg-gray-500 dark:bg-gray-800" />
+        <div className="h-48 w-full bg-accent" />
         <div className="h-full bg-background" />
       </div>
       {/* EndBackground */}

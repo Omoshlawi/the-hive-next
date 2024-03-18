@@ -17,6 +17,10 @@ const AgentCard: React.FC<Props> = async ({
     twitter,
     profilePic,
     memberShips,
+    state,
+    city,
+    zipCode,
+    country,
   },
 }) => {
   return (
@@ -25,7 +29,7 @@ const AgentCard: React.FC<Props> = async ({
         <div className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
           <div className="relative overflow-hidden bg-cover bg-no-repeat">
             <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/6.jpg"
+              src={`/api/proxy/files/${profilePic.path}`}
               className="w-full rounded-t-lg"
             />
             <Link href={`/agents/${id}`}>
@@ -39,7 +43,7 @@ const AgentCard: React.FC<Props> = async ({
               {`${firstName} ${lastName}`}`
             </h5>
             <p className="mb-4 text-neutral-500 dark:text-neutral-300">
-              Realtor
+              {`${state} ${city}, ${country}`}
             </p>
             <ul className="mx-auto flex list-inside justify-center">
               {facebook && (

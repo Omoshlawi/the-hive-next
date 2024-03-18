@@ -6,28 +6,34 @@ export interface Agent extends Entity {
   firstName: string;
   lastName: string;
   bio: string;
-  contacts: AgentContact[];
   memberShips: AgencyMembership[];
   user?: string;
   profilePic: UploadFile;
   specialties?: string[];
-  licenses?: Record<string, any>; //TODO make required in 2nd mvp
-  achievements?: Record<string, any>;
+  licenseNumber?: string | null;
+  email: string;
+  phoneNumber: string;
+  city: string;
+  country: string;
+  state: string;
+  zipCode?: string;
+  achievements: AgentArchievement[];
   facebook?: string;
   linkedIn?: string;
   twitter?: string;
   instagram?: string;
 }
 
-export interface AgentContact extends Entity {
+export interface AgentArchievement extends Entity {
+  id: string;
   agentId?: string;
   agent?: Agent;
-  email: string;
-  phoneNumber: string;
-  address: string;
+  attachments: Record<string, any>;
+  description: string;
 }
 
 export interface AgencyMembership extends Entity {
+  id: string;
   agentId?: string;
   agent?: Agent;
   agency: string;

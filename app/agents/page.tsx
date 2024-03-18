@@ -17,6 +17,7 @@ import { BASE_URL } from "../lib/constants";
 import { ListLayoutWithSideBar } from "../components/layouts";
 import { AgentCard, FilterForm } from "./components";
 import { Agent } from "../lib/entities/agents";
+import HeroHeader from "../components/display/HeroHeader";
 
 const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -39,20 +40,18 @@ const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
   }
 
   return (
-    <ListLayoutWithSideBar sideBar={<FilterForm />}>
-      <div className="container my-24 mx-auto md:px-6">
-        {/* Section: Design Block */}
-        <section className="mb-32 text-center">
-          <h2 className="mb-12 text-3xl font-bold">Agents </h2>
+    <div>
+      <HeroHeader title="All agents" subtitle="Meet all agents" />
+      <ListLayoutWithSideBar sideBar={<FilterForm />}>
+        <section className="text-center">
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             {agents.map((agent, index) => (
               <AgentCard key={index} agent={agent} />
             ))}
           </div>
         </section>
-        {/* Section: Design Block */}
-      </div>
-    </ListLayoutWithSideBar>
+      </ListLayoutWithSideBar>
+    </div>
   );
 };
 
