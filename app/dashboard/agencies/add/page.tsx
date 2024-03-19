@@ -14,13 +14,13 @@ import { useRouter } from "next/navigation";
 import { addAgency } from "../api";
 import { ValidationError } from "@/app/lib/exceptions";
 import { DetailsForm, FileUploadsForm, SocialAccounts } from "../forms";
-import { AgentSchema } from "@/app/lib/schema/agents";
+import { AgencySchema } from "@/app/lib/schema/agencies";
 
-type AgentForm = z.infer<typeof AgentSchema>;
+type AgencyForm = z.infer<typeof AgencySchema>;
 
-const AgentsAddPage = () => {
-  const form = useForm<AgentForm>({
-    resolver: zodResolver(AgentSchema),
+const AgencysAddPage = () => {
+  const form = useForm<AgencyForm>({
+    resolver: zodResolver(AgencySchema),
     defaultValues: {
       specialties: [],
     },
@@ -28,7 +28,7 @@ const AgentsAddPage = () => {
   const [files, setFiles] = useState<File[]>([]);
   const { toast } = useToast();
   const { replace } = useRouter();
-  async function onSubmit(values: AgentForm) {
+  async function onSubmit(values: AgencyForm) {
     try {
       //   if (property) await updateProperty(property._id!, values, files);
       //   else
@@ -99,4 +99,4 @@ const AgentsAddPage = () => {
   );
 };
 
-export default AgentsAddPage;
+export default AgencysAddPage;

@@ -6,12 +6,13 @@ import {
   SaleListingSchema,
 } from "@/app/lib/schema/listingsSchema";
 import { AgentSchema } from "@/app/lib/schema/agents";
+import { AgencySchema } from "@/app/lib/schema/agencies";
 
 export const addAgency = async (
-  agent: z.infer<typeof AgentSchema>,
-  profilePic: File
+  agent: z.infer<typeof AgencySchema>,
+  logo: File
 ) => {
-  const formData = objectToFormData({ ...agent, profilePic });
+  const formData = objectToFormData({ ...agent, logo });
   const response = await fetch(`/api/proxy/agents`, {
     method: "POST",
     body: formData,
