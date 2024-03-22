@@ -58,50 +58,16 @@ const ListingProfile: FC<Props> = ({
           </Badge>
         </div>
         <Separator />
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="hover:no-underline">
-              <span className="opacity-30">Description</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              {description ?? "No description"}
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="hover:no-underline">
-              <span className="opacity-30">Amenities</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul>
-                {amenities.map((amenity, index) => (
-                  <li key={index} className="items-center space-x-2">
-                    <Checkbox disabled checked />
-                    <span>{amenity}</span>
-                  </li>
-                ))}
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="hover:no-underline">
-              <span className="opacity-30">Types</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul>
-                {tags.map((amenity, index) => (
-                  <li key={index} className="items-center space-x-2">
-                    <Checkbox disabled checked />
-                    <span>{amenity}</span>
-                  </li>
-                ))}
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <span className="opacity-30">Tags</span>
+        <ul>
+          {tags.map((amenity, index) => (
+            <li key={index} className="items-center space-x-2">
+              <Checkbox disabled checked />
+              <span>{amenity}</span>
+            </li>
+          ))}
+        </ul>
+        <Separator />
         <ul className="m-0 flex list-none items-center justify-between px-0 pt-6 pb-0">
           <li className="text-left">
             <span className="text-sm text-gray-400">Price</span>

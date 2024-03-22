@@ -4,6 +4,7 @@ import { columns } from "../columns";
 import { Property } from "@/app/lib/entities/properties";
 import { PropsWithSearchParams } from "@/app/lib/types/base";
 import { BASE_URL } from "@/app/lib/constants";
+import RenderTable from "./RenderTable";
 
 const PropertyDataTable: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -27,7 +28,7 @@ const PropertyDataTable: React.FC<PropsWithSearchParams> = async ({
     console.log(error.message);
     properties = [];
   }
-  return <DataTable columns={columns} data={properties} />;
+  return <RenderTable properties={properties} />;
 };
 
 export default PropertyDataTable;

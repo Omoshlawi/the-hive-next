@@ -19,9 +19,10 @@ import {
 } from "@/app/components/ui/form";
 import { Input } from "@/app/components/ui/input";
 import { AgentSchema } from "@/app/lib/schema/agents";
+import { AgencySchema } from "@/app/lib/schema/agencies";
 
 const SocialAccounts = () => {
-  const form = useFormContext<z.infer<typeof AgentSchema>>();
+  const form = useFormContext<z.infer<typeof AgencySchema>>();
   const specilities = [
     "Rentals",
     "Sales",

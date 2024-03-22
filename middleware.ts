@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const authCookie = request.cookies.get(authCookieConfig.name)?.value;
   const isAuthenticated =
     (decode(authCookie ?? "") as TokenPayload | null) !== null;
-  const isProtected = true;
+  const isProtected = request.nextUrl.pathname.startsWith("/dashboard");
   // TODO Specify protected routes
   if (!isAuthenticated && isProtected) {
     const serializedCookieToken = serialize("session-token", authCookie ?? "", {

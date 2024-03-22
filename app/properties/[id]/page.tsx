@@ -36,7 +36,7 @@ const PropertyDetail: FC<PropsWithPathParams> = async ({
         <ImageDisplay images={property.images} />
       </section>
       <ListLayoutWithSideBar sideBar={<FilterForm />} reverse>
-        <div className="w-full px-5 flex flex-col space-y-4">
+        <div className="w-full px-5 flex flex-col space-y-4 ">
           <Card className="border-none shadow-md shadow-indigo-400">
             <CardHeader>
               {/* Badges */}

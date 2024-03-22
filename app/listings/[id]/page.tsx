@@ -5,6 +5,17 @@ import { BASE_URL } from "@/app/lib/constants";
 import { ListingProfile, ListingPropertyCard } from "../components";
 import { ListLayoutWithSideBar } from "@/app/components/layouts";
 import HeroHeader from "@/app/components/display/HeroHeader";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/card";
+import { Badge } from "@/app/components/ui/badge";
+import { Button } from "@/app/components/ui/button";
+import { BookmarkPlus, CheckCircle, Heart } from "lucide-react";
+import clsx from "clsx";
+import { lusitana } from "@/app/fonts";
 
 const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
   let listing: Listing;
@@ -25,11 +36,34 @@ const ListingDetail: FC<PropsWithPathParams> = async ({ params: { id } }) => {
         backgroundImage={`/api/proxy/files/${listing.coverImage.path}`}
       />
       <ListLayoutWithSideBar sideBar={<ListingProfile listing={listing} />}>
-        <div className="w-full rounded-sm flex flex-col space-y-4">
-          <div className="p-5 bg-accent rounded-lg">
-            <h1 className=" text-xl font-bold w-full">Listing Properties</h1>
+        <div className="w-full rounded-sm flex flex-col space-y-4 px-5">
+          <div className="w-full flex flex-col space-y-4">
+            <Card className="border-none shadow-md shadow-indigo-400">
+              <CardHeader>
+                <CardTitle>About listing</CardTitle>
+              </CardHeader>
+              <CardContent>{listing.description}</CardContent>
+            </Card>
+            <Card className="border-none shadow-md shadow-indigo-400">
+              <CardHeader>
+                <CardTitle>Amenities</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {listing.amenities.map((amenity, index) => (
+                    <div key={index} className="flex space-x-3 p-2">
+                      <CheckCircle />
+                      <span>{amenity}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
-          <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+          <p className={clsx("text-4xl pt-4", lusitana.className)}>
+            Properties
+          </p>
+          <section className="grid grid-cols-2  gap-6 lg:grid-cols-3 ">
             {listing.properties.map(({ property }, index) => (
               <Suspense fallback={<div>Loading property ....</div>} key={index}>
                 <ListingPropertyCard propertyId={property} />
