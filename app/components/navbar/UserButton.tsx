@@ -38,19 +38,29 @@ import { useState } from "react";
 import Link from "next/link";
 
 export function UserButton() {
-  const { toggleAuth, session:user } = useSessionContext();
+  const { toggleAuth, session: user } = useSessionContext();
+  console.log(user);
+
   const [open, setOpen] = useState(false);
   if (!user) {
     return <Button onClick={() => toggleAuth(true)}>Get started</Button>;
   }
 
-  const alt = (user?.name ?? user?.username)?.charAt(0)?.toUpperCase();
+  const alt = (user?.person?.name ?? user?.username)?.charAt(0)?.toUpperCase();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar>
-          <AvatarImage src={user?.image as string | undefined} />
+          <AvatarImage
+            src={
+              user?.person?.image
+                ? user!.person!.image!.type === "remote"
+                  ? user!.person!.image!.path
+                  : `/api/proxy/files${user!.person!.image!.path}`
+                : undefined
+            }
+          />
           <AvatarFallback className="bg-cyan-500">
             {alt ? alt : "TH"}
           </AvatarFallback>

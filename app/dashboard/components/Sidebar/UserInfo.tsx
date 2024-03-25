@@ -9,7 +9,9 @@ import {
 import { useSessionContext } from "@/app/context/auth/hooks";
 const UserInfo = () => {
   const { session } = useSessionContext();
-  const alt = (session?.name ?? session?.username)?.charAt(0)?.toUpperCase();
+  const alt = (session?.person?.name ?? session?.username)
+    ?.charAt(0)
+    ?.toUpperCase();
 
   return (
     <div className="hidden md:block p-2 px-4  lg:px-6">
@@ -18,17 +20,26 @@ const UserInfo = () => {
       </h3>
 
       <ListItem
-        title={session?.name ?? ""}
+        title={session?.person?.name ?? ""}
         avatar={
           <Avatar>
-            <AvatarImage src={session?.image ?? ""} alt="profile picture" />
+            <AvatarImage
+              src={
+                session?.person?.image
+                  ? session!.person!.image!.type === "remote"
+                    ? session!.person!.image!.path
+                    : `/api/proxy/files${session!.person!.image!.path}`
+                  : undefined
+              }
+              alt="profile picture"
+            />
             <AvatarFallback className="bg-cyan-500">
               {alt ? alt : "TH"}
             </AvatarFallback>
           </Avatar>
         }
       >
-        {session?.email ?? ""}
+        {session?.person?.email ?? ""}
       </ListItem>
     </div>
   );

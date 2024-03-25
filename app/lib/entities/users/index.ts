@@ -1,4 +1,5 @@
 import { Entity } from "../../types/base";
+import { UploadFile } from "../files";
 
 export interface Account extends Entity {
   id: string;
@@ -16,15 +17,21 @@ export interface Account extends Entity {
 
 export interface User extends Entity {
   id: string;
-  name?: string;
-  email?: string;
   username?: string;
-  phoneNumber?: string;
-  gender?: "MALE" | "FEMALE" | "UNKNOWN";
+  person?: Person;
   accountVerified?: Date;
-  image?: string;
   password?: string;
   lastLogin?: Date;
   active: boolean;
   accounts: Account[];
+}
+
+export interface Person extends Entity {
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  gender?: "MALE" | "FEMALE" | "UNKNOWN";
+  image?: UploadFile;
+  phoneNumber?: string;
 }
