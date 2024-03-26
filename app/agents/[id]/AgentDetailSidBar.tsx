@@ -19,8 +19,8 @@ const AgentDetailSidBar: React.FC<Props> = ({ agent }) => {
       </div>
       {/* EndBackground */}
       <img
-        src={`/api/proxy/files/${agent.profilePic.path}`}
-        alt={agent.firstName}
+        src={`/api/proxy/files/${agent.image.path}`}
+        alt={agent.person.firstName}
         className="rounded-full h-56 w-56 mt-5 bg-indigo-800 object-cover"
       />
       <div className="w-full grid grid-cols-1 gap-2 p-4">
@@ -30,7 +30,7 @@ const AgentDetailSidBar: React.FC<Props> = ({ agent }) => {
             "text-2xl hover:text-indigo-600 font-medium duration-500 ease-in-out text-center"
           )}
         >
-          {`${agent.firstName} ${agent.lastName}`}
+          {`${agent.person.firstName} ${agent.person.lastName}`}
         </span>
         <div className="flex justify-center">
           <span>Aprroved</span>

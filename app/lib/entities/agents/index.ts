@@ -1,18 +1,16 @@
 import { Entity } from "../../types/base";
 import { UploadFile } from "../files";
+import { Person } from "../users";
 
 export interface Agent extends Entity {
   id: string;
-  firstName: string;
-  lastName: string;
   bio: string;
+  person: Person
   memberShips: AgencyMembership[];
-  user?: string;
-  profilePic: UploadFile;
+  image: UploadFile;
+  coverImage?: UploadFile;
   specialties?: string[];
   licenseNumber?: string | null;
-  email: string;
-  phoneNumber: string;
   city: string;
   country: string;
   state: string;

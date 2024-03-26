@@ -41,8 +41,13 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
   return (
     <div>
       <HeroHeader
-        subtitle={`${agent.firstName} ${agent.lastName}`}
+        subtitle={`${agent.person.firstName} ${agent.person.lastName}`}
         title="Agent Detail"
+        backgroundImage={
+          agent.coverImage
+            ? `/api/proxy/files/${agent.coverImage.path}`
+            : undefined
+        }
       />
       <ListLayoutWithSideBar
         reverse
@@ -227,7 +232,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                     <Mail />
                   </div>
                   <div className="flex flex-col ">
-                    <span>{agent.email}</span>
+                    <span>{agent.person.email}</span>
                     <span className="opacity-50">Email</span>
                   </div>
                 </div>
@@ -236,7 +241,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                     <Phone />
                   </div>
                   <div className="flex flex-col ">
-                    <span>{agent.phoneNumber}</span>
+                    <span>{agent.person.phoneNumber}</span>
                     <span className="opacity-50">Call</span>
                   </div>
                 </div>
