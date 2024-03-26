@@ -32,7 +32,15 @@ const AgencyDetail: React.FC<PropsWithPathParams> = async ({
   }
   return (
     <div>
-      <HeroHeader title="Agency Detail" subtitle={agency.name} />
+      <HeroHeader
+        title="Agency Detail"
+        subtitle={agency.name}
+        backgroundImage={
+          agency.coverImage
+            ? `/api/proxy/files/${agency.coverImage.path}`
+            : undefined
+        }
+      />
       <ListLayoutWithSideBar
         reverse
         sideBar={<AgencyDetailSideBar agency={agency} />}
@@ -40,7 +48,7 @@ const AgencyDetail: React.FC<PropsWithPathParams> = async ({
         <div className="w-full px-5 flex flex-col space-y-4">
           <Card className="border-none shadow-md shadow-indigo-400">
             <CardHeader>
-              <CardTitle>About Agent</CardTitle>
+              <CardTitle>About Agency</CardTitle>
             </CardHeader>
             <CardContent>{agency.description ?? "No description"}</CardContent>
             <CardFooter>

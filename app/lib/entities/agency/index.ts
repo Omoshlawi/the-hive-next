@@ -9,6 +9,7 @@ export interface Agency extends Entity {
   memberShips: AgencyMembership[];
   website?: string;
   logo: UploadFile;
+  coverImage?: UploadFile;
   specialties: string[];
   tags: string[];
   email: string;

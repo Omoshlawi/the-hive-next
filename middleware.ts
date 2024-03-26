@@ -8,19 +8,21 @@ import { serialize } from "cookie";
 export function middleware(request: NextRequest) {
   const callbackUrl = request.nextUrl.pathname;
   const authCookie = request.cookies.get(authCookieConfig.name)?.value;
-  const isAuthenticated =
-    (decode(authCookie ?? "") as TokenPayload | null) !== null;
+  const isAuthenticated = decode(authCookie ?? "") as TokenPayload | null;
   const isProtected = request.nextUrl.pathname.startsWith("/dashboard");
   // TODO Specify protected routes
   if (!isAuthenticated && isProtected) {
-    const serializedCookieToken = serialize("session-token", authCookie ?? "", {
-      ...authCookieConfig.config,
-      maxAge: -1,
-    });
+    const serializedCookieToken = serialize(
+      authCookieConfig.name,
+      authCookie ?? "",
+      {
+        ...authCookieConfig.config,
+        maxAge: -1,
+      }
+    );
 
     const headers = new Headers();
     headers.append("Set-Cookie", serializedCookieToken);
-
     return NextResponse.redirect(
       new URL(
         `/api/auth?callbackUrl=${encodeURIComponent(callbackUrl)}`,

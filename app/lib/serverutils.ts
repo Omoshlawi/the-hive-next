@@ -1,6 +1,6 @@
 import path from "path";
 import fs, { unlink } from "fs/promises";
-import { MEDIA_ROOT } from "./constants";
+import { authCookieConfig, MEDIA_ROOT } from "./constants";
 import { existsSync } from "fs";
 import slugify from "slugify";
 import { fileTypeFromBuffer } from "file-type";
@@ -111,3 +111,12 @@ export const upload = async ({
     },
   };
 };
+export async function getHeaderWithCookie() {
+  const cookiesModule = await import("next/headers");
+  const userCookie = cookiesModule.cookies().get(authCookieConfig.name)?.value;
+  const myHeaders = new Headers();
+  if (userCookie) {
+    myHeaders.append("Cookie", `${authCookieConfig.name}=${userCookie}`);
+  }
+  return myHeaders;
+}

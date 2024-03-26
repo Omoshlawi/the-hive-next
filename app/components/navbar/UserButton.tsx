@@ -57,7 +57,7 @@ export function UserButton() {
               user?.person?.image
                 ? user!.person!.image!.type === "remote"
                   ? user!.person!.image!.path
-                  : `/api/proxy/files${user!.person!.image!.path}`
+                  : `/api/proxy/files/${user!.person!.image!.path}`
                 : undefined
             }
           />
@@ -70,7 +70,7 @@ export function UserButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={"/dashboard/profile"}>
+          <Link href={"/dashboard/settings"}>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>

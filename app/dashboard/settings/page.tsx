@@ -19,24 +19,38 @@ import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 import clsx from "clsx";
 import bg from "@/public/index_bg.jpg";
+import { BASE_URL } from "@/app/lib/constants";
+import { getHeaderWithCookie } from "@/app/lib/serverutils";
 
 type Props = {};
 
 const SettingsPage = async (props: Props) => {
-  let user: User;
+  let user: User | undefined;
   try {
-    const response = await fetch(`/api/proxy/users/profile`, {
-      cache: "no-cache",
-    });
+    const response = await fetch(
+      new URL(`/api/proxy/users/profile`, BASE_URL),
+      {
+        cache: "no-cache",
+        headers: await getHeaderWithCookie(),
+      }
+    );
     const responseData = await response.json();
+
     if (response.ok) {
       user = responseData;
     } else if (response.status === 401) {
+      console.log(response.status);
+
+      console.log(responseData);
       // Unauthorized
     } else {
+      console.log(responseData);
       // Any other error
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(__filename, error);
+  }
+
   return (
     <Card className="w-full overflow-clip ">
       <CardHeader className="p-0 relative">
@@ -47,7 +61,15 @@ const SettingsPage = async (props: Props) => {
         />
         <Image
           alt="Profile"
-          src={bg}
+          src={{
+            src: user?.person?.image
+              ? user!.person!.image!.type === "remote"
+                ? user!.person!.image!.path
+                : `/api/proxy/files/${user!.person!.image!.path}`
+              : bg.src,
+            width: 100,
+            height: 100,
+          }}
           className={clsx(
             "absolute self-center -bottom-7 md:-bottom-9 lg:-bottom-11",
             "h-24 w-24 object-cover md:h-32 md:w-32 lg:w-40 lg:h-40 rounded-full",
@@ -60,7 +82,10 @@ const SettingsPage = async (props: Props) => {
         </Button>
       </CardHeader>
       <CardContent className="pt-10 md:pt-14 lg:pt-16">
-        <p className="font-bold text-center text-2xl">Laurent Ouma</p>
+        <p className="font-bold text-center text-2xl">
+          {user?.person?.name ??
+            `${user?.person?.firstName} ${user?.person?.lastName}`}
+        </p>
         <p className="text-center text-zinc-500 p-3">
           Property manager bio goes here though i need long one to see how it
           works

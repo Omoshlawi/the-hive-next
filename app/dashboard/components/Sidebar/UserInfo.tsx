@@ -28,7 +28,7 @@ const UserInfo = () => {
                 session?.person?.image
                   ? session!.person!.image!.type === "remote"
                     ? session!.person!.image!.path
-                    : `/api/proxy/files${session!.person!.image!.path}`
+                    : `/api/proxy/files/${session!.person!.image!.path}`
                   : undefined
               }
               alt="profile picture"
