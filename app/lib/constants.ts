@@ -68,43 +68,45 @@ export const fileExtensionsColors: { [key: string]: string } = {
 
 export const amenities = [
   {
-    id: "pool",
-    label: "Swimming pool",
+    id: "Free wifi",
+    label: "Free wifi",
   },
   {
-    id: "garage",
-    label: "Garage",
+    id: "Secirity Camera",
+    label: "Secirity Camera",
   },
   {
-    id: "balcony",
-    label: "Balcony",
+    id: "24 Hour Security",
+    label: "24 Hour Security",
   },
   {
-    id: "gym",
-    label: "Gym",
+    id: "Swimming Pool",
+    label: "Swimming Pool",
   },
   {
-    id: "courte",
+    id: "Conference Room",
+    label: "Conference Room",
+  },
+  {
+    id: "Tennis Court",
     label: "Tennis court",
   },
   {
-    id: "conference",
-    label: "Conference room",
+    id: "Garadge",
+    label: "Garadge",
   },
 ];
 
 export const propertyTypes = [
-  { id: "apartment", label: "Apartment" },
-  { id: "mainsonet", label: "Mainsonet" },
-  { id: "vila", label: "Vila" },
-  { id: "bungalow", label: "Bungalow" },
-  { id: "mansion", label: "Mansion" },
-  { id: "studio", label: "Studio" },
+  { id: "Apartment", label: "Apartment" },
+  { id: "Mainsonet", label: "Mainsonet" },
+  { id: "Vila", label: "Vila" },
+  { id: "Bungalow", label: "Bungalow" },
+  { id: "Mansion", label: "Mansion" },
+  { id: "Studio", label: "Studio" },
 ];
-
 
 export const propertyStatus = [
   { id: "on-rent", label: "On rent" },
   { id: "on-sale", label: "on Sale" },
-
-]
+];

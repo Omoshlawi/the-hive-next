@@ -4,7 +4,7 @@ import { Button } from "@/app/components/ui/button";
 import { Checkbox } from "@/app/components/ui/checkbox";
 import { Input } from "@/app/components/ui/input";
 import { Separator } from "@/app/components/ui/separator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -15,30 +15,55 @@ import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
 import { Card } from "@/app/components/ui/card";
 import { amenities, propertyTypes } from "@/app/lib/constants";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toInteger } from "lodash";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
+import { propertyStatus } from "@/app/lib/constants";
+import { useDebouncedCallback } from "use-debounce";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
 const FilterForm = () => {
   const searchParams = useSearchParams();
-  const [priceRange, setPriceRange] = useState<number[]>([
-    toInteger(searchParams.get("minPrice")) || 50,
-    toInteger(searchParams.get("maxPrice")) || 400,
-  ]);
-  const amenitiesParams = searchParams.get("amenities")?.split(",");
+  const { replace } = useRouter();
+  const pathName = usePathname();
+
+  const handleSearch = useDebouncedCallback((key, value) => {
+    const queryParams = new URLSearchParams(searchParams);
+    if (value) {
+      queryParams.set(key, value);
+    } else {
+      queryParams.delete(key);
+    }
+    replace(`${pathName}?${queryParams.toString()}`);
+  }, 300);
+
+  const amenitiesParams = searchParams.get("amenities")?.split(",") ?? [];
+
   return (
     <Card className="border-none shadow-md shadow-indigo-400">
       {/* Header */}
       <div className="p-2 ">
         <div className="w-full flex justify-between items-center mb-2 ">
           <span className="font-bold">Filters</span>
-          <Button variant={"link"}>Clear all</Button>
+          <Button variant={"link"} onClick={() => replace(pathName)}>
+            Clear all
+          </Button>
         </div>
         {/* seach */}
         <Input
+          name="search"
           placeholder="Seach ..."
           defaultValue={searchParams.get("search") ?? ""}
+          onChange={({ target: { value, name } }) => handleSearch(name, value)}
         />
         <div className="w-full my-4">
           <ReactSelect
@@ -58,22 +83,96 @@ const FilterForm = () => {
             //   }))}
           />
         </div>
+        <div className="w-full my-4">
+          <Select
+            name="status"
+            defaultValue={searchParams.get("status") ?? ""}
+            onValueChange={(value) => handleSearch("status", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Property status</SelectLabel>
+                {propertyStatus.map(({ id, label }, index) => (
+                  <SelectItem key={index} value={id}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-full my-4">
+          <Select
+            name="tags"
+            defaultValue={searchParams.get("tags") ?? ""}
+            onValueChange={(value) => handleSearch("tags", value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>House type</SelectLabel>
+                {propertyTypes.map(({ id, label }, index) => (
+                  <SelectItem key={index} value={id}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <Separator className="mt-4" />
+      {/* Advance Features */}
+      <div className="p-2">
+        <span className="opacity-30">Advanced features</span>
+        <div className="w-full grid grid-cols-2 gap-2">
+          <Input
+            placeholder="e.g bedrooms"
+            name="name"
+            defaultValue={searchParams.get("minAge") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+          />
+          <Input
+            placeholder="e.g 2"
+            name="value"
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+            defaultValue={searchParams.get("maxAge") ?? ""}
+          />
+        </div>
+      </div>
+      <Separator className="mt-4" />
+
       {/* Size */}
       <div className="p-2">
         <span className="opacity-30">Age</span>
         <div className="w-full grid grid-cols-2 gap-2">
           <Input
-            placeholder="max age"
-            type="number"
-            defaultValue={searchParams.get("maxAge") ?? ""}
-          />
-          <Input
             placeholder="min age"
             type="number"
+            name="minAge"
             defaultValue={searchParams.get("minAge") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+          />
+          <Input
+            placeholder="max age"
+            type="number"
+            name="maxAge"
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+            defaultValue={searchParams.get("maxAge") ?? ""}
           />
         </div>
       </div>
@@ -83,13 +182,21 @@ const FilterForm = () => {
         <div className="w-full grid grid-cols-2 gap-2">
           <Input
             placeholder="min sqft size"
-            type="number"
-            defaultValue={searchParams.get("maxSize") ?? ""}
-          />
-          <Input
-            placeholder="max sqft size"
+            name="minSize"
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
             type="number"
             defaultValue={searchParams.get("minSize") ?? ""}
+          />
+          <Input
+            name="maxSize"
+            placeholder="max sqft size"
+            type="number"
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+            defaultValue={searchParams.get("maxSize") ?? ""}
           />
         </div>
       </div>
@@ -97,32 +204,22 @@ const FilterForm = () => {
       {/* price */}
       <div className="p-2">
         <span className="uppercase opacity-30">Price</span>
-        <div className="w-full my-4">
-          <Slider
-            min={0}
-            max={1000}
-            value={priceRange}
-            // value={priceRange}
-            step={10}
-            onValueChange={setPriceRange}
-          />
-        </div>
         <div className="w-full grid grid-cols-2 gap-2">
           <Input
-            prefix="$"
+            name="minPrice"
             type="number"
-            value={priceRange[0]}
-            onChange={({ target: { value } }) => {
-              setPriceRange((range) => [Number(value), range[1]]);
-            }}
+            defaultValue={searchParams.get("minPrice") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
           />
           <Input
-            prefix="$"
             type="number"
-            value={priceRange[1]}
-            onChange={({ target: { value } }) => {
-              setPriceRange((range) => [range[0], Number(value)]);
-            }}
+            name="maxPrice"
+            defaultValue={searchParams.get("maxPrice") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
           />
         </div>
       </div>
@@ -159,12 +256,32 @@ const FilterForm = () => {
             </AccordionTrigger>
             <AccordionContent>
               <ul>
-                {amenities.map(({ id, label }, index) => (
-                  <li key={index} className="items-center space-x-2">
-                    <Checkbox checked={amenitiesParams?.includes(id)} />
-                    <span>{label}</span>
-                  </li>
-                ))}
+                {amenities.map(({ id, label }, index) => {
+                  const checked = amenitiesParams?.includes(id);
+                  return (
+                    <li key={index} className="items-center space-x-2">
+                      <Checkbox
+                        checked={checked}
+                        onClick={() => {
+                          // If checked uncheck
+                          if (checked)
+                            handleSearch(
+                              "amenities",
+                              amenitiesParams
+                                ?.filter((ame) => ame !== id)
+                                .join(",")
+                            );
+                          else
+                            handleSearch(
+                              "amenities",
+                              [...amenitiesParams, id].join(",")
+                            );
+                        }}
+                      />
+                      <span>{label}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </AccordionContent>
           </AccordionItem>

@@ -14,6 +14,7 @@ import {
 import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
 import { Card } from "@/app/components/ui/card";
+
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
@@ -54,6 +55,7 @@ const FilterForm = () => {
             //   }))}
           />
         </div>
+        
       </div>
 
       <Separator className="mt-4" />
