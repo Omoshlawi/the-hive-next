@@ -21,7 +21,6 @@ import {
   FormMessage,
 } from "@/app/components/ui/form";
 import { TourScheduleSchema } from "@/app/lib/schema/listingsSchema";
-import { Listing } from "@/app/lib/entities/listings";
 import { Textarea } from "@/app/components/ui/textarea";
 import DatePicker from "@/app/components/form/DatePicker";
 import {
@@ -33,16 +32,11 @@ import {
 } from "@/app/components/ui/select";
 import { scheduleTour } from "../api";
 import { ValidationError } from "@/app/lib/exceptions";
-import { usePathname, useRouter } from "next/navigation";
-import { useToast } from "@/app/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { Props } from "./TourScheduleForm";
 
-interface Props {
-  listing: Listing;
-}
-
-const TourScheduleForm: React.FC<Props> = ({ listing }) => {
+export const TourScheduleForm: React.FC<Props> = ({ listing }) => {
   const { refresh } = useRouter();
-  const { toast } = useToast();
   const form = useForm<z.infer<typeof TourScheduleSchema>>({
     resolver: zodResolver(TourScheduleSchema),
     defaultValues: {
@@ -55,7 +49,7 @@ const TourScheduleForm: React.FC<Props> = ({ listing }) => {
     try {
       //   if (property) await updateProperty(property._id!, values, files);
       //   else
-      await scheduleTour(values, listing.id);
+      await scheduleTour(values);
       toast({
         className: "bg-green-900 dark:text-emerald-500",
         description: (
@@ -68,9 +62,7 @@ const TourScheduleForm: React.FC<Props> = ({ listing }) => {
     } catch (error) {
       if (error instanceof ValidationError) {
         // Handle validation errors
-        Object.entries(error.errors).forEach(([field, value]) => {
-          form.setError(field as any, { message: value as string });
-        });
+        form.setError(field as any, { message: value as string });
         // console.log(JSON.stringify(error.errors));
       } else if (
         typeof error === "object" &&
@@ -164,5 +156,3 @@ const TourScheduleForm: React.FC<Props> = ({ listing }) => {
     </Card>
   );
 };
-
-export default TourScheduleForm;
