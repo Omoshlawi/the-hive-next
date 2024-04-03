@@ -1,17 +1,4 @@
 import React from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/app/components/ui/pagination";
-import { Listing } from "@/app/lib/entities/listings";
-import Link from "next/link";
-import { formartCurrency } from "@/app/lib/utils";
-import { Badge } from "@/app/components/ui/badge";
 import { PropsWithSearchParams } from "../lib/types/base";
 import { BASE_URL } from "../lib/constants";
 import { ListLayoutWithSideBar } from "../components/layouts";

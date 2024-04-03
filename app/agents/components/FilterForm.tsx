@@ -4,7 +4,7 @@ import { Button } from "@/app/components/ui/button";
 import { Checkbox } from "@/app/components/ui/checkbox";
 import { Input } from "@/app/components/ui/input";
 import { Separator } from "@/app/components/ui/separator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -14,33 +14,63 @@ import {
 import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
 import { Card } from "@/app/components/ui/card";
-
+import { amenities, propertyTypes } from "@/app/lib/constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { toInteger } from "lodash";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
+import { propertyStatus } from "@/app/lib/constants";
+import { useDebouncedCallback } from "use-debounce";
+import RatingInput from "@/app/components/form/RatingInput";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
 const FilterForm = () => {
-  const [priceRange, setPriceRange] = useState<number[]>([50, 400]);
-  const amenities = [
-    "Wifi",
-    "Security",
-    "Conference room",
-    "CCTV Camera",
-    "Entertainment",
-  ];
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathName = usePathname();
+
+  const handleSearch = useDebouncedCallback((key, value) => {
+    const queryParams = new URLSearchParams(searchParams);
+    if (value) {
+      queryParams.set(key, value);
+    } else {
+      queryParams.delete(key);
+    }
+    replace(`${pathName}?${queryParams.toString()}`);
+  }, 300);
+
+  const amenitiesParams = searchParams.get("amenities")?.split(",") ?? [];
+
   return (
     <Card className="border-none shadow-md shadow-indigo-400">
       {/* Header */}
       <div className="p-2 ">
         <div className="w-full flex justify-between items-center mb-2 ">
           <span className="font-bold">Filters</span>
-          <Button variant={"link"}>Clear all</Button>
+          <Button variant={"link"} onClick={() => replace(pathName)}>
+            Clear all
+          </Button>
         </div>
         {/* seach */}
-        <Input placeholder="Seach ..." />
+        <Input
+          name="search"
+          placeholder="Seach ..."
+          defaultValue={searchParams.get("search") ?? ""}
+          onChange={({ target: { value, name } }) => handleSearch(name, value)}
+        />
+
         <div className="w-full my-4">
           <ReactSelect
             className="dark:text-primary-foreground"
-            placeholder="tags..."
+            placeholder="specilities"
             //   inputValue={search}
             //   onInputChange={(value) => setSearch(value)}
             //   value={{ label: selected?.display, value: selected?.display }}
@@ -55,103 +85,52 @@ const FilterForm = () => {
             //   }))}
           />
         </div>
-        
-      </div>
-
-      <Separator className="mt-4" />
-      {/* Size */}
-      <div className="p-2">
-        <span className="opacity-30">Age</span>
-        <div className="w-full grid grid-cols-2 gap-2">
-          <Input placeholder="max age" type="number" />
-          <Input placeholder="min age" type="number" />
-        </div>
-      </div>
-      {/* Age */}
-      <div className="p-2">
-        <span className="opacity-30">Size</span>
-        <div className="w-full grid grid-cols-2 gap-2">
-          <Input placeholder="min sqft size" type="number" />
-          <Input placeholder="max sqft size" type="number" />
-        </div>
-      </div>
-      <Separator className="mt-4" />
-      {/* price */}
-      <div className="p-2">
-        <span className="uppercase opacity-30">Price</span>
         <div className="w-full my-4">
-          <Slider
-            min={0}
-            max={1000}
-            value={priceRange}
-            // value={priceRange}
-            step={10}
-            onValueChange={setPriceRange}
+          <Input
+            placeholder="Location"
+            name="location"
+            defaultValue={searchParams.get("location") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
           />
         </div>
-        <div className="w-full grid grid-cols-2 gap-2">
+        <div className="w-full my-4">
           <Input
-            prefix="$"
-            type="number"
-            value={priceRange[0]}
-            onChange={({ target: { value } }) => {
-              setPriceRange((range) => [Number(value), range[1]]);
-            }}
-          />
-          <Input
-            prefix="$"
-            type="number"
-            value={priceRange[1]}
-            onChange={({ target: { value } }) => {
-              setPriceRange((range) => [range[0], Number(value)]);
-            }}
+            placeholder="Minimum Listings"
+            name="minListings"
+            defaultValue={searchParams.get("minListings") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
           />
         </div>
       </div>
-      <Separator className="mt-4" />
 
+      <Separator className="mt-4" />
       {/* Categories */}
       <div className="p-2">
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1" className="border-none">
             <AccordionTrigger className="hover:no-underline p-0 m-0">
-              <span className="uppercase opacity-30">Amenities</span>
+              <span className="uppercase opacity-30">Rating</span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul>
-                {amenities.map((amenity, index) => (
-                  <li key={index} className="items-center space-x-2">
-                    <Checkbox />
-                    <span>{amenity}</span>
-                  </li>
-                ))}
-              </ul>
+              <RatingInput
+                rating={
+                  searchParams.get("rating")
+                    ? Number(searchParams.get("rating"))
+                    : -1
+                }
+                onRatingChange={(rating) =>
+                  handleSearch("rating", String(rating))
+                }
+              />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
       <Separator className="" />
-
-      {/* Categories */}
-      <div className="p-2 ">
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1" className="border-none">
-            <AccordionTrigger className="hover:no-underline p-0 m-0">
-              <span className="uppercase opacity-30">Amenities</span>
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul>
-                {amenities.map((amenity, index) => (
-                  <li key={index} className="items-center space-x-2">
-                    <Checkbox />
-                    <span>{amenity}</span>
-                  </li>
-                ))}
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
     </Card>
   );
 };

@@ -110,3 +110,4 @@ export const propertyStatus = [
   { id: "on-rent", label: "On rent" },
   { id: "on-sale", label: "on Sale" },
 ];
+
