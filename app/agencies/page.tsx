@@ -4,7 +4,7 @@ import { PropsWithSearchParams } from "../lib/types/base";
 import { Agency } from "../lib/entities/agency";
 import { BASE_URL } from "../lib/constants";
 import { ListLayoutWithSideBar } from "../components/layouts";
-import { FilterForm } from "../agents/components";
+import FilterForm from "./FilterForm";
 import AgencyCard from "./AgencyCard";
 
 const AgenciesPage: React.FC<PropsWithSearchParams> = async ({

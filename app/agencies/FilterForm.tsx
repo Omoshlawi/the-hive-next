@@ -73,6 +73,24 @@ const FilterForm = () => {
           />
         </div>
         <div className="w-full my-4">
+          <ReactSelect
+            className="dark:text-primary-foreground"
+            placeholder="tags"
+            //   inputValue={search}
+            //   onInputChange={(value) => setSearch(value)}
+            //   value={{ label: selected?.display, value: selected?.display }}
+            //   onChange={(newValue: any) =>
+            //     setSelected(places.find((p) => p.display === newValue?.label))
+            //   }
+            isMulti={true}
+            //   isLoading={loading}
+            //   options={places.map((place) => ({
+            //     value: place.display,
+            //     label: place.display,
+            //   }))}
+          />
+        </div>
+        <div className="w-full my-4">
           <Input
             placeholder="Location"
             name="location"
@@ -94,6 +112,31 @@ const FilterForm = () => {
         </div>
       </div>
 
+      <Separator className="mt-4" />
+      {/* price */}
+      <div className="p-2">
+        <span className="uppercase opacity-30">Member Agents</span>
+        <div className="w-full grid grid-cols-2 gap-2">
+          <Input
+            name="minAgents"
+            placeholder="Min Agents"
+            type="number"
+            defaultValue={searchParams.get("minAgents") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+          />
+          <Input
+            type="number"
+            placeholder="Max Agents"
+            name="maxAgents"
+            defaultValue={searchParams.get("maxPrice") ?? ""}
+            onChange={({ target: { value, name } }) =>
+              handleSearch(name, value)
+            }
+          />
+        </div>
+      </div>
       <Separator className="mt-4" />
       {/* Categories */}
       <div className="p-2">

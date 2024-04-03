@@ -11,12 +11,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
-import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
 import { Card } from "@/app/components/ui/card";
 import { amenities, propertyTypes } from "@/app/lib/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { toInteger } from "lodash";
 import {
   Select,
   SelectContent,
