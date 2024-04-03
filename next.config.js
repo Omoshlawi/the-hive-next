@@ -2,6 +2,9 @@
 const nextConfig = {
   images: {
     remotePatterns: [{ protocol: "http", hostname: "localhost" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+    ],
   },
   rewrites: async () => {
     return [

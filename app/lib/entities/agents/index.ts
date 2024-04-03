@@ -26,7 +26,7 @@ export interface AgentArchievement extends Entity {
   id: string;
   agentId?: string;
   agent?: Agent;
-  attachments: Record<string, any>;
+  attachments: UploadFile[];
   description: string;
 }
 

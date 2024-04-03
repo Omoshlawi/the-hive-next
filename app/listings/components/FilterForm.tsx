@@ -14,18 +14,19 @@ import {
 import { Slider } from "@/app/components/ui/slider";
 import dynamic from "next/dynamic";
 import { Card } from "@/app/components/ui/card";
+import { amenities, propertyTypes } from "@/app/lib/constants";
+import { useSearchParams } from "next/navigation";
+import { toInteger } from "lodash";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
 const FilterForm = () => {
-  const [priceRange, setPriceRange] = useState<number[]>([50, 400]);
-  const amenities = [
-    "Wifi",
-    "Security",
-    "Conference room",
-    "CCTV Camera",
-    "Entertainment",
-  ];
+  const searchParams = useSearchParams();
+  const [priceRange, setPriceRange] = useState<number[]>([
+    toInteger(searchParams.get("minPrice")) || 50,
+    toInteger(searchParams.get("maxPrice")) || 400,
+  ]);
+  const amenitiesParams = searchParams.get("amenities")?.split(",");
   return (
     <Card className="border-none shadow-md shadow-indigo-400">
       {/* Header */}
@@ -35,7 +36,10 @@ const FilterForm = () => {
           <Button variant={"link"}>Clear all</Button>
         </div>
         {/* seach */}
-        <Input placeholder="Seach ..." />
+        <Input
+          placeholder="Seach ..."
+          defaultValue={searchParams.get("search") ?? ""}
+        />
         <div className="w-full my-4">
           <ReactSelect
             className="dark:text-primary-foreground"
@@ -61,16 +65,32 @@ const FilterForm = () => {
       <div className="p-2">
         <span className="opacity-30">Age</span>
         <div className="w-full grid grid-cols-2 gap-2">
-          <Input placeholder="max age" type="number" />
-          <Input placeholder="min age" type="number" />
+          <Input
+            placeholder="max age"
+            type="number"
+            defaultValue={searchParams.get("maxAge") ?? ""}
+          />
+          <Input
+            placeholder="min age"
+            type="number"
+            defaultValue={searchParams.get("minAge") ?? ""}
+          />
         </div>
       </div>
       {/* Age */}
       <div className="p-2">
         <span className="opacity-30">Size</span>
         <div className="w-full grid grid-cols-2 gap-2">
-          <Input placeholder="min sqft size" type="number" />
-          <Input placeholder="max sqft size" type="number" />
+          <Input
+            placeholder="min sqft size"
+            type="number"
+            defaultValue={searchParams.get("maxSize") ?? ""}
+          />
+          <Input
+            placeholder="max sqft size"
+            type="number"
+            defaultValue={searchParams.get("minSize") ?? ""}
+          />
         </div>
       </div>
       <Separator className="mt-4" />
@@ -109,18 +129,18 @@ const FilterForm = () => {
       <Separator className="mt-4" />
 
       {/* Categories */}
-      <div className="p-2">
+      {/* <div className="p-2">
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1" className="border-none">
             <AccordionTrigger className="hover:no-underline p-0 m-0">
-              <span className="uppercase opacity-30">Amenities</span>
+              <span className="uppercase opacity-30">Type</span>
             </AccordionTrigger>
             <AccordionContent>
               <ul>
-                {amenities.map((amenity, index) => (
+                {propertyTypes.map(({ id, label }, index) => (
                   <li key={index} className="items-center space-x-2">
                     <Checkbox />
-                    <span>{amenity}</span>
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>
@@ -128,7 +148,7 @@ const FilterForm = () => {
           </AccordionItem>
         </Accordion>
       </div>
-      <Separator className="" />
+      <Separator className="" /> */}
 
       {/* Categories */}
       <div className="p-2 ">
@@ -139,10 +159,10 @@ const FilterForm = () => {
             </AccordionTrigger>
             <AccordionContent>
               <ul>
-                {amenities.map((amenity, index) => (
+                {amenities.map(({ id, label }, index) => (
                   <li key={index} className="items-center space-x-2">
-                    <Checkbox />
-                    <span>{amenity}</span>
+                    <Checkbox checked={amenitiesParams?.includes(id)} />
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>

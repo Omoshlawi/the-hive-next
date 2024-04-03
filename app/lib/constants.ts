@@ -65,3 +65,46 @@ export const fileExtensionsColors: { [key: string]: string } = {
   exe: "#607d8b",
   default: "#9e9e9e", // Default color for unknown file types
 };
+
+export const amenities = [
+  {
+    id: "pool",
+    label: "Swimming pool",
+  },
+  {
+    id: "garage",
+    label: "Garage",
+  },
+  {
+    id: "balcony",
+    label: "Balcony",
+  },
+  {
+    id: "gym",
+    label: "Gym",
+  },
+  {
+    id: "courte",
+    label: "Tennis court",
+  },
+  {
+    id: "conference",
+    label: "Conference room",
+  },
+];
+
+export const propertyTypes = [
+  { id: "apartment", label: "Apartment" },
+  { id: "mainsonet", label: "Mainsonet" },
+  { id: "vila", label: "Vila" },
+  { id: "bungalow", label: "Bungalow" },
+  { id: "mansion", label: "Mansion" },
+  { id: "studio", label: "Studio" },
+];
+
+
+export const propertyStatus = [
+  { id: "on-rent", label: "On rent" },
+  { id: "on-sale", label: "on Sale" },
+
+]

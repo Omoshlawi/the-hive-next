@@ -20,7 +20,7 @@ export interface Agency extends Entity {
   country: string;
   state: string;
   zipCode?: string;
-  achievements: AgentArchievement[];
+  archievements: AgentArchievement[];
   facebook?: string;
   linkedIn?: string;
   twitter?: string;
@@ -31,7 +31,7 @@ export interface AgentArchievement extends Entity {
   id: string;
   agencyId?: string;
   agency?: Agency;
-  attachments: Record<string, any>;
+  attachments: UploadFile[];
   description: string;
 }
 

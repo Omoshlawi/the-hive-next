@@ -7,6 +7,7 @@ import { BASE_URL } from "@/app/lib/constants";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -15,6 +16,7 @@ import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import {
   BookmarkPlus,
+  Calendar,
   CheckCircle,
   Heart,
   Mail,
@@ -23,6 +25,8 @@ import {
 } from "lucide-react";
 import HeroHeader from "@/app/components/display/HeroHeader";
 import { Separator } from "@/app/components/ui/separator";
+import Image from "next/image";
+import moment from "moment/moment";
 
 const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
   params: { id },
@@ -280,6 +284,36 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
                   <span className="opacity-50 text-xs">Zip code</span>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+          <Card className="border-none shadow-md shadow-indigo-400">
+            <CardHeader>
+              <CardTitle>Events</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 gap-4">
+              {agent.achievements.map((archievement, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col space-y-2 bg-accent p-4"
+                >
+                  <div className="flex space-x-4 items-center">
+                    <Button variant={"outline"} size={"icon"}>
+                      <Calendar />
+                    </Button>
+                    <span>
+                      {moment(archievement.createdAt).format("Do dd MM yyy ")}
+                    </span>
+                  </div>
+                  {archievement.attachments[0] && (
+                    <img
+                      src={`/api/proxy/files/${archievement.attachments[0].path}`}
+                      alt="attachments"
+                      className="object-cover w-full h-[40vh]"
+                    />
+                  )}
+                  <CardDescription>{archievement.description}</CardDescription>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </div>
