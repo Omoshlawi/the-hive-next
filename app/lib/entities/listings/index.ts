@@ -1,5 +1,6 @@
 import { Entity } from "../../types/base";
 import { UploadFile } from "../files";
+import { Person } from "../users";
 
 export interface Listing extends Entity {
   id: string;
@@ -14,6 +15,8 @@ export interface Listing extends Entity {
   properties: ListingProperty[];
   rental: RentalListing;
   sale?: SaleListing;
+  tourHours: string[];
+  tourSchedules: TourSchedule[];
 }
 
 export interface ListingProperty extends Entity {
@@ -21,6 +24,15 @@ export interface ListingProperty extends Entity {
   listing: Listing;
   property: string;
   note?: string;
+}
+
+export interface TourSchedule extends Entity {
+  id: string;
+  listingId: string;
+  date: string;
+  time: string;
+  person: Person;
+  notes: string;
 }
 
 export interface RentalListing extends Entity {

@@ -50,3 +50,9 @@ export const ListingSchema = z.object({
   published: z.boolean().optional(),
   properties: z.array(ListingPropertySchema),
 });
+
+export const TourScheduleSchema = z.object({
+  date: z.date({ coerce: true }).min(new Date(), "Must be a future date"),
+  time: z.string(),
+  notes: z.string().optional(),
+});
