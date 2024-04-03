@@ -12,8 +12,8 @@ export interface Listing extends Entity {
   coverImage: UploadFile;
   published: boolean;
   properties: ListingProperty[];
-  rentalListings?: RentalListing[];
-  saleListings?: SaleListing[];
+  rental: RentalListing;
+  sale?: SaleListing;
 }
 
 export interface ListingProperty extends Entity {

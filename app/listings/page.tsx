@@ -45,12 +45,34 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
         <div className="w-full rounded-sm flex flex-col space-y-4">
           <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
             {listings.map(
-              ({ tags, coverImage, id, title, price, properties }, index) => (
+              (
+                {
+                  tags,
+                  coverImage,
+                  id,
+                  title,
+                  price,
+                  properties,
+                  rental,
+                  sale,
+                },
+                index
+              ) => (
                 <article
                   key={id}
                   className="mb-4 overflow-hidden rounded-xl border shadow-md duration-500 ease-in-out hover:shadow-xl"
                 >
-                  <div className="">
+                  <div className="relative">
+                    {rental && (
+                      <Badge className="absolute top-3 left-3 p-2">
+                        For Rent
+                      </Badge>
+                    )}
+                    {sale && (
+                      <Badge className="absolute top-3 left-3 p-2">
+                        For Sale
+                      </Badge>
+                    )}
                     <img
                       src={`/api/proxy/files/${coverImage.path}`}
                       alt={title}
@@ -58,6 +80,16 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                     />
                   </div>
                   <div className="p-4">
+                    <div className="box-border flex px-0 pb-6 flex-wrap">
+                      {tags.map((amenity, index) => (
+                        <Badge
+                          key={index}
+                          className="rounded-sm bg-accent text-primary overflow-x-auto mt-2 mr-2"
+                        >
+                          {amenity}
+                        </Badge>
+                      ))}
+                    </div>
                     <div className="pb-6">
                       <Link
                         href={`/listings/${id}`}
@@ -66,11 +98,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                         {title}({properties.length} properties)
                       </Link>
                     </div>
-                    <div className="box-border flex border-t border-b border-solid border-gray-200 px-0 py-6 space-x-2 flex-wrap space-y-1">
-                      {tags.map((amenity, index) => (
-                        <Badge key={index}>{amenity}</Badge>
-                      ))}
-                    </div>
+
                     <ul className="m-0 flex list-none items-center justify-between px-0 pt-6 pb-0">
                       <li className="text-left">
                         <span className="text-sm text-gray-400">Price</span>

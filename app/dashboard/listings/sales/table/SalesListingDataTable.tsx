@@ -17,7 +17,7 @@ const SalesListingsDataTable: FC<PropsWithSearchParams> = async ({
     );
     if (response.ok) {
       listing = ((await response.json()).results as SaleListing[]).map(
-        (sales) => ({ ...sales.listing, saleListings:[sales] })
+        (sales) => ({ ...sales.listing, sale: sales })
       );
     }
   } catch (error) {
