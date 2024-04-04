@@ -66,13 +66,27 @@ const FilterForm = () => {
         <div className="w-full my-4">
           <ReactSelect
             className="dark:text-primary-foreground"
-            placeholder="tags..."
+            placeholder="Type tags..."
+            defaultValue={(searchParams.get("tags")?.split(",") ?? []).map(
+              (val) => ({
+                label: val,
+                value: val,
+              })
+            )}
+            options={propertyTypes.map(({ id, label }) => ({
+              label,
+              value: id,
+            }))}
+            onChange={(newValues: any) =>
+              handleSearch(
+                "tags",
+                newValues.map((val: any) => val.value).join(",")
+              )
+            }
             //   inputValue={search}
             //   onInputChange={(value) => setSearch(value)}
             //   value={{ label: selected?.display, value: selected?.display }}
-            //   onChange={(newValue: any) =>
-            //     setSelected(places.find((p) => p.display === newValue?.label))
-            //   }
+
             isMulti={true}
             //   isLoading={loading}
             //   options={places.map((place) => ({
@@ -94,27 +108,6 @@ const FilterForm = () => {
               <SelectGroup>
                 <SelectLabel>Property status</SelectLabel>
                 {propertyStatus.map(({ id, label }, index) => (
-                  <SelectItem key={index} value={id}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="w-full my-4">
-          <Select
-            name="tags"
-            defaultValue={searchParams.get("tags") ?? ""}
-            onValueChange={(value) => handleSearch("tags", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>House type</SelectLabel>
-                {propertyTypes.map(({ id, label }, index) => (
                   <SelectItem key={index} value={id}>
                     {label}
                   </SelectItem>

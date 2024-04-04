@@ -5,12 +5,33 @@ import EaningTrendsChart from "./components/charts/EaningTrendsChart";
 import LinChart from "./components/charts/LinChart";
 import BarChart from "./components/charts/BarChart";
 import DounartChart from "./components/charts/DounartChart";
-import { Banknote, Clock4, LayoutList, Users } from "lucide-react";
+import {
+  Banknote,
+  Building,
+  Clock4,
+  LayoutList,
+  Link2,
+  Users,
+} from "lucide-react";
 import { Card, CardTitle } from "../components/ui/card";
+import { BASE_URL } from "../lib/constants";
 
 // https://towardsdev.com/chart-js-next-js-beautiful-data-driven-dashboards-how-to-create-them-fast-and-efficiently-a59e313a3153
 
-const DashBoard = () => {
+const DashBoard = async () => {
+  let summary: any = {};
+  try {
+    const response = await fetch(new URL(`/api/proxy/summary`, BASE_URL), {
+      cache: "no-cache",
+    });
+    if (response.ok) {
+      summary = await response.json();
+    }
+  } catch (error) {
+    // console.log(error);
+  }
+  console.log(summary);
+
   return (
     <div>
       <p className={`${lusitana.className} font-bold text-2xl m-3`}>
@@ -19,23 +40,23 @@ const DashBoard = () => {
       <div className="mb-4 grid gap-3 grid-cols-1 md:grid-cols-4 sm:grid-cols-2">
         <SummaryCard.SummaryCardConcrete
           title="Total Listings"
-          subTitle="20 Properties"
+          subTitle={`${summary.listings} Listings`}
           icon={LayoutList}
         />
         <SummaryCard.SummaryCardConcrete
-          title="Total Tenants"
-          subTitle="330 Tenants"
+          title="Total Properties"
+          subTitle={`${summary.properties} Properties`}
+          icon={Building}
+        />
+        <SummaryCard.SummaryCardConcrete
+          title="Total Agents"
+          subTitle={`${summary.agents} Agents`}
           icon={Users}
         />
         <SummaryCard.SummaryCardConcrete
-          title="Total Earnings"
-          subTitle="10k+ USD"
-          icon={Banknote}
-        />
-        <SummaryCard.SummaryCardConcrete
-          title="Pending "
-          subTitle="12 Pending"
-          icon={Clock4}
+          title="Total Agencies "
+          subTitle={`${summary.agencies} Agencies`}
+          icon={Link2}
         />
       </div>
       <div className="grid gap-3 grid-cols-1 md:grid-cols-2">

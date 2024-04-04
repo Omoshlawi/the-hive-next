@@ -16,6 +16,7 @@ import { Card } from "@/app/components/ui/card";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import RatingInput from "@/app/components/form/RatingInput";
+import { specialities } from "../lib/constants";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
@@ -57,19 +58,24 @@ const FilterForm = () => {
         <div className="w-full my-4">
           <ReactSelect
             className="dark:text-primary-foreground"
-            placeholder="specilities"
-            //   inputValue={search}
-            //   onInputChange={(value) => setSearch(value)}
-            //   value={{ label: selected?.display, value: selected?.display }}
-            //   onChange={(newValue: any) =>
-            //     setSelected(places.find((p) => p.display === newValue?.label))
-            //   }
             isMulti={true}
-            //   isLoading={loading}
-            //   options={places.map((place) => ({
-            //     value: place.display,
-            //     label: place.display,
-            //   }))}
+            placeholder="Specialities"
+            defaultValue={(searchParams.get("tags")?.split(",") ?? []).map(
+              (val) => ({
+                label: val,
+                value: val,
+              })
+            )}
+            options={specialities.map(({ id, label }) => ({
+              label,
+              value: id,
+            }))}
+            onChange={(newValues: any) =>
+              handleSearch(
+                "specialities",
+                newValues.map((val: any) => val.value).join(",")
+              )
+            }
           />
         </div>
         <div className="w-full my-4">

@@ -106,8 +106,18 @@ export const propertyTypes = [
   { id: "Studio", label: "Studio" },
 ];
 
+export const specialities = [
+  { id: "Luxury", label: "Luxury" },
+  { id: "One time home buyers", label: "One time home buyers" },
+  { id: "Apartment", label: "Apartment" },
+  { id: "Mainsonet", label: "Mainsonet" },
+  { id: "Vila", label: "Vila" },
+  { id: "Bungalow", label: "Bungalow" },
+  { id: "Mansion", label: "Mansion" },
+  { id: "Studio", label: "Studio" },
+];
+
 export const propertyStatus = [
   { id: "on-rent", label: "On rent" },
   { id: "on-sale", label: "on Sale" },
 ];
-
