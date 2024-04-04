@@ -5,6 +5,8 @@ import { ListLayoutWithSideBar } from "../components/layouts";
 import { AgentCard, FilterForm } from "./components";
 import { Agent } from "../lib/entities/agents";
 import HeroHeader from "../components/display/HeroHeader";
+import SimilarListings from "../components/display/SimilarListings";
+
 import { getHeaderWithCookie } from "../lib/serverutils";
 
 const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
@@ -31,7 +33,14 @@ const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
   return (
     <div>
       <HeroHeader title="All agents" subtitle="Meet all agents" />
-      <ListLayoutWithSideBar sideBar={<FilterForm />}>
+      <ListLayoutWithSideBar
+        sideBar={
+          <div className="flex flex-col gap-2">
+            <FilterForm />
+            <SimilarListings />
+          </div>
+        }
+      >
         <section className="text-center">
           <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
             {agents.map((agent, index) => (

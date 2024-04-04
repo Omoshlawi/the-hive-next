@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: "Users", href: "/dashboard/settings/users" },
     { name: "Subscriptions", href: "/dashboard/settings/subscriptions" },
     { name: "Billings", href: "/dashboard/settings/billings" },
-    { name: "Notifications", href: "/dashboard/settings/notofications" },
+    { name: "Notifications", href: "/dashboard/settings/notifications" },
   ];
 
   return (
@@ -24,7 +24,7 @@ const Sidebar = () => {
       <ul>
         {links.map(({ href, name }, index) => {
           const isActive =
-          new URL(href, "http://localhost").pathname === pathName;
+            new URL(href, "http://localhost").pathname === pathName;
           return (
             <li
               key={index}

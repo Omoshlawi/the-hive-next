@@ -29,10 +29,12 @@ export interface ListingProperty extends Entity {
 export interface TourSchedule extends Entity {
   id: string;
   listingId: string;
+  listing: Listing;
   date: string;
   time: string;
   person: Person;
   notes: string;
+  status: string;
 }
 
 export interface RentalListing extends Entity {

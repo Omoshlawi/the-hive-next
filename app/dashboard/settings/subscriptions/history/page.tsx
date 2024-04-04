@@ -1,20 +1,17 @@
 import { BASE_URL } from "@/app/lib/constants";
 import { UserSubscription } from "@/app/lib/entities/sass";
 import React from "react";
-import { cookies } from "next/headers";
 import moment from "moment/moment";
+import { getHeaderWithCookie } from "@/app/lib/serverutils";
 
 const SubscriptionHistoryPage = async () => {
   let subscriptions: UserSubscription[] = [];
-  const userCookie = cookies().get("session-token")?.value;
-  const myHeaders = new Headers();
-  myHeaders.append("Cookie", `session-token=${userCookie}`);
   try {
     const response = await fetch(
       new URL(`/api/proxy/pricing/subscriptions`, BASE_URL),
       {
         cache: "no-cache",
-        headers: myHeaders,
+        headers: await getHeaderWithCookie(),
       }
     );
     if (response.ok) {

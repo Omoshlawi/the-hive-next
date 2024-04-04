@@ -18,6 +18,7 @@ import { ListLayoutWithSideBar } from "../components/layouts";
 import { FilterForm } from "./components";
 import HeroHeader from "../components/display/HeroHeader";
 import { getHeaderWithCookie } from "../lib/serverutils";
+import SimilarListings from "../components/display/SimilarListings";
 
 const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -50,7 +51,14 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   return (
     <div>
       <HeroHeader title="All listings" subtitle="Find your desired listing" />
-      <ListLayoutWithSideBar sideBar={<FilterForm />}>
+      <ListLayoutWithSideBar
+        sideBar={
+          <div className="flex flex-col gap-2">
+            <FilterForm />
+            <SimilarListings />
+          </div>
+        }
+      >
         <div className="w-full rounded-sm flex flex-col space-y-4">
           <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ">
             {listings.map(
@@ -182,7 +190,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                 </article>
               )
             )}
-            <Pagination>
+            {/* <Pagination>
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious href="#" />
@@ -205,7 +213,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                   <PaginationNext href="#" />
                 </PaginationItem>
               </PaginationContent>
-            </Pagination>
+            </Pagination> */}
           </section>
         </div>
       </ListLayoutWithSideBar>

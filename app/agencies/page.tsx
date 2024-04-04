@@ -7,6 +7,7 @@ import { ListLayoutWithSideBar } from "../components/layouts";
 import FilterForm from "./FilterForm";
 import AgencyCard from "./AgencyCard";
 import { getHeaderWithCookie } from "../lib/serverutils";
+import SimilarListings from "../components/display/SimilarListings";
 
 const AgenciesPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -31,7 +32,14 @@ const AgenciesPage: React.FC<PropsWithSearchParams> = async ({
   return (
     <div>
       <HeroHeader title="All Agencies" subtitle="View our trusted agencies" />
-      <ListLayoutWithSideBar sideBar={<FilterForm />}>
+      <ListLayoutWithSideBar
+        sideBar={
+          <div className="flex flex-col gap-2">
+            <FilterForm />
+            <SimilarListings />
+          </div>
+        }
+      >
         <section className="text-center">
           <div className="grid gap-6 md:grid-cols-3 lg:gap-12">
             {agencies.map((agency, index) => (
