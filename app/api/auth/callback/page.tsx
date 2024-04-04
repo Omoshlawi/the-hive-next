@@ -17,7 +17,8 @@ const OauthCallback = () => {
     // const accessToken = searchParams.get("accessToken");
     // const refreshToken = searchParams.get("refreshToken");
     // if (accessToken && refreshToken) setToken({ accessToken, refreshToken });
-    replace(callBack ?? "/");
+    const decoded = callBack ? decodeURIComponent(callBack) : "/";
+    replace(decoded);
     setCallback(undefined);
   }, []);
 

@@ -6,6 +6,7 @@ import { BASE_URL } from "../lib/constants";
 import { ListLayoutWithSideBar } from "../components/layouts";
 import FilterForm from "./FilterForm";
 import AgencyCard from "./AgencyCard";
+import { getHeaderWithCookie } from "../lib/serverutils";
 
 const AgenciesPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -18,6 +19,7 @@ const AgenciesPage: React.FC<PropsWithSearchParams> = async ({
         new URL(`/api/proxy/agencies?${queryParams.toString()}`, BASE_URL),
         {
           cache: "no-cache",
+          headers: await getHeaderWithCookie(),
         }
       )
     ).json();

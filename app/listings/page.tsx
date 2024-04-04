@@ -17,6 +17,7 @@ import { BASE_URL } from "../lib/constants";
 import { ListLayoutWithSideBar } from "../components/layouts";
 import { FilterForm } from "./components";
 import HeroHeader from "../components/display/HeroHeader";
+import { getHeaderWithCookie } from "../lib/serverutils";
 
 const ListingsPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -29,12 +30,20 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
         new URL(`/api/proxy/listings?${queryParams.toString()}`, BASE_URL),
         {
           cache: "no-cache",
+          headers: await getHeaderWithCookie(),
         }
       )
     ).json();
     listings = results;
   } catch (error: any) {
-    console.log(error.message);
+    console.log(
+      (
+        await fetch(new URL(`/api/proxy/listings`, BASE_URL), {
+          cache: "no-cache",
+        })
+      ).status
+    );
+    console.log(error);
     listings = [];
   }
 

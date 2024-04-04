@@ -15,9 +15,7 @@ const SideBar: FC<Props> = ({ listing }) => {
     <div className="p-5">
       <ListingProfile listing={listing} />
       <TourScheduleForm listing={listing} />
-      <p className={clsx("text-2xl my-4", lusitana.className)}>
-        Featured listing
-      </p>
+     
       <SimilarListings />
     </div>
   );

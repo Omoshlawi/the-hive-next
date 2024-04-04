@@ -5,6 +5,7 @@ import { ListLayoutWithSideBar } from "../components/layouts";
 import { AgentCard, FilterForm } from "./components";
 import { Agent } from "../lib/entities/agents";
 import HeroHeader from "../components/display/HeroHeader";
+import { getHeaderWithCookie } from "../lib/serverutils";
 
 const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
   searchParams,
@@ -17,6 +18,7 @@ const AgentsListingPage: React.FC<PropsWithSearchParams> = async ({
         new URL(`/api/proxy/agents?${queryParams.toString()}`, BASE_URL),
         {
           cache: "no-cache",
+          headers: await getHeaderWithCookie(),
         }
       )
     ).json();

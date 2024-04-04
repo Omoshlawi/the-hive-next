@@ -81,14 +81,14 @@ const TourScheduleForm: React.FC<Props> = ({ listing }) => {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: `Unexpected error adding service: ${error}`,
+          description: `Unexpected error: ${error}`,
         });
       } else {
         // Handle other cases
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: `Unexpected error adding service: ${error}`,
+          description: `Unexpected error: ${error}`,
         });
       }
     }
