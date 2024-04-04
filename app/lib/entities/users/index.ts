@@ -24,6 +24,7 @@ export interface User extends Entity {
   lastLogin?: Date;
   active: boolean;
   accounts: Account[];
+  roles: string[];
 }
 
 export interface Person extends Entity {

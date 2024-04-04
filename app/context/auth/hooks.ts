@@ -15,6 +15,7 @@ export const useSessionContext = () => {
     resetData,
     notifyChanges,
     toggleAuth,
+    setData,
   } = useContext(SessionContext);
 
   // console.log(authenticate);
@@ -36,6 +37,7 @@ export const useSessionContext = () => {
     session: data,
     error,
     logout,
+    setSession: setData!,
     authenticate,
     loading: loading!,
     notifyChanges: notifyChanges!,

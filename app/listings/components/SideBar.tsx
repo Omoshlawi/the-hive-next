@@ -15,7 +15,6 @@ const SideBar: FC<Props> = ({ listing }) => {
     <div className="p-5">
       <ListingProfile listing={listing} />
       <TourScheduleForm listing={listing} />
-     
       <SimilarListings />
     </div>
   );

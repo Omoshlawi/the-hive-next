@@ -11,6 +11,7 @@ import React, {
 export interface Session {
   authenticate?: boolean;
   data?: User;
+  setData?: (data: User) => void;
   loading?: boolean;
   error?: {
     status: number;
@@ -45,6 +46,7 @@ export const SessionProvider: React.FC<PropsWithChildren> = ({ children }) => {
       value={{
         authenticate,
         resetData: () => setData(undefined),
+        setData,
         notifyChanges: nortifyAll,
         loading,
         data,
