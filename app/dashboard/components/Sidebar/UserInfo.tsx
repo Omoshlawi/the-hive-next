@@ -16,7 +16,7 @@ const UserInfo = () => {
   return (
     <div className="hidden md:block p-2 px-4  lg:px-6">
       <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-        PROFILE
+        PROFILE ({session?.roles?.join(", ")})
       </h3>
 
       <ListItem
