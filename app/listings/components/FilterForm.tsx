@@ -29,6 +29,10 @@ import { useDebouncedCallback } from "use-debounce";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false, // Prevent SSR
 });
+const CreatableSelect = dynamic(() => import("react-select/creatable"), {
+  ssr: false, // Prevent SSR
+});
+
 const FilterForm = () => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
