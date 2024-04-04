@@ -10,6 +10,8 @@ import { Agency } from "@/app/lib/entities/agency";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import Tooltip from "@/app/components/display/ToolTip";
 import { useSessionContext } from "@/app/context/auth/hooks";
+import { Button } from "@/app/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface Props {
   pathname: string;
@@ -22,6 +24,7 @@ const SideBardLinks: React.FC<Props> = ({
   setSidebarExpanded,
   sidebarExpanded,
 }) => {
+  const { push } = useRouter();
   const { loading, request, data, error } = useApiClient<{
     roles: { agent?: Agency; agency?: Agency; owner?: Record<string, any> };
   }>({ roles: {} });
@@ -70,16 +73,17 @@ const SideBardLinks: React.FC<Props> = ({
                         key={index}
                         className="flex justify-between items-center"
                       >
-                        <Link
-                          href={href}
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:opacity-30 dark:hover:bg-meta-4 ${
+                        <Button
+                          onClick={() => push(href)}
+                          variant={"ghost"}
+                          className={` group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:opacity-30 dark:hover:bg-meta-4 ${
                             pathname.includes(href) &&
                             "bg-graydark dark:bg-meta-4"
                           }`}
                         >
                           {renderIcon()}
                           {label}
-                        </Link>
+                        </Button>
                         {isNotEligible && (
                           <Tooltip tipText="Insiffient role">
                             <LockKeyhole />
@@ -156,14 +160,15 @@ const SideBardLinks: React.FC<Props> = ({
                                       key={index}
                                       className="flex justify-between items-center w-full"
                                     >
-                                      <Link
-                                        href={href}
+                                      <Button
+                                        variant={"ghost"}
+                                        onClick={() => push(href)}
                                         className={clsx(
                                           `group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:opacity-30`
                                         )}
                                       >
                                         {label}
-                                      </Link>
+                                      </Button>
                                       {isNotEligible && (
                                         <Tooltip tipText="Insiffient role">
                                           <LockKeyhole />
