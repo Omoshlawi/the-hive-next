@@ -33,7 +33,7 @@ const ListingPropertyCard = async ({ propertyId }: Props) => {
     <article className="mb-4 overflow-hidden rounded-xl border shadow-md duration-500 ease-in-out hover:shadow-xl relative">
       <div className="">
         <img
-          src={`/api/proxy/files/${property.images[0].path}`}
+          src={`/api/proxy/files/process/${property.images[0].path}?width=800&height=500&crop=true&q=100`}
           alt={property.title}
           className="bg-indigo-800 object-cover"
         />

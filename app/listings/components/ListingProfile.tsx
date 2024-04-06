@@ -39,7 +39,7 @@ const ListingProfile: FC<Props> = ({
       </div>
       {/* EndBackground */}
       <img
-        src={`/api/proxy/files/${coverImage.path}`}
+        src={`/api/proxy/files/process/${coverImage.path}`}
         alt={title}
         className="rounded-full h-56 w-56 mt-5 bg-indigo-800 "
       />

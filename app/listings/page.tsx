@@ -91,7 +91,7 @@ const ListingsPage: React.FC<PropsWithSearchParams> = async ({
                       </Badge>
                     )}
                     <img
-                      src={`/api/proxy/files/${coverImage.path}`}
+                      src={`/api/proxy/files/process/${coverImage.path}?width=800&height=500&crop=true&q=100`}
                       alt={title}
                       className="bg-indigo-800"
                     />

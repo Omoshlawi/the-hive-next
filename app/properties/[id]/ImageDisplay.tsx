@@ -14,7 +14,7 @@ const ImageDisplay: React.FC<Props> = ({ images = [] }) => {
       <img
         src={
           currentImage
-            ? `/api/proxy/files/${currentImage.path}`
+            ? `/api/proxy/files/${currentImage.path}?q=100`
             : "https://via.placeholder.com/1200x400?text=Property image"
         }
         alt={""}

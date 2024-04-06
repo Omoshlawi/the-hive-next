@@ -22,7 +22,7 @@ const AgencyCard: React.FC<Props> = ({ agency }) => {
       </div>
       {/* EndBackground */}
       <img
-        src={`/api/proxy/files/${agency.logo.path}`}
+        src={`/api/proxy/files/process/${agency.logo.path}`}
         alt={agency.name}
         className="rounded-full h-36 w-36 mt-5 bg-indigo-800 object-cover"
       />

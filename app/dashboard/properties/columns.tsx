@@ -44,14 +44,16 @@ export const columns: ColumnDef<Property>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  { 
+  {
     accessorKey: "images",
     header: "Image",
     cell: ({ row, renderValue }) => {
       return (
         <Image
           alt={row.getValue("title")}
-          src={`/api/proxy/files/${(renderValue() as UploadFile[])[0]?.path}`}
+          src={`/api/proxy/files/process/${
+            (renderValue() as UploadFile[])[0]?.path
+          }`}
           width={100}
           height={100}
           className="h-20 w-40 object-cover rounded-xl"

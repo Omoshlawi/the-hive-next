@@ -49,7 +49,7 @@ const AgentDetailScreen: React.FC<PropsWithPathParams> = async ({
         title="Agent Detail"
         backgroundImage={
           agent.coverImage
-            ? `/api/proxy/files/${agent.coverImage.path}`
+            ? `/api/proxy/files/process/${agent.coverImage.path}`
             : undefined
         }
       />

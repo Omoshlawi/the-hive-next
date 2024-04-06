@@ -57,7 +57,7 @@ export function UserButton() {
               user?.person?.image
                 ? user!.person!.image!.type === "remote"
                   ? user!.person!.image!.path
-                  : `/api/proxy/files/${user!.person!.image!.path}`
+                  : `/api/proxy/files/process/${user!.person!.image!.path}`
                 : undefined
             }
           />

@@ -40,7 +40,7 @@ const AgencyDetail: React.FC<PropsWithPathParams> = async ({
         subtitle={agency.name}
         backgroundImage={
           agency.coverImage
-            ? `/api/proxy/files/${agency.coverImage.path}`
+            ? `/api/proxy/files/process/${agency.coverImage.path}`
             : undefined
         }
       />
@@ -297,7 +297,7 @@ const AgencyDetail: React.FC<PropsWithPathParams> = async ({
                   </div>
                   {archievement.attachments[0] && (
                     <img
-                      src={`/api/proxy/files/${archievement.attachments[0].path}`}
+                      src={`/api/proxy/files/process/${archievement.attachments[0].path}`}
                       alt="attachments"
                       className="object-cover w-full h-[40vh]"
                     />

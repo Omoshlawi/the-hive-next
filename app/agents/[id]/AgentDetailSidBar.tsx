@@ -21,7 +21,7 @@ const AgentDetailSidBar: React.FC<Props> = ({ agent }) => {
         </div>
         {/* EndBackground */}
         <img
-          src={`/api/proxy/files/${agent.image.path}`}
+          src={`/api/proxy/files/process/${agent.image.path}`}
           alt={agent.person.firstName}
           className="rounded-full h-56 w-56 mt-5 bg-indigo-800 object-cover"
         />

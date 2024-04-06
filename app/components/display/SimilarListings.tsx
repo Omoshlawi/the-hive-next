@@ -69,7 +69,7 @@ const SimilarListings = () => {
                     <div className="shrink-0 relative">
                       <img
                         className="h-24 w-24 max-w-full rounded-lg object-cover"
-                        src={`/api/proxy/files/${coverImage.path}`}
+                        src={`/api/proxy/files/process/${coverImage.path}`}
                         alt=""
                       />
                     </div>
