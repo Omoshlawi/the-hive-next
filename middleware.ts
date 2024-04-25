@@ -5,33 +5,51 @@ import { decode } from "jsonwebtoken";
 import { TokenPayload } from "./app/lib/types/base";
 import { serialize } from "cookie";
 
-export function middleware(request: NextRequest) {
+const redirectToAuth = (request: NextRequest) => {
+  const authCookie = request.cookies.get(authCookieConfig.name)?.value;
   const callbackUrl = request.nextUrl.pathname;
+
+  const serializedCookieToken = serialize(
+    authCookieConfig.name,
+    authCookie ?? "",
+    {
+      ...authCookieConfig.config,
+      maxAge: -1,
+    }
+  );
+
+  const headers = new Headers();
+  headers.append("Set-Cookie", serializedCookieToken);
+  return NextResponse.redirect(
+    new URL(
+      `/api/auth?callbackUrl=${encodeURIComponent(callbackUrl)}`,
+      request.url
+    ),
+    { headers }
+  );
+};
+
+export function middleware(request: NextRequest) {
   const authCookie = request.cookies.get(authCookieConfig.name)?.value;
   const isAuthenticated = decode(authCookie ?? "") as TokenPayload | null;
   const isProtected = request.nextUrl.pathname.startsWith("/dashboard");
+
   // TODO Specify protected routes
   if (!isAuthenticated && isProtected) {
-    const serializedCookieToken = serialize(
-      authCookieConfig.name,
-      authCookie ?? "",
-      {
-        ...authCookieConfig.config,
-        maxAge: -1,
-      }
+    return redirectToAuth(request);
+  }
+
+  const response = NextResponse.next();
+  if (response.status === 401) {
+    console.log(
+      "----------------------------------------------------------",
+      "Redirect user to auth screen",
+      "----------------------------------------------------------"
     );
 
-    const headers = new Headers();
-    headers.append("Set-Cookie", serializedCookieToken);
-    return NextResponse.redirect(
-      new URL(
-        `/api/auth?callbackUrl=${encodeURIComponent(callbackUrl)}`,
-        request.url
-      ),
-      { headers }
-    );
+    return redirectToAuth(request);
   }
-  return NextResponse.next();
+  return response;
 }
 
 // See "Matching Paths" below to learn more

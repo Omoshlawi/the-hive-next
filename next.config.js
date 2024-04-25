@@ -11,6 +11,7 @@ const nextConfig = {
       {
         source: "/api/proxy/:path*",
         destination: `${process.env.BACKEND_URL}/:path*`,
+        
       },
     ];
   },
